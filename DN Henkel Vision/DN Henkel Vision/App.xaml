@@ -1,5 +1,5 @@
-<!-- Copyright (c) Microsoft Corporation and Contributors. -->
-<!-- Licensed under the MIT License. -->
+<!-- Copyright (c) DN Foundation and Branislav Juhás. -->
+<!-- Trade secret of DN Foundation. -->
 
 <Application
     x:Class="DN_Henkel_Vision.App"

@@ -1,7 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
-
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -19,8 +16,8 @@ using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+// Copyright(c) DN Foundation and Branislav Juhás.
+// Trade secret of DN Foundation.
 
 namespace DN_Henkel_Vision
 {
@@ -38,16 +35,24 @@ namespace DN_Henkel_Vision
             this.InitializeComponent();
         }
 
+        public Environment Environment
+        {
+            get => default;
+            set
+            {
+            }
+        }
+
         /// <summary>
         /// Invoked when the application is launched.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
-            m_window.Activate();
+            environment = new Environment();
+            environment.Activate();
         }
 
-        private Window m_window;
+        private Window environment;
     }
 }
