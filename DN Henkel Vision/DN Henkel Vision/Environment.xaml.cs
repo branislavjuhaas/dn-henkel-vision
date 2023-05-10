@@ -26,6 +26,8 @@ namespace DN_Henkel_Vision
         public Environment()
         {
             this.InitializeComponent();
+            ExtendsContentIntoTitleBar = true;
+            SetTitleBar(ApplicationTitleBar);
         }
     }
 }

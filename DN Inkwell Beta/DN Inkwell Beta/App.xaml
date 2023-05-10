@@ -1,11 +1,11 @@
-<!-- Copyright (c) DN Foundation and Branislav Juhás. -->
-<!-- Trade secret of DN Foundation. -->
+<!-- Copyright (c) Microsoft Corporation and Contributors. -->
+<!-- Licensed under the MIT License. -->
 
 <Application
-    x:Class="DN_Henkel_Vision.App"
+    x:Class="DN_Inkwell_Beta.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:DN_Henkel_Vision">
+    xmlns:local="using:DN_Inkwell_Beta">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
