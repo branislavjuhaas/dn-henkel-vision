@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="DN_Henkel_Vision.App">
-    <Position X="7.75" Y="0.75" Width="1.5" />
+  <Class Name="DN_Henkel_Vision.App" Collapsed="true">
+    <Position X="7.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAAAAgAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>App.xaml.cs</FileName>
@@ -11,11 +11,47 @@
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="DN_Henkel_Vision.Environment">
-    <Position X="9.75" Y="0.75" Width="1.5" />
+  <Class Name="DN_Henkel_Vision.Environment" Collapsed="true">
+    <Position X="9.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Environment.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DN_Henkel_Vision.Memory.Manager" Collapsed="true">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Memory\Manager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DN_Henkel_Vision.Memory.Drive" Collapsed="true">
+    <Position X="7.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAABAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Memory\Drive.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DN_Henkel_Vision.Memory.Cache" Collapsed="true">
+    <Position X="9.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Memory\Cache.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DN_Henkel_Vision.Memory.Setup" Collapsed="true">
+    <Position X="9.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Memory\Setup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DN_Henkel_Vision.Memory.Hotfix" Collapsed="true">
+    <Position X="9.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Memory\Setup.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

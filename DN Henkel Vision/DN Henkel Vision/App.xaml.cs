@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using DN_Henkel_Vision.Memory;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -24,7 +25,7 @@ namespace DN_Henkel_Vision
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public partial class App : Application
+    public partial class App : Manager
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -33,14 +34,7 @@ namespace DN_Henkel_Vision
         public App()
         {
             this.InitializeComponent();
-        }
-
-        public Environment Environment
-        {
-            get => default;
-            set
-            {
-            }
+            Manager.Initialize();
         }
 
         /// <summary>
@@ -53,6 +47,9 @@ namespace DN_Henkel_Vision
             environment.Activate();
         }
 
+        /// <summary>
+        /// Initializes the environment of the application. This variable stores the main application's window.
+        /// </summary>
         private Window environment;
     }
 }

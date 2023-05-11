@@ -26,9 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Memory\NewFolder\" />
     <Folder Include="Interface\" />
     <Folder Include="Felber\" />
-    <Folder Include="NewFolder\" />
   </ItemGroup>
 </Project>
