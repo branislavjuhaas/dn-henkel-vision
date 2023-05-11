@@ -57,7 +57,8 @@
                     PlaceholderText="Search"
                     QueryIcon="Find"
                     Width="288"
-                    VerticalAlignment="Top"/>
+                    VerticalAlignment="Top"
+                    />
             </Grid>
         </Grid>
         <!--Content panel-->

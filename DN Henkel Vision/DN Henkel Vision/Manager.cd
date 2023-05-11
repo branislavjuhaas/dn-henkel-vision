@@ -3,12 +3,9 @@
   <Class Name="DN_Henkel_Vision.App" Collapsed="true">
     <Position X="7.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAAAAgAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Environment" />
-    </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="DN_Henkel_Vision.Environment" Collapsed="true">
@@ -22,14 +19,14 @@
   <Class Name="DN_Henkel_Vision.Memory.Manager" Collapsed="true">
     <Position X="7.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Memory\Manager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="DN_Henkel_Vision.Memory.Drive" Collapsed="true">
     <Position X="7.75" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAABAAAAAAAAAAAAAAABAA=</HashCode>
+      <HashCode>AAAAAAgAAECAAAgAAAAAAAAgAAQAAAAAAAAAAAEABAA=</HashCode>
       <FileName>Memory\Drive.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -43,14 +40,7 @@
   <Class Name="DN_Henkel_Vision.Memory.Setup" Collapsed="true">
     <Position X="9.75" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Memory\Setup.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="DN_Henkel_Vision.Memory.Hotfix" Collapsed="true">
-    <Position X="9.75" Y="7" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Memory\Setup.cs</FileName>
     </TypeIdentifier>
   </Class>

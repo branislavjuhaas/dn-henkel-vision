@@ -1,21 +1,5 @@
 ﻿using DN_Henkel_Vision.Memory;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // Copyright(c) DN Foundation and Branislav Juhás.
 // Trade secret of DN Foundation.
@@ -25,7 +9,7 @@ namespace DN_Henkel_Vision
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public partial class App : Manager
+    public partial class App
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code

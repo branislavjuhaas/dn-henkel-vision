@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace DN_Henkel_Vision.Memory
 {
-    internal class Setup
-    {
-
+    /// <summary>
+    /// Provides methods for setting up the file system if it does not exist.
+    /// </summary>
+    internal class Setup : Drive
+    {        
+        /// <summary>
+        /// This method creates the file system.
+        /// </summary>
         public static void CreateFileSystem()
         {
-
-        }
-    }
-
-    internal class Hotfix : Setup
-    {
-        public static void Fix(string file)
-        {
-
+            Directory.CreateDirectory(s_regdir);
+            
+            Write(s_registry, "38 655 127\n38 621 846");
         }
     }
 }
