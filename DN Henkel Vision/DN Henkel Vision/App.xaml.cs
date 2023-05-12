@@ -1,5 +1,8 @@
 ﻿using DN_Henkel_Vision.Memory;
 using Microsoft.UI.Xaml;
+using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 // Copyright(c) DN Foundation and Branislav Juhás.
 // Trade secret of DN Foundation.

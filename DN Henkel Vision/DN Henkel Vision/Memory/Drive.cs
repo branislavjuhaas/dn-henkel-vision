@@ -7,7 +7,6 @@ namespace DN_Henkel_Vision.Memory
     /// </summary>
     internal class Drive
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         public static readonly string Folder = Windows.ApplicationModel.Package.Current.InstalledPath;
 
         #region File Paths

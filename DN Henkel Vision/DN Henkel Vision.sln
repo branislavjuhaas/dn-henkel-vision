@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "DN Henkel Vision (Package)", "DN Henkel Vision (Package)\DN Henkel Vision (Package).wapproj", "{22FCD1E8-D552-4E1A-9DFF-F467F0281926}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DN Henkel Vision", "DN Henkel Vision\DN Henkel Vision.csproj", "{333ADED0-5DED-4BD6-8392-BE8A89941273}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DN Henkel Vision", "DN Henkel Vision\DN Henkel Vision.csproj", "{333ADED0-5DED-4BD6-8392-BE8A89941273}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
