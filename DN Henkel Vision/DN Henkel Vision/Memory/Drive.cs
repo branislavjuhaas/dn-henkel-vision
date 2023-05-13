@@ -63,7 +63,7 @@ namespace DN_Henkel_Vision.Memory
             return File.ReadAllText(file);
         }
 
-        /// <summary
+        /// <summary>
         /// This method checks if the file exists in the file system and if not,
         /// it creates the file.
         /// </summary>

@@ -1,4 +1,5 @@
 ﻿using DN_Henkel_Vision.Memory;
+using DN_Henkel_Vision.Interface;
 using Microsoft.UI.Xaml;
 using System;
 using System.Reflection;
@@ -30,7 +31,7 @@ namespace DN_Henkel_Vision
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            environment = new Environment();
+            environment = new Interface.Environment();
             environment.Activate();
         }
 

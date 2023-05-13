@@ -14,7 +14,7 @@
 	<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Environment.xaml" />
+    <None Remove="Interface\Environment.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,13 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Environment.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interface\" />
     <Folder Include="Felber\" />
   </ItemGroup>
 
@@ -51,6 +44,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
     </None>
+    <Page Update="Interface\Environment.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v17.0\TextTemplating\Microsoft.TextTemplating.targets" />
