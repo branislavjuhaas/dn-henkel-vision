@@ -10,6 +10,8 @@ namespace DN_Henkel_Vision.Memory
     {
         public static List<string> OrdersRegistry = new();
 
+        public static Order Selected = new();
+
         /// <summary>
         /// This method initializes the global memory of the application.
         /// </summary>
@@ -17,7 +19,13 @@ namespace DN_Henkel_Vision.Memory
         {
             Drive.Validate();
 
-            OrdersRegistry = Drive.LoadRegistry().ToList();
+            OrdersRegistry = Drive.LoadRegistry().ToList<string>();
+        }
+
+        public static void SelectOrder(string orderNumber)
+        {
+            // TODO: make this method load the order from the file system\
+            Selected = new Order() { OrderNumber = orderNumber };
         }
     }
 }

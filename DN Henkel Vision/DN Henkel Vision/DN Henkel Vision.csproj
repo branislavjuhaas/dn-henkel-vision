@@ -14,6 +14,7 @@
 	<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Interface\Editor.xaml" />
     <None Remove="Interface\Environment.xaml" />
   </ItemGroup>
 
@@ -44,6 +45,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
     </None>
+    <Page Update="Interface\Editor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Interface\Environment.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,14 +8,36 @@
     xmlns:local="using:DN_Henkel_Vision.Interface"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:memory="using:DN_Henkel_Vision.Memory"
     mc:Ignorable="d">
 
     <Grid>
         <!--This grid acts as a root panel for the page-->
         <Grid 
-        x:Name="EnvironmentalGrid"
-        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            x:Name="EnvironmentalGrid"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+            <Grid.Resources>
+                <DataTemplate
+                    x:Key="OrderChip"
+                    x:DataType="x:String">
+                    
+                    <ToggleButton
+                        x:Name="OrderToggle"
+                        Width="92" Height="32"
+                        Content="{x:Bind}"
+                        BorderBrush="Transparent"
+                        Background="Transparent"
+                        Click="OrderToggle_Click"/>
+                </DataTemplate>
+                <UniformGridLayout
+                    x:Key="OrdersLayout"
+                    MinColumnSpacing="5"
+                    MinRowSpacing="9"
+                    MaximumRowsOrColumns="3"/>
+            </Grid.Resources>
+
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="320"/>
                 <ColumnDefinition Width="*"/>
@@ -54,13 +76,76 @@
                 Grid.Row="1"
                 Margin="0,48,0,0">
                     <AutoSuggestBox
-                    x:Name="NavigationSearch"
-                    PlaceholderText="Search"
-                    QueryIcon="Find"
-                    Width="288"
-                    VerticalAlignment="Top"
-                    TextChanged="NavigationSearch_TextChanged"
-                    />
+                        x:Name="NavigationSearch"
+                        PlaceholderText="Search"
+                        QueryIcon="Find"
+                        Width="288"
+                        VerticalAlignment="Top"
+                        TextChanged="NavigationSearch_TextChanged"
+                        QuerySubmitted="NavigationSearch_QuerySubmitted"/>
+                    <ScrollViewer
+                        Margin="16,60,16,100"
+                        VerticalScrollBarVisibility="Hidden"
+                        CornerRadius="4">
+
+                        <ItemsRepeater
+                            x:Name="OrdersPanel"
+                            ItemsSource="{x:Bind memory:Manager.OrdersRegistry}"
+                            ItemTemplate="{StaticResource OrderChip}"
+                            Layout="{StaticResource OrdersLayout}"
+                            Loaded="OrdersPanel_Loaded"/>
+                    </ScrollViewer>
+                    <Grid
+                        VerticalAlignment="Bottom"
+                        Height="44"
+                        Margin="16,0,16,0"
+                        ColumnSpacing="4">
+
+                        <Button
+                            x:Name="Export"
+                            Height="32"
+                            Width="216"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left">
+
+                            <Grid>
+                                <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xE74E;" Margin="-2" FontSize="16" />
+                                <TextBlock Text="Export" Margin="24,0"/>
+                            </Grid>
+
+                        </Button>
+                        <Button
+                            x:Name="Settings"
+                            Height="32"
+                            Width="32"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            Margin="220,0,0,0">
+                            
+                            <FontIcon
+                                FontFamily="Segoe Fluent Icons"
+                                Glyph="&#xE713;"
+                                Margin="-10"
+                                FontSize="16"/>
+                        </Button>
+                        <Button
+                            x:Name="Create"
+                            Grid.Column="4"
+                            Height="32"
+                            Width="32"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            Margin="256,0,0,0">
+
+                            <FontIcon
+                                FontFamily="Segoe Fluent Icons"
+                                Glyph="&#xED0E;"
+                                Margin="-10"
+                                FontSize="16"/>
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
             <!--Content panel-->
