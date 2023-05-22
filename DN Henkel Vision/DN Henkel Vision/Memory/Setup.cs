@@ -14,7 +14,7 @@ namespace DN_Henkel_Vision.Memory
         {
             Directory.CreateDirectory(s_regdir);
             
-            Write(s_registry, "38 655 127\n38 621 846\n38 621 848\n38 630 095");
+            Write(s_registry, "38 655 127\n38 621 846\n38 621 848\n2023  0001");
         }
     }
 }

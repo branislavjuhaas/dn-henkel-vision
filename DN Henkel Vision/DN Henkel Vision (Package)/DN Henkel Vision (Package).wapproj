@@ -64,12 +64,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="2.0.0" />
+    <PackageReference Include="Microsoft.ML.FastTree" Version="2.0.0" />
+    <PackageReference Include="Microsoft.ML.LightGbm" Version="2.0.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="[1.2.221109.1]">
       <IncludeAssets>build</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="[10.0.22621.755]">
       <IncludeAssets>build</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup Label="Cause">
+    <None Include="Cause.consumption.cs">
+      <DependentUpon>Cause.mbconfig</DependentUpon>
+    </None>
+    <None Include="Cause.training.cs">
+      <DependentUpon>Cause.mbconfig</DependentUpon>
+    </None>
+    <None Include="Cause.zip" />
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
 </Project>

@@ -21,14 +21,20 @@
                 <DataTemplate
                     x:Key="OrderChip"
                     x:DataType="x:String">
-                    
+
                     <ToggleButton
                         x:Name="OrderToggle"
                         Width="92" Height="32"
                         Content="{x:Bind}"
                         BorderBrush="Transparent"
                         Background="Transparent"
-                        Click="OrderToggle_Click"/>
+                        Click="OrderToggle_Click">
+                        <ToggleButton.Transitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition/>
+                            </TransitionCollection>
+                        </ToggleButton.Transitions>
+                    </ToggleButton>
                 </DataTemplate>
                 <UniformGridLayout
                     x:Key="OrdersLayout"
@@ -90,7 +96,7 @@
 
                         <ItemsRepeater
                             x:Name="OrdersPanel"
-                            ItemsSource="{x:Bind memory:Manager.OrdersRegistry}"
+                            ItemsSource="{x:Bind memory:Manager.VisualRegistry}"
                             ItemTemplate="{StaticResource OrderChip}"
                             Layout="{StaticResource OrdersLayout}"
                             Loaded="OrdersPanel_Loaded"/>

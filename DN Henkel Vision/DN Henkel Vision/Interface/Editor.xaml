@@ -3,17 +3,18 @@
 
 <Page
     x:Class="DN_Henkel_Vision.Interface.Editor"
+    x:Name="EditorPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:DN_Henkel_Vision.Interface"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:memory="using:DN_Henkel_Vision.Memory"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="EditorPage_Loaded">
 
     <!--The main grid for the page-->
     <Grid
-        x:Name="EditorPage"
         RowSpacing="2">
 
         <Grid.RowDefinitions>
@@ -52,13 +53,16 @@
                 Width="42"
                 Margin="20,0,180,0"
                 HorizontalAlignment="Left"
-                Visibility="Collapsed"/>
+                Visibility="Collapsed"
+                Click="NetstalPlacement_Click"/>
             <TextBox
                 x:Name="FaultInput"
                 PlaceholderText="Fault"
                 VerticalAlignment="Stretch"
                 Height="32"
-                Margin="20,0,180,0">
+                Margin="20,0,180,0"
+                TextChanged="FaultInput_TextChanged"
+                KeyDown="FaultInput_KeyDown">
                 
                 <TextBox.Transitions>
                     <TransitionCollection>
@@ -71,7 +75,7 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Margin="20,0,20,0">
-                
+
                 <Button
                     x:Name="Tact"
                     Foreground="{ThemeResource TextFillColorSecondary}"
@@ -79,7 +83,39 @@
                     Content="Cause"
                     Height="33"
                     Width="103"
-                    CornerRadius="4,0,0,4"></Button>
+                    CornerRadius="4,0,0,4">
+                    <Button.Flyout>
+                        <Flyout>
+                            <ScrollViewer
+                                Height="200"
+                                Width="150"
+                                Margin="-13,-10">
+                                <ListView
+                                    x:Name="CauseList"
+                                    ItemsSource="{x:Bind memory:Classification.Causes}"
+                                    SelectionMode="None"
+                                    IsItemClickEnabled="True"
+                                    ItemClick="CauseList_ItemClick"/>
+                            </ScrollViewer>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+                    <Rectangle
+                    Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}"
+                    Opacity="0.41"
+                    Width="1"/>
+                <Button
+                    x:Name="PushFault"
+                    HorizontalContentAlignment="Left"
+                    HorizontalAlignment="Stretch"
+                    CornerRadius="0,4,4,0"
+                    Height="33">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        Glyph="&#xE76C;"
+                        Margin="-1,3"
+                        FontSize="12"/>
+                </Button>
             </StackPanel>
             
         </Grid>

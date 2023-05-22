@@ -23,6 +23,7 @@ namespace DN_Henkel_Vision
         {
             this.InitializeComponent();
             Manager.Initialize();
+            Felber.Felber.Initialize();
         }
 
         /// <summary>

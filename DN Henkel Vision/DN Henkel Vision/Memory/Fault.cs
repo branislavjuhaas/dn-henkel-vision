@@ -39,5 +39,20 @@ namespace DN_Henkel_Vision.Memory
         {
             return $"{Placement}\t{Component}\t{Description}\t{Cause}\t{Classification}\t{Type}\t{ClassIndexes[0]}\t{ClassIndexes[1]}\t{ClassIndexes[2]}";
         }
+
+        /// <summary>
+        /// This void checks if the characters provided are valid for a Netstal placement.
+        /// Valid placement is each 2 characters long, starts with 'A' and ends with a number.
+        /// </summary>
+        /// <param name="placement">Placement provided</param>
+        /// <returns>Whether the input is valid netstal placement</returns>
+        public static bool IsValidNetstalPlacement(string placement)
+        {
+            if (placement == null || placement.Length != 2) { return false; }
+            if (placement.ToLower().ToCharArray()[0] != 'a') { return false; }
+            if (!placement.Substring(1,1).All(char.IsDigit)) { return false; }
+
+            return true;
+        }
     }
 }

@@ -9,29 +9,26 @@
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
-    <StartupObject></StartupObject>
-	<TransformOnBuild>true</TransformOnBuild>
-	<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+    <StartupObject>
+    </StartupObject>
+    <TransformOnBuild>true</TransformOnBuild>
+    <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Interface\Editor.xaml" />
     <None Remove="Interface\Environment.xaml" />
   </ItemGroup>
-
   <ItemGroup>
+    <PackageReference Include="Microsoft.ML" Version="2.0.0" />
+    <PackageReference Include="Microsoft.ML.FastTree" Version="2.0.0" />
+    <PackageReference Include="Microsoft.ML.LightGbm" Version="2.0.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221109.1" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Felber\" />
-  </ItemGroup>
-
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="AssemblyInfo.cs">
       <DesignTime>True</DesignTime>
@@ -39,7 +36,6 @@
       <DependentUpon>AssemblyInfo.tt</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <None Update="AssemblyInfo.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -52,6 +48,17 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-
+  <ItemGroup Label="Cause">
+    <None Include="Felber\Models\Cause.consumption.cs">
+      <DependentUpon>Cause.mbconfig</DependentUpon>
+    </None>
+    <None Include="Felber\Models\Cause.training.cs">
+      <DependentUpon>Cause.mbconfig</DependentUpon>
+    </None>
+    <None Include="Felber\Models\Cause.zip">
+      <DependentUpon>Cause.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v17.0\TextTemplating\Microsoft.TextTemplating.targets" />
 </Project>
