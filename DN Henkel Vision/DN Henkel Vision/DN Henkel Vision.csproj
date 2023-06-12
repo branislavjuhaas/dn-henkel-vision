@@ -42,6 +42,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
     </None>
+    <None Update="Felber\Models\Analyze\Cause.zip">
+      <DependentUpon>Cause.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Page Update="Interface\Preview.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -53,14 +57,46 @@
     </Page>
   </ItemGroup>
   <ItemGroup Label="Cause">
-    <None Include="Felber\Models\Cause.consumption.cs">
+    <None Include="Felber\Models\Analyze\Cause.consumption.cs">
       <DependentUpon>Cause.mbconfig</DependentUpon>
     </None>
-    <None Include="Felber\Models\Cause.training.cs">
+    <None Include="Felber\Models\Analyze\Cause.training.cs">
       <DependentUpon>Cause.mbconfig</DependentUpon>
     </None>
-    <None Include="Felber\Models\Cause.zip">
-      <DependentUpon>Cause.mbconfig</DependentUpon>
+  </ItemGroup>
+  <ItemGroup Label="Felber\Models\Classification\Classification">
+    <None Include="Felber\Models\Classification\Classification.consumption.cs">
+      <DependentUpon>Classification.mbconfig</DependentUpon>
+    </None>
+    <None Include="Felber\Models\Classification\Classification.training.cs">
+      <DependentUpon>Classification.mbconfig</DependentUpon>
+    </None>
+    <None Include="Felber\Models\Classification\Classification.zip">
+      <DependentUpon>Classification.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="Felber\Models\Classification\Type">
+    <None Include="Felber\Models\Classification\Type.consumption.cs">
+      <DependentUpon>Type.mbconfig</DependentUpon>
+    </None>
+    <None Include="Felber\Models\Classification\Type.training.cs">
+      <DependentUpon>Type.mbconfig</DependentUpon>
+    </None>
+    <None Include="Felber\Models\Classification\Type.zip">
+      <DependentUpon>Type.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="Felber\Models\Classification\Component">
+    <None Include="Felber\Models\Classification\.consumption.cs">
+      <DependentUpon>Component.mbconfig</DependentUpon>
+    </None>
+    <None Include="Felber\Models\Classification\Component.training.cs">
+      <DependentUpon>Component.mbconfig</DependentUpon>
+    </None>
+    <None Include="Felber\Models\Classification\Component.zip">
+      <DependentUpon>Component.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
