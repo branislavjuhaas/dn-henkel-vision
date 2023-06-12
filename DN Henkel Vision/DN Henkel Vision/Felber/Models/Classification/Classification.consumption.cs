@@ -5,6 +5,8 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
+using DN_Henkel_Vision.Memory;
+
 namespace DN_Henkel_Vision
 {
     public partial class Classification
@@ -59,7 +61,7 @@ namespace DN_Henkel_Vision
 
         #endregion
 
-        private static string MLNetModelPath = Path.GetFullPath("Classification.zip");
+        private static string MLNetModelPath = Drive.Folder + @"\..\DN Henkel Vision\Felber\Models\Classification\Classification.zip";
 
         public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
 

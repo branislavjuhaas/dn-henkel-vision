@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
@@ -32,8 +33,11 @@ namespace DN_Henkel_Vision.Interface
     {
         public Action Analyze;
 
-        private bool Locked;
-        
+        private bool _locked;
+        private bool _reviewing;
+
+        public Preview CurrentPreview;
+
         /// <summary>
         /// Constructor of the Editor page.
         /// </summary>
@@ -59,7 +63,7 @@ namespace DN_Henkel_Vision.Interface
             Tact.Content = e.ClickedItem.ToString();
             Tact.Flyout.Hide();
 
-            if (Locked) { return; }
+            if (_locked) { return; }
             Lock();
         }
 
@@ -75,8 +79,9 @@ namespace DN_Henkel_Vision.Interface
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
+                FaultPush();
             }
-            else if (e.Key == VirtualKey.Tab && Tact.Content.ToString() != "Cause" && !Locked)
+            else if (e.Key == VirtualKey.Tab && Tact.Content.ToString() != "Cause" && !_locked)
             {
                 Lock();
                 e.Handled = true;
@@ -111,7 +116,7 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         private void OrderAnalyze()
         {
-            if (Locked || FaultInput.Text.Length == 0) { return; }
+            if (_locked || FaultInput.Text.Length == 0) { return; }
 
             Felber.Felber.EnqueueAnalyze(FaultInput.Text);
         }
@@ -140,7 +145,7 @@ namespace DN_Henkel_Vision.Interface
 
         private void PushFault_Click(object sender, RoutedEventArgs e)
         {
-            FaultPreview.Navigate(typeof(Preview));
+            FaultPush();
         }
 
         private void EditorPage_Loaded(object sender, RoutedEventArgs e)
@@ -150,23 +155,74 @@ namespace DN_Henkel_Vision.Interface
 
         public void Felber_UpdateCause(string cause)
         {
-            if (Locked) { return; }
+            if (_locked) { return; }
 
             Tact.Content = cause;
             Tact.FontStyle = Windows.UI.Text.FontStyle.Italic;
         }
 
+        public void Felber_UpdateFault(Fault fault, string order)
+        {
+            if (order != Manager.Selected.OrderNumber) { return; }
+
+            Manager.Selected.PendingFaults.RemoveAt(0);
+            Manager.Selected.ReviewFaults.Add(fault);
+
+            if (_reviewing)
+            {
+                CurrentPreview.Count.Content = CurrentPreview.CurrentFaultLabel();
+
+                CurrentPreview.SetPreviews();
+                
+                return;
+            }
+
+            Cache.CurrentReview = 0;
+            Cache.PreviewFault = Manager.Selected.ReviewFaults[0];
+
+            DataRing.Visibility = Visibility.Collapsed;
+            FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
+
+            _reviewing = true;
+        }
+
         public void Lock()
         {
-            Locked = true;
+            _locked = true;
             Tact.FontStyle = Windows.UI.Text.FontStyle.Normal;
             Tact.Foreground = new SolidColorBrush((Color)Application.Current.Resources["TextFillColorPrimary"]);
         }
 
         public void Unlock()
         {
-            Locked = false;
+            _locked = false;
             Tact.Foreground = new SolidColorBrush((Color)Application.Current.Resources["TextFillColorSecondary"]);
+        }
+
+        public void ResetEditor()
+        {
+            FaultInput.Text = string.Empty;            
+
+            Tact.Content = "Cause";
+            Unlock();
+
+            NetstalPlacement.Content = string.Empty;
+            UnassignNetstalPlacement();
+        }
+
+        public void FaultPush()
+        {
+            if (!_reviewing)
+            {
+                NoDataText.Visibility = Visibility.Collapsed;
+                DataRing.Visibility = Visibility.Visible;
+            }
+
+            Manager.Selected.PendingFaults.Add(new Fault(FaultInput.Text, Tact.Content.ToString()));
+
+            Felber.Felber.Requeue(Manager.Selected.PendingFaults[0], Manager.Selected.OrderNumber);
+
+            ResetEditor();
         }
     }
 }

@@ -17,10 +17,13 @@ namespace DN_Henkel_Vision.Memory
         #endregion
 
         public string OrderNumber;
-        public string Faults;
         
         public int OrderTotalTime;
         public int ExportModifiedTime;
+
+        public List<Fault> Faults = new();
+        public List<Fault> PendingFaults = new();
+        public List<Fault> ReviewFaults = new();
 
         public int State = Complete;
 

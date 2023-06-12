@@ -134,11 +134,19 @@
                 VerticalAlignment="Center"
                 Text="No data to display"
                 FontStyle="Italic"
-                Visibility="Collapsed"/>
+                Visibility="Visible"/>
             <ProgressRing
                 x:Name="DataRing"
                 Visibility="Collapsed"/>
-            <Frame x:Name="FaultPreview"/>
+            <Frame
+                x:Name="FaultPreview"
+                x:FieldModifier="public">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
         </Grid>
     </Grid>
 </Page>

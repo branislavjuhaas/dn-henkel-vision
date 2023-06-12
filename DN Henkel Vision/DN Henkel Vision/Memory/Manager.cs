@@ -13,9 +13,6 @@ namespace DN_Henkel_Vision.Memory
         public static List<string> OrdersRegistry = new();
         public static ObservableCollection<string> VisualRegistry = new();
 
-        public static List<Fault> PendingFaults = new();
-        public static List<Fault> ReviewFaults = new();
-
         public static Order Selected = new();
 
         public static Editor CurrentEditor;

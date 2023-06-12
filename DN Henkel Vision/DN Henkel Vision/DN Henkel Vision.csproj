@@ -89,7 +89,7 @@
     </None>
   </ItemGroup>
   <ItemGroup Label="Felber\Models\Classification\Component">
-    <None Include="Felber\Models\Classification\.consumption.cs">
+    <None Include="Felber\Models\Classification\Component.consumption.cs">
       <DependentUpon>Component.mbconfig</DependentUpon>
     </None>
     <None Include="Felber\Models\Classification\Component.training.cs">

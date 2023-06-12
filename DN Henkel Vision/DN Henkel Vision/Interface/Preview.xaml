@@ -55,10 +55,11 @@
                 HorizontalAlignment="Left"
                 MinWidth="25"
                 Padding="12,5"
-                Grid.Column="1"/>
+                Grid.Column="1"
+                LostFocus="Placement_LostFocus"/>
             <TextBox
                 x:Name="Description"
-                Text="{x:Bind memory:Cache.PreviewFault.Placement}"
+                Text="{x:Bind memory:Cache.PreviewFault.Description}"
                 Height="32"
                 TextWrapping="Wrap"
                 Grid.Column="2"
@@ -99,9 +100,24 @@
                     SelectedIndex="{x:Bind memory:Cache.PreviewFault.ClassIndexes[2]}"/>
             <Button
                 x:Name="Count"
+                x:FieldModifier="public"
                 Grid.Column="3"
                 Height="32"
-                Content="{x:Bind CurrentFaultLabel()}"/>
+                Content="{x:Bind CurrentFaultLabel()}">
+                <Button.Flyout>
+                    <Flyout>
+                        <ScrollViewer
+                            Width="100"
+                            MaxHeight="120"
+                            Margin="-13,-10">
+                            <ListView
+                                x:Name="PreviewsList"
+                                ItemsSource="{x:Bind Previews}"
+                                SelectionChanged="PreviewsList_SelectionChanged"/>
+                        </ScrollViewer>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
             <Button
                 x:Name="Approve"
                 Width="32"

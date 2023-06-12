@@ -16,6 +16,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using System.Collections.ObjectModel;
+using Microsoft.UI.Xaml.Media.Animation;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,9 +29,15 @@ namespace DN_Henkel_Vision.Interface
     /// </summary>
     public sealed partial class Preview : Page
     {
+        public ObservableCollection<string> Previews = new();
+        
         public Preview()
         {
             this.InitializeComponent();
+
+            Manager.CurrentEditor.CurrentPreview = this;
+
+            SetPreviews();
         }
 
         private void Cause_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -48,9 +56,9 @@ namespace DN_Henkel_Vision.Interface
             }
         }
 
-        private string CurrentFaultLabel()
+        public string CurrentFaultLabel()
         {
-            return "0/0";
+            return (Cache.CurrentReview + 1).ToString() + "/" + Manager.Selected.ReviewFaults.Count.ToString();
         }
 
         private void Approve_Click(object sender, RoutedEventArgs e)
@@ -61,6 +69,33 @@ namespace DN_Henkel_Vision.Interface
         private void Approve_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
 
+        }
+
+        private void Placement_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Cache.LastPlacement = Placement.Text;
+        }
+
+        public void SetPreviews()
+        {
+            Previews.Clear();
+            
+            foreach (Fault fault in Manager.Selected.ReviewFaults)
+            {             
+                Previews.Add(fault.Component);
+            }
+
+            PreviewsList.SelectedIndex = Cache.CurrentReview;
+        }
+
+        private void PreviewsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!Count.Flyout.IsOpen) { return; }
+
+            Cache.CurrentReview = PreviewsList.SelectedIndex;
+            Cache.PreviewFault = Manager.Selected.ReviewFaults[Cache.CurrentReview];
+
+            Manager.CurrentEditor.FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
         }
     }
 }
