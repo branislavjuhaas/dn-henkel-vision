@@ -138,6 +138,11 @@ namespace DN_Henkel_Vision.Interface
             FaultInput.Margin = new Thickness(20, 0, 180, 0);
         }
 
+        private void PushFault_Click(object sender, RoutedEventArgs e)
+        {
+            FaultPreview.Navigate(typeof(Preview));
+        }
+
         private void EditorPage_Loaded(object sender, RoutedEventArgs e)
         {
             Manager.CurrentEditor = this;

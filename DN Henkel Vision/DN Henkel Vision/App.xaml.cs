@@ -21,8 +21,8 @@ namespace DN_Henkel_Vision
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
             Manager.Initialize();
+            this.InitializeComponent();
             Felber.Felber.Initialize();
         }
 

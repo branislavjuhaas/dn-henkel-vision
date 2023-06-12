@@ -109,7 +109,8 @@
                     HorizontalContentAlignment="Left"
                     HorizontalAlignment="Stretch"
                     CornerRadius="0,4,4,0"
-                    Height="33">
+                    Height="33"
+                    Click="PushFault_Click">
                     <FontIcon
                         FontFamily="Segoe Fluent Icons"
                         Glyph="&#xE76C;"
@@ -118,6 +119,26 @@
                 </Button>
             </StackPanel>
             
+        </Grid>
+        <!--The editor grid of the page-->
+        <Grid
+            Background="{ThemeResource CardBackgroundFillColorDefault}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultSolid}" 
+            Grid.Row="2"
+            BorderThickness="1,1,0,1"
+            CornerRadius="4,0,0,4">
+
+            <TextBlock
+                x:Name="NoDataText"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="No data to display"
+                FontStyle="Italic"
+                Visibility="Collapsed"/>
+            <ProgressRing
+                x:Name="DataRing"
+                Visibility="Collapsed"/>
+            <Frame x:Name="FaultPreview"/>
         </Grid>
     </Grid>
 </Page>
