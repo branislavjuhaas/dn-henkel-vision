@@ -189,7 +189,6 @@ namespace DN_Henkel_Vision.Interface
         {
             if (order != Manager.Selected.OrderNumber) { return; }
 
-            Manager.Selected.PendingFaults.RemoveAt(0);
             Manager.Selected.ReviewFaults.Add(fault);
 
             if (_reviewing)
@@ -248,12 +247,6 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         public void FaultPush()
         {
-            if (!_reviewing)
-            {
-                NoDataText.Visibility = Visibility.Collapsed;
-                DataRing.Visibility = Visibility.Visible;
-            }
-
             string placement = string.Empty;
 
             if (NetstalPlacement.Content != null)
@@ -265,7 +258,16 @@ namespace DN_Henkel_Vision.Interface
 
             Manager.Selected.PendingFaults.Add(input);
 
-            Felber.Felber.Requeue(Manager.Selected.PendingFaults[0], Manager.Selected.OrderNumber);
+            if (!Felber.Felber.Classifier.IsBusy)
+            {
+                Felber.Felber.Requeue();
+            }
+
+            if (!_reviewing)
+            {
+                NoDataText.Visibility = Visibility.Collapsed;
+                DataRing.Visibility = Visibility.Visible;
+            }
 
             ResetEditor();
         }

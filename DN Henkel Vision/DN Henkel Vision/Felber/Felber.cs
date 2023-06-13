@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Media.Capture;
 
@@ -19,8 +20,9 @@ namespace DN_Henkel_Vision.Felber
 
         private static string s_analyticDescription;
 
-        private static Fault s_classificFault;
         private static string s_orderNumber;
+
+        private static List<Fault> s_faultsCache;
 
         /// <summary>
         /// Loads the AI models and initializes the background workers.
@@ -45,10 +47,15 @@ namespace DN_Henkel_Vision.Felber
         /// <param name="e">Event arguments</param>
         /// <exception cref="NotImplementedException"></exception>
         private static void Classify(object sender, DoWorkEventArgs e)
-        {
-            Fault output = PredictFaultProperties(s_classificFault);
+        {            
+            while (Manager.Selected.PendingFaults.Count > 0)
+            {
+                Fault output = PredictFaultProperties(Manager.Selected.PendingFaults[0]);
 
-            Manager.CurrentEditor.DispatcherQueue.TryEnqueue(() => { Manager.CurrentEditor.Felber_UpdateFault(output, s_orderNumber); });
+                Manager.CurrentEditor.DispatcherQueue.TryEnqueue(() => { Manager.CurrentEditor.Felber_UpdateFault(output, s_orderNumber); });
+
+                Manager.Selected.PendingFaults.RemoveAt(0);
+            }
         }
 
         /// <summary>
@@ -56,13 +63,11 @@ namespace DN_Henkel_Vision.Felber
         /// </summary>
         /// <param name="fault">Fault to be requeued</param>
         /// <param name="order">Order number of the fault</param>
-        public static void Requeue(Fault fault, string order)
-        {
+        public static void Requeue()
+        {           
             if (Classifier.IsBusy || !Ready) { return; }
 
-            s_classificFault = fault;
-
-            s_orderNumber = order;
+            s_orderNumber = Manager.Selected.OrderNumber;
 
             Classifier.RunWorkerAsync();
         }
