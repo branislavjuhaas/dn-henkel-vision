@@ -24,7 +24,9 @@ namespace DN_Henkel_Vision.Memory
         public static string[][] Types = new string[146][];
         public static string[][] OriginalTypes = new string[146][];
 
-        // Function used to assign the classifications & the types to the arrays
+        /// <summary>
+        /// Function used to assign the classifications & the types to the arrays.
+        /// </summary>
         public static void Assign()
         {
             // Assign the classifications

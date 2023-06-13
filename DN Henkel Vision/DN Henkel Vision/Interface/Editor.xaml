@@ -10,8 +10,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:memory="using:DN_Henkel_Vision.Memory"
-    mc:Ignorable="d"
-    Loaded="EditorPage_Loaded">
+    mc:Ignorable="d">
 
     <!--The main grid for the page-->
     <Grid

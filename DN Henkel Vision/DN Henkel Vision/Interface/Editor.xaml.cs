@@ -44,6 +44,7 @@ namespace DN_Henkel_Vision.Interface
         public Editor()
         {
             this.InitializeComponent();
+            Manager.CurrentEditor = this;
             if (Manager.Selected.IsNetstal())
             {
                 Analyze = NetstalAnalyse;
@@ -75,6 +76,14 @@ namespace DN_Henkel_Vision.Interface
             Analyze();
         }
 
+        /// <summary>
+        /// This void triggers the analysis of the fault input when the user presses key.
+        /// If the user presses Enter, the fault input will be pushed to the fault list.
+        /// If the user presses Tab, the fault input will be locked, so the user can't
+        /// edit it anymore until it is unlocked.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="e">Arguments of the event.</param>
         private void FaultInput_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -144,16 +153,22 @@ namespace DN_Henkel_Vision.Interface
             FaultInput.Margin = new Thickness(20, 0, 180, 0);
         }
 
+        /// <summary>
+        /// This void is trigerred when the user clicks on the fault push button.
+        /// It pushes the fault input to the fault list.
+        /// </summary>
+        /// <param name="sender">Sender of the event.</param>
+        /// <param name="e">Arguments of the event.</param>
         private void PushFault_Click(object sender, RoutedEventArgs e)
         {
             FaultPush();
         }
 
-        private void EditorPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            Manager.CurrentEditor = this;
-        }
-
+        /// <summary>
+        /// This void updates the AI predicted cause of the fault input in the
+        /// Tact button after Felber has analyzed the fault input.
+        /// </summary>
+        /// <param name="cause">Cause predicted by Felber.</param>
         public void Felber_UpdateCause(string cause)
         {
             if (_locked) { return; }
@@ -162,6 +177,14 @@ namespace DN_Henkel_Vision.Interface
             Tact.FontStyle = Windows.UI.Text.FontStyle.Italic;
         }
 
+        /// <summary>
+        /// This void pushes the fault input to the fault list and if there is
+        /// no fault previewed, it previews the first fault in the fault list.
+        /// Otherwise it just updates the count and the flyout of the fault preview.
+        /// </summary>
+        /// <param name="fault">Fault analyzed by Felber.</param>
+        /// <param name="order">Order number of the fault, so it can be checked if
+        /// the fault is still relevant.</param>
         public void Felber_UpdateFault(Fault fault, string order)
         {
             if (order != Manager.Selected.OrderNumber) { return; }
@@ -187,6 +210,9 @@ namespace DN_Henkel_Vision.Interface
             _reviewing = true;
         }
 
+        /// <summary>
+        /// This void locks the cause of the fault input, so it can't be predicted by Felber.
+        /// </summary>
         public void Lock()
         {
             _locked = true;
@@ -194,12 +220,19 @@ namespace DN_Henkel_Vision.Interface
             Tact.Foreground = new SolidColorBrush((Color)Application.Current.Resources["TextFillColorPrimary"]);
         }
 
+        /// <summary>
+        /// This void unlocks the cause of the fault input, so it can be predicted by Felber.
+        /// </summary>
         public void Unlock()
         {
             _locked = false;
             Tact.Foreground = new SolidColorBrush((Color)Application.Current.Resources["TextFillColorSecondary"]);
         }
 
+        /// <summary>
+        /// This void resets the fault input, tact button and Netstal placement in case
+        /// the current order is Netstal, so the editor could be used for a new fault.
+        /// </summary>
         public void ResetEditor()
         {
             FaultInput.Text = string.Empty;            
@@ -210,6 +243,9 @@ namespace DN_Henkel_Vision.Interface
             UnassignNetstalPlacement();
         }
 
+        /// <summary>
+        /// This void pushes the fault input to the Felber, so it could be analyzed.
+        /// </summary>
         public void FaultPush()
         {
             if (!_reviewing)

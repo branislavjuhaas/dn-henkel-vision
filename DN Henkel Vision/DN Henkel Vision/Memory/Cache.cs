@@ -7,6 +7,9 @@
 
         public static int CurrentReview = 0;
 
+        /// <summary>
+        /// Clears the cache and resets all the variables.
+        /// </summary>
         public static void Clear()
         {
             PreviewFault = new Fault("");
