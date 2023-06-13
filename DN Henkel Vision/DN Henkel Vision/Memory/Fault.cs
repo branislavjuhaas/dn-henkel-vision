@@ -18,7 +18,7 @@ namespace DN_Henkel_Vision.Memory
         public string Classification;
         public string Type;
         public int Index;
-        public int[] ClassIndexes = new int[3];
+        public int[] ClassIndexes = { -1, -1, -1 };
 
         /// <summary>
         /// The fault class storing all the pieces of information about a fault.

@@ -76,6 +76,8 @@ namespace DN_Henkel_Vision.Felber
         {
             if (input.Cause == "" || input.Cause == "Cause")
             {
+                if (s_orderNumber.StartsWith("20")) { return PredictLimitedFault(input); }
+                
                 input.Cause = PredictCause(input.Description);
             }
             
@@ -85,9 +87,31 @@ namespace DN_Henkel_Vision.Felber
             output.Type = PredictType(output.Description, output.Cause, output.Classification);
             output.Component = PredictComponent(output.Description);
 
-            output.Placement = Cache.LastPlacement;
+            if (s_orderNumber.StartsWith("20") && input.Placement != string.Empty)
+            {
+                 output.Placement = input.Placement;
+            }
+            else if (!s_orderNumber.StartsWith("20"))
+            {
+                output.Placement = Cache.LastPlacement;
+            }
+
 
             output.ClassIndexes = AssignIndexes(output.Cause, output.Classification, output.Type);
+
+            return output;
+        }
+
+        private static Fault PredictLimitedFault(Fault input)
+        {
+            Fault output = new(input.Description);
+
+            output.Component = PredictComponent(output.Description);
+
+            if (input.Placement != string.Empty)
+            {
+                output.Placement = input.Placement;
+            }
 
             return output;
         }
@@ -281,7 +305,11 @@ namespace DN_Henkel_Vision.Felber
         {
             BackgroundWorker loader = new();
 
-            loader.DoWork += (sender, e) => { PredictCause(""); Ready = true; };
+            loader.DoWork += (sender, e) => { 
+                PredictCause("");
+                s_orderNumber = "38 000 000";
+                PredictFaultProperties(new("DN7 HV7", "Preparation"));
+                Ready = true; };
 
             loader.RunWorkerAsync();
         }

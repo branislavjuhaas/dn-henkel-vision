@@ -140,6 +140,7 @@ namespace DN_Henkel_Vision.Interface
         private void UnassignNetstalPlacement()
         {
             NetstalPlacement.Visibility = Visibility.Collapsed;
+            NetstalPlacement.Content = string.Empty;
             FaultInput.Margin = new Thickness(20, 0, 180, 0);
         }
 
@@ -206,7 +207,6 @@ namespace DN_Henkel_Vision.Interface
             Tact.Content = "Cause";
             Unlock();
 
-            NetstalPlacement.Content = string.Empty;
             UnassignNetstalPlacement();
         }
 
@@ -218,7 +218,16 @@ namespace DN_Henkel_Vision.Interface
                 DataRing.Visibility = Visibility.Visible;
             }
 
-            Manager.Selected.PendingFaults.Add(new Fault(FaultInput.Text, Tact.Content.ToString()));
+            string placement = string.Empty;
+
+            if (NetstalPlacement.Content != null)
+            {
+                placement = NetstalPlacement.Content.ToString();
+            }
+
+            Fault input = new(FaultInput.Text, Tact.Content.ToString()) { Placement = placement };
+
+            Manager.Selected.PendingFaults.Add(input);
 
             Felber.Felber.Requeue(Manager.Selected.PendingFaults[0], Manager.Selected.OrderNumber);
 
