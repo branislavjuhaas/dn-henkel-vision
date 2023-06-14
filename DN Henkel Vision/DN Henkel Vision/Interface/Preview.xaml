@@ -46,7 +46,8 @@
                 TextWrapping="Wrap"
                 HorizontalAlignment="Left"
                 MinWidth="25"
-                Padding="12,5"/>
+                Padding="12,5"
+                TextChanged="Component_TextChanged"/>
             <TextBox
                 x:Name="Placement"
                 Text="{x:Bind memory:Cache.PreviewFault.Placement}"

@@ -308,6 +308,7 @@ namespace DN_Henkel_Vision.Interface
 
             if (((ComboBox)sender).SelectedIndex >= 0)
             {
+                // FAULT: INDEX OUTSIDE RANGE OF THE ARRAY | REVISE
                 type.ItemsSource = DN_Henkel_Vision.Memory.Classification.Types[DN_Henkel_Vision.Memory.Classification.ClassificationsPointers[((ComboBox)sender).SelectedIndex][classification.SelectedIndex]];
             }
         }
@@ -330,6 +331,13 @@ namespace DN_Henkel_Vision.Interface
             changer.Visibility = Visibility.Collapsed;
             changer.UpdateLayout();
             preview.Visibility = Visibility.Visible;
+        }
+
+        public void Unreview()
+        {
+            Manager.CurrentEditor.FaultPreview.Content = null;
+            Manager.CurrentEditor.NoDataText.Visibility = Visibility.Visible;
+            _reviewing = false;
         }
     }
 

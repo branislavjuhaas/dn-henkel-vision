@@ -92,12 +92,7 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">Arguments of the event</param>
         private void Approve_Click(object sender, RoutedEventArgs e)
         {
-            Manager.Selected.ReviewFaults[0].Index = Random.Shared.Next(0, 100000);
-            
-            Manager.Selected.Faults.Add(Manager.Selected.ReviewFaults[0].Clone());
-            // TODO: Add the fault to the done list and remove it from the review list.
-            // If there are are more faults to review, move to the next one. Otherwise,
-            // show the no data text.
+            ApproveFault();
         }
 
         /// <summary>
@@ -108,7 +103,32 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">Arguments of the event</param>
         private void Approve_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            // TODO: Add the fault to the done list, but keep it in the review list.
+            ApproveFault(true);
+        }
+
+        private void ApproveFault(bool keep = false)
+        {
+            Manager.Selected.Faults.Add(PrepareFault());
+
+            //If it is not set to remove, function can return, because following code is just for removing the fault
+            if (keep) { return; }
+
+            Manager.Selected.ReviewFaults.RemoveAt(Cache.CurrentReview);
+
+            if (Manager.Selected.ReviewFaults.Count > 0)
+            {
+                if (Cache.CurrentReview >= Manager.Selected.ReviewFaults.Count)
+                {
+                    Cache.CurrentReview = Manager.Selected.ReviewFaults.Count - 1;
+                }
+                Cache.PreviewFault = Manager.Selected.ReviewFaults[Cache.CurrentReview];
+
+                Manager.CurrentEditor.FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
+
+                return;
+            }
+
+            Manager.CurrentEditor.Unreview();
         }
 
         /// <summary>
@@ -153,6 +173,38 @@ namespace DN_Henkel_Vision.Interface
             Cache.PreviewFault = Manager.Selected.ReviewFaults[Cache.CurrentReview];
 
             Manager.CurrentEditor.FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
+        }
+
+        private Fault PrepareFault()
+        {
+            Fault output = new(Description.Text);
+
+            output.Component = Component.Text;
+            output.Placement = Placement.Text;
+            output.Cause = Cause.SelectedValue.ToString();
+            output.Classification = Classification.SelectedValue.ToString();
+            output.Type = Type.SelectedValue.ToString();
+
+            output.ClassIndexes[0] = Cause.SelectedIndex;
+            output.ClassIndexes[1] = Classification.SelectedIndex;
+            output.ClassIndexes[2] = Type.SelectedIndex;
+
+            output.Index = Manager.CreateIndex();
+
+            return output;
+        }
+
+        private void Component_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //TODO: Upgrade method of replacing based on the index of the Felber's detection 
+            if (Component.Text == Cache.PreviewFault.Component) { return; }
+            if (Cache.PreviewFault.Component == string.Empty) { 
+                Cache.PreviewFault.Component = Component.Text;
+                return; }
+
+            Description.Text = Description.Text.Replace(Cache.PreviewFault.Component, Component.Text);
+
+            Cache.PreviewFault.Component = Component.Text;
         }
     }
 }

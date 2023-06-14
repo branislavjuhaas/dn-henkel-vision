@@ -1,4 +1,5 @@
 ﻿using DN_Henkel_Vision.Interface;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -37,6 +38,11 @@ namespace DN_Henkel_Vision.Memory
         {
             // TODO: make this method load the order from the file system\
             Selected = new Order() { OrderNumber = orderNumber };
+        }
+
+        public static int CreateIndex()
+        {
+            return (DateTime.UtcNow - new DateTime(2023, 3, 4)).Seconds;
         }
     }
 }

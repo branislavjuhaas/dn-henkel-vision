@@ -148,7 +148,7 @@
                     </Grid>
                     <Grid.Transitions>
                         <TransitionCollection>
-                            <AddDeleteThemeTransition/>
+                            <EntranceThemeTransition/>
                             <RepositionThemeTransition/>
                             <ReorderThemeTransition/>
                         </TransitionCollection>
@@ -287,7 +287,7 @@
                     </Grid>
                     <Grid.Transitions>
                         <TransitionCollection>
-                            <AddDeleteThemeTransition/>
+                            <EntranceThemeTransition/>
                             <RepositionThemeTransition/>
                             <ReorderThemeTransition/>
                         </TransitionCollection>
@@ -415,6 +415,7 @@
 
             <TextBlock
                 x:Name="NoDataText"
+                x:FieldModifier="public"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Text="No data to display"
