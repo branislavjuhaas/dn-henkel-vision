@@ -92,6 +92,9 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">Arguments of the event</param>
         private void Approve_Click(object sender, RoutedEventArgs e)
         {
+            Manager.Selected.ReviewFaults[0].Index = Random.Shared.Next(0, 100000);
+            
+            Manager.Selected.Faults.Add(Manager.Selected.ReviewFaults[0].Clone());
             // TODO: Add the fault to the done list and remove it from the review list.
             // If there are are more faults to review, move to the next one. Otherwise,
             // show the no data text.

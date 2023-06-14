@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -247,6 +248,8 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         public void FaultPush()
         {
+            if (FaultInput.Text == string.Empty) { return; }
+            
             string placement = string.Empty;
 
             if (NetstalPlacement.Content != null)
@@ -270,6 +273,80 @@ namespace DN_Henkel_Vision.Interface
             }
 
             ResetEditor();
+        }
+
+        private void Fault_Click(object sender, PointerRoutedEventArgs e)
+        {
+
+            Grid parent = ((Grid)sender).Parent as Grid;
+            Grid preview = parent.Children[0] as Grid;
+
+            if (preview.Visibility != Visibility.Visible) { return; }
+
+            Grid changer = parent.Children[1] as Grid;
+
+            preview.Visibility = Visibility.Collapsed;
+            changer.Visibility = Visibility.Visible;
+        }
+
+        private void Cause_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if ((((ComboBox)sender).Parent) == null) { return; }
+            
+            ComboBox classification = ((Grid)((ComboBox)sender).Parent).Children[1] as ComboBox;
+
+            if (((ComboBox)sender).SelectedIndex >= 0)
+            {
+                classification.ItemsSource = DN_Henkel_Vision.Memory.Classification.Classifications[((ComboBox)sender).SelectedIndex].ToList();
+            }
+        }
+
+        private void Classification_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox classification = ((Grid)((ComboBox)sender).Parent).Children[1] as ComboBox;
+            ComboBox type = ((Grid)((ComboBox)sender).Parent).Children[2] as ComboBox;
+
+            if (((ComboBox)sender).SelectedIndex >= 0)
+            {
+                type.ItemsSource = DN_Henkel_Vision.Memory.Classification.Types[DN_Henkel_Vision.Memory.Classification.ClassificationsPointers[((ComboBox)sender).SelectedIndex][classification.SelectedIndex]];
+            }
+        }
+
+        private void Cause_Loaded(object sender, RoutedEventArgs e)
+        {
+            int index = ((ComboBox)sender).SelectedIndex;
+
+            ((ComboBox)sender).SelectedIndex = -1;
+            
+            ((ComboBox)sender).SelectedIndex = index;
+        }
+
+        private void Approve_Click(object sender, RoutedEventArgs e)
+        {
+            Grid parent = ((Grid)((Grid)((Button)sender).Parent).Parent).Parent as Grid;
+            Grid preview = (Grid)parent.Children[0];
+            Grid changer = (Grid)parent.Children[1];
+
+            changer.Visibility = Visibility.Collapsed;
+            changer.UpdateLayout();
+            preview.Visibility = Visibility.Visible;
+        }
+    }
+
+    public class FaultDataTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate Normal { get; set; }
+        public DataTemplate Accent { get; set; }
+        protected override DataTemplate SelectTemplateCore(object item)
+        {
+            if (Manager.Selected.Faults.IndexOf((Fault)item) % 2 == 0)
+            {
+                return Accent;
+            }
+            else
+            {
+                return Normal;
+            }
         }
     }
 }

@@ -22,8 +22,6 @@ namespace DN_Henkel_Vision.Felber
 
         private static string s_orderNumber;
 
-        private static List<Fault> s_faultsCache;
-
         /// <summary>
         /// Loads the AI models and initializes the background workers.
         /// </summary>
@@ -61,8 +59,6 @@ namespace DN_Henkel_Vision.Felber
         /// <summary>
         /// Requeues the fault for classification.
         /// </summary>
-        /// <param name="fault">Fault to be requeued</param>
-        /// <param name="order">Order number of the fault</param>
         public static void Requeue()
         {           
             if (Classifier.IsBusy || !Ready) { return; }

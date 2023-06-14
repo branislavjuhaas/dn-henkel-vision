@@ -31,6 +31,19 @@ namespace DN_Henkel_Vision.Memory
             Cause = cause;
         }
 
+        public Fault Clone()
+        {
+            Fault clone = new Fault(Description, Cause);
+            clone.Placement = Placement;
+            clone.Component = Component;
+            clone.Classification = Classification;
+            clone.Type = Type;
+            clone.Index = Index;
+            clone.ClassIndexes = ClassIndexes;
+            return clone;
+
+        }
+
         /// <summary>
         /// The new ToString method for the fault class.
         /// </summary>

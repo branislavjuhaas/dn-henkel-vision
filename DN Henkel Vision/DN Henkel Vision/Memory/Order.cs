@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace DN_Henkel_Vision.Memory
         public int OrderTotalTime;
         public int ExportModifiedTime;
 
-        public List<Fault> Faults = new();
+        public ObservableCollection<Fault> Faults = new();
         public List<Fault> PendingFaults = new();
         public List<Fault> ReviewFaults = new();
 
