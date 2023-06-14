@@ -42,7 +42,7 @@ namespace DN_Henkel_Vision.Memory
 
         public static int CreateIndex()
         {
-            return (DateTime.UtcNow - new DateTime(2023, 3, 4)).Seconds;
+            return (int)(DateTime.Now - new DateTime(2023, 4, 3)).TotalSeconds;
         }
     }
 }
