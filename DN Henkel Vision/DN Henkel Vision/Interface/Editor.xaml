@@ -177,11 +177,17 @@
                         <TextBlock Text="{x:Bind Description}" Grid.Column="0" VerticalAlignment="Center" Margin="10,0"/>
                         <TextBlock Text="{x:Bind Cause}" Grid.Column="2" VerticalAlignment="Center" Margin="15,0"/>
                         <Rectangle Width="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}" Opacity="0.41" Grid.Column="1"/>
+                        <Grid.Transitions>
+                            <TransitionCollection>
+                                <RepositionThemeTransition/>
+                            </TransitionCollection>
+                        </Grid.Transitions>
                     </Grid>
                     <Grid
                         x:Name="Changer"
                         Visibility="Collapsed"
-                        Height="128">
+                        Height="128"
+                        Margin="100,0,-100,0">
                         <Grid.Resources>
                             <ResourceDictionary>
                                 <ResourceDictionary.ThemeDictionaries>
@@ -284,6 +290,11 @@
                                 Visibility="Collapsed"
                                 Width="{x:Bind ClassIndexes[0]}"/>
                         </Grid>
+                        <Grid.Transitions>
+                            <TransitionCollection>
+                                <RepositionThemeTransition/>
+                            </TransitionCollection>
+                        </Grid.Transitions>
                     </Grid>
                     <Grid.Transitions>
                         <TransitionCollection>

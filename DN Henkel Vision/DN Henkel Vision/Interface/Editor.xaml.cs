@@ -303,13 +303,12 @@ namespace DN_Henkel_Vision.Interface
 
         private void Classification_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox classification = ((Grid)((ComboBox)sender).Parent).Children[1] as ComboBox;
+            ComboBox cause = ((Grid)((ComboBox)sender).Parent).Children[0] as ComboBox;
             ComboBox type = ((Grid)((ComboBox)sender).Parent).Children[2] as ComboBox;
 
             if (((ComboBox)sender).SelectedIndex >= 0)
             {
-                // FAULT: INDEX OUTSIDE RANGE OF THE ARRAY | REVISE
-                type.ItemsSource = DN_Henkel_Vision.Memory.Classification.Types[DN_Henkel_Vision.Memory.Classification.ClassificationsPointers[((ComboBox)sender).SelectedIndex][classification.SelectedIndex]];
+                type.ItemsSource = DN_Henkel_Vision.Memory.Classification.Types[DN_Henkel_Vision.Memory.Classification.ClassificationsPointers[cause.SelectedIndex][((ComboBox)sender).SelectedIndex]];
             }
         }
 
@@ -329,7 +328,6 @@ namespace DN_Henkel_Vision.Interface
             Grid changer = (Grid)parent.Children[1];
 
             changer.Visibility = Visibility.Collapsed;
-            changer.UpdateLayout();
             preview.Visibility = Visibility.Visible;
         }
 

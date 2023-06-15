@@ -42,7 +42,13 @@ namespace DN_Henkel_Vision.Memory
 
         public static int CreateIndex()
         {
-            return (int)(DateTime.Now - new DateTime(2023, 4, 3)).TotalSeconds;
+            //NOTE: Working just up to year 2092
+            int index = (int)(DateTime.Now - new DateTime(2023, 4, 3)).TotalSeconds;
+
+            if (index > Cache.LastIndex) { Cache.LastIndex = index; return index; }
+                
+            Cache.LastIndex++;
+            return Cache.LastIndex;
         }
     }
 }
