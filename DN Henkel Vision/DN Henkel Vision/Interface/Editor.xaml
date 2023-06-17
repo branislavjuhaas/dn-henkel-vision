@@ -140,10 +140,6 @@
                                     Margin="-10"
                                     FontSize="16"/>
                             </Button>
-                            <!--Helper component always invisible-->
-                            <Rectangle
-                                Visibility="Collapsed"
-                                Width="{x:Bind ClassIndexes[0]}"/>
                         </Grid>
                     </Grid>
                     <Grid.Transitions>
@@ -153,9 +149,9 @@
                             <ReorderThemeTransition/>
                         </TransitionCollection>
                     </Grid.Transitions>
-                </Grid>               
+                </Grid>
             </DataTemplate>
-            
+
             <DataTemplate
                 x:Key="AccentFaultTemplate"
                 x:DataType="memory:Fault">
@@ -186,8 +182,7 @@
                     <Grid
                         x:Name="Changer"
                         Visibility="Collapsed"
-                        Height="128"
-                        Margin="100,0,-100,0">
+                        Height="128">
                         <Grid.Resources>
                             <ResourceDictionary>
                                 <ResourceDictionary.ThemeDictionaries>
@@ -285,10 +280,6 @@
                                     Margin="-10"
                                     FontSize="16"/>
                             </Button>
-                            <!--Helper component always invisible-->
-                            <Rectangle
-                                Visibility="Collapsed"
-                                Width="{x:Bind ClassIndexes[0]}"/>
                         </Grid>
                         <Grid.Transitions>
                             <TransitionCollection>
@@ -303,7 +294,7 @@
                             <ReorderThemeTransition/>
                         </TransitionCollection>
                     </Grid.Transitions>
-                </Grid>                
+                </Grid>
             </DataTemplate>
 
             <local:FaultDataTemplateSelector
@@ -319,7 +310,7 @@
             <RowDefinition Height="128"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <!--The title of the page-->
         <Grid
             Background="{ThemeResource CardBackgroundFillColorDefault}"
@@ -359,7 +350,7 @@
                 Margin="20,0,180,0"
                 TextChanged="FaultInput_TextChanged"
                 KeyDown="FaultInput_KeyDown">
-                
+
                 <TextBox.Transitions>
                     <TransitionCollection>
                         <RepositionThemeTransition/>
@@ -396,7 +387,7 @@
                         </Flyout>
                     </Button.Flyout>
                 </Button>
-                    <Rectangle
+                <Rectangle
                     Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}"
                     Opacity="0.41"
                     Width="1"/>
@@ -414,7 +405,7 @@
                         FontSize="12"/>
                 </Button>
             </StackPanel>
-            
+
         </Grid>
         <!--The editor grid of the page-->
         <Grid
@@ -458,7 +449,8 @@
                     x:Name="FaultsList"
                     x:FieldModifier="public"
                     ItemsSource="{x:Bind memory:Manager.Selected.Faults}"
-                    ItemTemplate="{StaticResource SelectiveFaultTemplate}"/>
+                    ItemTemplate="{StaticResource SelectiveFaultTemplate}"
+                    Loaded="FaultsList_Loaded"/>
             </ScrollViewer>
         </Grid>
     </Grid>

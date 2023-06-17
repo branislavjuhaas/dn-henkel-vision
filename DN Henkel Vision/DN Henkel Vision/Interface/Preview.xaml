@@ -57,7 +57,8 @@
                 MinWidth="25"
                 Padding="12,5"
                 Grid.Column="1"
-                LostFocus="Placement_LostFocus"/>
+                LostFocus="Placement_LostFocus"
+                TextChanged="Placement_TextChanged"/>
             <TextBox
                 x:Name="Description"
                 Text="{x:Bind memory:Cache.PreviewFault.Description}"

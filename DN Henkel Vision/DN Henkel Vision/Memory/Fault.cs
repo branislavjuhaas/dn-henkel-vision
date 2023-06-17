@@ -63,7 +63,7 @@ namespace DN_Henkel_Vision.Memory
         {
             if (placement == null || placement.Length != 2) { return false; }
             if (placement.ToLower().ToCharArray()[0] != 'a') { return false; }
-            if (!placement.Substring(1,1).All(char.IsDigit)) { return false; }
+            if (!placement.Substring(1, 1).All(char.IsDigit)) { return false; }
 
             return true;
         }

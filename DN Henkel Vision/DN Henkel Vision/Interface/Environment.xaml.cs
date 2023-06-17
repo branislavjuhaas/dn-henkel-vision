@@ -167,6 +167,11 @@ namespace DN_Henkel_Vision.Interface
                 return;
             }
 
+            if (Manager.CurrentEditor != null)
+            {
+                Manager.CurrentEditor.FaultsList.ItemsSource = null;
+            }
+
             Manager.SelectOrder(orderNumber);
             Workspace.Navigate(typeof(Editor));
         }

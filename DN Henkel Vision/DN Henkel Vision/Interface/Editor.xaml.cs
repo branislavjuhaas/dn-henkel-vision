@@ -337,6 +337,14 @@ namespace DN_Henkel_Vision.Interface
             Manager.CurrentEditor.NoDataText.Visibility = Visibility.Visible;
             _reviewing = false;
         }
+
+        private void FaultsList_Loaded(object sender, RoutedEventArgs e)
+        {         
+            foreach (Fault fault in Manager.Selected.Loader)
+            {
+                //Manager.Selected.Faults.Add(fault);
+            }
+        }
     }
 
     public class FaultDataTemplateSelector : DataTemplateSelector

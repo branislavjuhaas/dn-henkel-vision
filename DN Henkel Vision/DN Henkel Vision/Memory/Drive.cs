@@ -16,6 +16,7 @@ namespace DN_Henkel_Vision.Memory
         internal static readonly string s_regdir =   $"{Folder}\\FileSystem\\Registry\\";
 
         internal static readonly string s_system =      $"{Folder}\\FileSystem\\System.dntf";
+        internal static readonly string s_orders =      $"{Folder}\\FileSystem\\Orders\\";
         internal static readonly string s_registry =    $"{Folder}\\FileSystem\\Registry\\Registry.dntf";
         
         #endregion
@@ -41,6 +42,77 @@ namespace DN_Henkel_Vision.Memory
         {
             string source = Read(s_registry);
             return source.Split('\n');
+        }
+
+        public static List<Fault>[] LoadFaults(string orderNumber)
+        {
+            List<Fault>[] output = new List<Fault>[3];
+            
+            List<Fault> faults = new();
+            List<Fault> previews = new();
+            List<Fault> pending = new();
+
+            string source = Read(CreateFaultsPath(orderNumber));
+
+            string header = "Normal";
+
+            foreach (string line in source.Split('\n'))
+            {
+                if (line == "Preview:") { header = "Preview"; continue; }
+                if (line == "Pending:") { header = "Pending"; continue; }
+                if (line == "") { continue; }
+                string[] parts = line.Split('\t');
+
+                Fault fault = new(parts[3]);
+
+                fault.Index = int.Parse(parts[0]);
+                fault.Component = parts[1];
+                fault.Placement = parts[2];
+                fault.Cause = parts[4];
+                fault.Classification = parts[5];
+                fault.Type = parts[6];
+                fault.ClassIndexes[0] = int.Parse(parts[7]);
+                fault.ClassIndexes[1] = int.Parse(parts[8]);
+                fault.ClassIndexes[2] = int.Parse(parts[9]);
+
+                if (header == "Normal") { faults.Add(fault); continue; }
+                if (header == "Preview") { previews.Add(fault); continue; }
+                
+                pending.Add(fault);
+            }
+
+            output[0] = faults;
+            output[1] = previews;
+            output[2] = pending;
+
+            return output;
+        }
+
+        public static void SaveFaults(string orderNumber, List<Fault> faults, List<Fault> previews, List<Fault> pending)
+        {
+            string output = "";
+
+            foreach (Fault fault in faults)
+            {
+                output += $"{fault.Index}\t{fault.ToString()}\n";
+            }
+            output += "Preview:\n";
+            foreach (Fault fault in previews)
+            {
+                output += $"{fault.Index}\t{fault.ToString()}\n";
+            }
+            output += "Pending:\n";
+            foreach (Fault fault in pending)
+            {
+                output += $"{fault.Index}\t{fault.ToString()}\n";
+            }
+
+            Write(CreateFaultsPath(orderNumber), output);
+        }
+
+        internal static string CreateFaultsPath(string orderNumber)
+        {
+            return $"{s_orders}{orderNumber.Replace(" ", string.Empty)}.dnff";
         }
 
         /// <summary>

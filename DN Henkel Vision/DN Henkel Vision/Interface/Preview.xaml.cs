@@ -139,6 +139,8 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">Arguments of the event</param>
         private void Placement_LostFocus(object sender, RoutedEventArgs e)
         {
+            if (Manager.Selected.IsNetstal()) { return; }
+
             Cache.LastPlacement = Placement.Text;
         }
 
@@ -181,9 +183,15 @@ namespace DN_Henkel_Vision.Interface
 
             output.Component = Component.Text;
             output.Placement = Placement.Text;
-            output.Cause = Cause.SelectedValue.ToString();
-            output.Classification = Classification.SelectedValue.ToString();
-            output.Type = Type.SelectedValue.ToString();
+
+            if (Cause.SelectedValue != null) { output.Cause = Cause.SelectedValue.ToString(); }
+            else { output.Cause = string.Empty; }
+
+            if (Classification.SelectedValue != null) { output.Classification = Classification.SelectedValue.ToString(); }
+            else { output.Classification = string.Empty; }
+
+            if (Type.SelectedValue != null) { output.Type = Type.SelectedValue.ToString(); }
+            else { output.Type = string.Empty; }
 
             output.ClassIndexes[0] = Cause.SelectedIndex;
             output.ClassIndexes[1] = Classification.SelectedIndex;
@@ -205,6 +213,17 @@ namespace DN_Henkel_Vision.Interface
             Description.Text = Description.Text.Replace(Cache.PreviewFault.Component, Component.Text);
 
             Cache.PreviewFault.Component = Component.Text;
+        }
+
+        private void Placement_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int index = Placement.SelectionStart;
+            int length = Placement.SelectionLength;
+            
+            Placement.Text = Placement.Text.ToUpper();
+
+            Placement.SelectionStart = index;
+            Placement.SelectionLength = length;
         }
     }
 }

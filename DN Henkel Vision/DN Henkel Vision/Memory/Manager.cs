@@ -36,8 +36,17 @@ namespace DN_Henkel_Vision.Memory
         /// <param name="orderNumber">Number of the order.</param>
         public static void SelectOrder(string orderNumber)
         {
-            // TODO: make this method load the order from the file system\
-            Selected = new Order() { OrderNumber = orderNumber };
+            if (Selected.OrderNumber == null) { Selected = new() { OrderNumber = orderNumber }; return; }
+            
+            Drive.SaveFaults(Selected.OrderNumber, Selected.Faults.ToList(), Selected.ReviewFaults, Selected.PendingFaults);
+
+            List<Fault>[] faults = Drive.LoadFaults(orderNumber);
+            
+            Selected = new() { 
+                OrderNumber = orderNumber,
+                Faults = new(faults[0]),
+                ReviewFaults = faults[1],
+                PendingFaults = faults[2] };
         }
 
         public static int CreateIndex()

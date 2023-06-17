@@ -23,6 +23,7 @@ namespace DN_Henkel_Vision.Memory
         public int ExportModifiedTime;
 
         public ObservableCollection<Fault> Faults = new();
+        public List<Fault> Loader = new();
         public List<Fault> PendingFaults = new();
         public List<Fault> ReviewFaults = new();
 
