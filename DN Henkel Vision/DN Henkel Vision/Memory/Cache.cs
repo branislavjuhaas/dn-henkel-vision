@@ -2,7 +2,6 @@
 {
     internal class Cache
     {
-        public static Fault PreviewFault = new("");
         public static string LastPlacement = "";
 
         public static int CurrentReview = 0;
@@ -14,7 +13,6 @@
         /// </summary>
         public static void Clear()
         {
-            PreviewFault = new Fault("");
             LastPlacement = "";
             CurrentReview = 0;
             LastIndex = 0;

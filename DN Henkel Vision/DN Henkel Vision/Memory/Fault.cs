@@ -31,6 +31,10 @@ namespace DN_Henkel_Vision.Memory
             Cause = cause;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public Fault Clone()
         {
             Fault clone = new Fault(Description, Cause);
@@ -50,7 +54,7 @@ namespace DN_Henkel_Vision.Memory
         /// <returns>the string of fault</returns>
         public override string ToString()
         {
-            return $"{Placement}\t{Component}\t{Description}\t{Cause}\t{Classification}\t{Type}\t{ClassIndexes[0]}\t{ClassIndexes[1]}\t{ClassIndexes[2]}";
+            return $"{Component}\t{Placement}\t{Description}\t{Cause}\t{Classification}\t{Type}\t{ClassIndexes[0]}\t{ClassIndexes[1]}\t{ClassIndexes[2]}";
         }
 
         /// <summary>

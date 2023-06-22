@@ -41,7 +41,7 @@
 
             <TextBox
                 x:Name="Component"
-                Text="{x:Bind memory:Cache.PreviewFault.Component}"
+                Text="{x:Bind Current.Component}"
                 Height="32"
                 TextWrapping="Wrap"
                 HorizontalAlignment="Left"
@@ -50,7 +50,7 @@
                 TextChanged="Component_TextChanged"/>
             <TextBox
                 x:Name="Placement"
-                Text="{x:Bind memory:Cache.PreviewFault.Placement}"
+                Text="{x:Bind Current.Placement}"
                 Height="32"
                 TextWrapping="Wrap"
                 HorizontalAlignment="Left"
@@ -61,7 +61,7 @@
                 TextChanged="Placement_TextChanged"/>
             <TextBox
                 x:Name="Description"
-                Text="{x:Bind memory:Cache.PreviewFault.Description}"
+                Text="{x:Bind Current.Description}"
                 Height="32"
                 TextWrapping="Wrap"
                 Grid.Column="2"
@@ -85,7 +85,7 @@
                     Grid.Column="0"
                     IsTextSearchEnabled="True"
                     ItemsSource="{x:Bind memory:Classification.Causes}"
-                    SelectedIndex="{x:Bind memory:Cache.PreviewFault.ClassIndexes[0]}"
+                    SelectedIndex="{x:Bind Current.ClassIndexes[0]}"
                     SelectionChanged="Cause_SelectionChanged"/>
             <ComboBox
                     x:Name="Classification"
@@ -93,13 +93,13 @@
                     Grid.Column="1"
                     IsTextSearchEnabled="True"
                     SelectionChanged="Classification_SelectionChanged"
-                    SelectedIndex="{x:Bind memory:Cache.PreviewFault.ClassIndexes[1]}"/>
+                    SelectedIndex="{x:Bind Current.ClassIndexes[1]}"/>
             <ComboBox
                     x:Name="Type"
                     HorizontalAlignment="Stretch"
                     Grid.Column="2"
                     IsTextSearchEnabled="True"
-                    SelectedIndex="{x:Bind memory:Cache.PreviewFault.ClassIndexes[2]}"/>
+                    SelectedIndex="{x:Bind Current.ClassIndexes[2]}"/>
             <Button
                 x:Name="Count"
                 x:FieldModifier="public"

@@ -54,6 +54,13 @@ namespace DN_Henkel_Vision.Interface
             {
                 Analyze = OrderAnalyze;
             }
+            if (Manager.Selected.ReviewFaults.Count > 0)
+            {
+                DataRing.Visibility = Visibility.Collapsed;
+                NoDataText.Visibility = Visibility.Collapsed;
+                FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
+                _reviewing = true;
+            }
         }
 
         /// <summary>
@@ -202,7 +209,7 @@ namespace DN_Henkel_Vision.Interface
             }
 
             Cache.CurrentReview = 0;
-            Cache.PreviewFault = Manager.Selected.ReviewFaults[0];
+            Cache.CurrentReview = 0;
 
             DataRing.Visibility = Visibility.Collapsed;
             FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());

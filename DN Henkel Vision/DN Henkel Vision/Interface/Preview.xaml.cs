@@ -30,7 +30,9 @@ namespace DN_Henkel_Vision.Interface
     public sealed partial class Preview : Page
     {
         public ObservableCollection<string> Previews = new();
-        
+
+        public Fault Current = Manager.Selected.ReviewFaults[Cache.CurrentReview];
+
         /// <summary>
         /// Constructor of the Preview page.
         /// </summary>
@@ -121,7 +123,6 @@ namespace DN_Henkel_Vision.Interface
                 {
                     Cache.CurrentReview = Manager.Selected.ReviewFaults.Count - 1;
                 }
-                Cache.PreviewFault = Manager.Selected.ReviewFaults[Cache.CurrentReview];
 
                 Manager.CurrentEditor.FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
 
@@ -172,7 +173,6 @@ namespace DN_Henkel_Vision.Interface
             if (!Count.Flyout.IsOpen) { return; }
 
             Cache.CurrentReview = PreviewsList.SelectedIndex;
-            Cache.PreviewFault = Manager.Selected.ReviewFaults[Cache.CurrentReview];
 
             Manager.CurrentEditor.FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
         }
@@ -205,14 +205,14 @@ namespace DN_Henkel_Vision.Interface
         private void Component_TextChanged(object sender, TextChangedEventArgs e)
         {
             //TODO: Upgrade method of replacing based on the index of the Felber's detection 
-            if (Component.Text == Cache.PreviewFault.Component) { return; }
-            if (Cache.PreviewFault.Component == string.Empty) { 
-                Cache.PreviewFault.Component = Component.Text;
+            if (Component.Text == Manager.Selected.ReviewFaults[Cache.CurrentReview].Component) { return; }
+            if (Manager.Selected.ReviewFaults[Cache.CurrentReview].Component == string.Empty) {
+                Manager.Selected.ReviewFaults[Cache.CurrentReview].Component = Component.Text;
                 return; }
 
-            Description.Text = Description.Text.Replace(Cache.PreviewFault.Component, Component.Text);
+            Description.Text = Description.Text.Replace(Manager.Selected.ReviewFaults[Cache.CurrentReview].Component, Component.Text);
 
-            Cache.PreviewFault.Component = Component.Text;
+            Manager.Selected.ReviewFaults[Cache.CurrentReview].Component = Component.Text;
         }
 
         private void Placement_TextChanged(object sender, TextChangedEventArgs e)

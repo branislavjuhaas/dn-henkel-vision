@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -18,6 +18,7 @@ namespace DN_Henkel_Vision.Memory
         internal static readonly string s_system =      $"{Folder}\\FileSystem\\System.dntf";
         internal static readonly string s_orders =      $"{Folder}\\FileSystem\\Orders\\";
         internal static readonly string s_registry =    $"{Folder}\\FileSystem\\Registry\\Registry.dntf";
+        internal static readonly string s_exports =     $"{Folder}\\FileSystem\\Registry\\Exports.dntf";
         
         #endregion
 
@@ -38,10 +39,27 @@ namespace DN_Henkel_Vision.Memory
         /// <summary>
         /// This method loads the registry from the file system.
         /// </summary>
-        public static string[] LoadRegistry()
+        public static void LoadRegistry()
         {
+            Manager.OrdersRegistry.Clear();
+            Manager.Users.Clear();
+            Manager.Machines.Clear();
+            Manager.States.Clear();
+            
             string source = Read(s_registry);
-            return source.Split('\n');
+
+            foreach (string order in source.Split('\n'))
+            {
+                string[] parameters = order.Split('\t');
+                Manager.OrdersRegistry.Add(parameters[0]);
+                Manager.Users.Add(Int32.Parse(parameters[1]));
+                Manager.Machines.Add(Int32.Parse(parameters[2]));
+                Manager.States.Add(Int32.Parse(parameters[3]));
+
+                if (parameters[3] == "0") { continue; }
+
+                Export.Unexported.Add(parameters[0]);
+            }
         }
 
         public static List<Fault>[] LoadFaults(string orderNumber)

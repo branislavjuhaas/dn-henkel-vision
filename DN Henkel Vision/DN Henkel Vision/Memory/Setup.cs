@@ -15,7 +15,7 @@ namespace DN_Henkel_Vision.Memory
             Directory.CreateDirectory(s_regdir);
             Directory.CreateDirectory(s_orders);
             
-            Write(s_registry, "38 655 127\n38 621 846\n38 621 848\n2023  0001");
+            Write(s_registry, "38 655 127\t1000\t1000\t1\n38 621 846\t1000\t1000\t1\n38 621 848\t1000\t1000\t1\n2023  0001\t1000\t1000\t1");
 
             Write(CreateFaultsPath("38 655 127"), "Preview:\nPending:");
             Write(CreateFaultsPath("38 621 846"), "Preview:\nPending:");

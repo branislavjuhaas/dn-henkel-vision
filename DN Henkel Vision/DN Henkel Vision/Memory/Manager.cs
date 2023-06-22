@@ -12,6 +12,10 @@ namespace DN_Henkel_Vision.Memory
     internal class Manager
     {
         public static List<string> OrdersRegistry = new();
+        public static List<int> Users = new();
+        public static List<int> Machines = new();
+        public static List<int> States = new();
+
         public static ObservableCollection<string> VisualRegistry = new();
 
         public static Order Selected = new();
@@ -26,7 +30,7 @@ namespace DN_Henkel_Vision.Memory
             Classification.Assign();
             Drive.Validate();
 
-            OrdersRegistry = Drive.LoadRegistry().ToList<string>();
+            Drive.LoadRegistry();
             VisualRegistry = new(OrdersRegistry);
         }
 
@@ -38,15 +42,34 @@ namespace DN_Henkel_Vision.Memory
         {
             if (Selected.OrderNumber == null) { Selected = new() { OrderNumber = orderNumber }; return; }
             
+            int index = OrdersRegistry.IndexOf(Selected.OrderNumber);
+
+            Users[index] = Selected.User;
+            Machines[index] = Selected.Machine;
+            States[index] = Selected.State;
+
             Drive.SaveFaults(Selected.OrderNumber, Selected.Faults.ToList(), Selected.ReviewFaults, Selected.PendingFaults);
 
             List<Fault>[] faults = Drive.LoadFaults(orderNumber);
             
-            Selected = new() { 
+            index = OrdersRegistry.IndexOf(orderNumber);
+
+            Selected = new() {
                 OrderNumber = orderNumber,
                 Faults = new(faults[0]),
                 ReviewFaults = faults[1],
-                PendingFaults = faults[2] };
+                PendingFaults = faults[2],
+                User = Users[index],
+                Machine = Machines[index],
+                State = States[index]
+            };
+
+            if (Selected.ReviewFaults.Count > 0)
+            {
+                Cache.CurrentReview = 0;
+                Cache.LastPlacement = Selected.ReviewFaults[0].Placement;
+                
+            }
         }
 
         public static int CreateIndex()

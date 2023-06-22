@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Remove="Interface\Editor.xaml" />
     <None Remove="Interface\Environment.xaml" />
+    <None Remove="Interface\Exports.xaml" />
     <None Remove="Interface\Preview.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -46,6 +47,9 @@
       <DependentUpon>Cause.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Interface\Exports.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Interface\Preview.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

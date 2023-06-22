@@ -18,7 +18,10 @@ namespace DN_Henkel_Vision.Memory
         #endregion
 
         public string OrderNumber;
-        
+
+        public int User;
+        public int Machine;
+
         public int OrderTotalTime;
         public int ExportModifiedTime;
 
