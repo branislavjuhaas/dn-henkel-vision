@@ -162,7 +162,7 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="orderNumber">Number of the new order, that is goinng to be selected</param>
         public void ReselectOrder(string orderNumber)
         {
-            if (orderNumber == Manager.Selected.OrderNumber|| !Manager.OrdersRegistry.Contains(orderNumber))
+            if ( (orderNumber == Manager.Selected.OrderNumber && orderNumber != _selectedOrder) || !Manager.OrdersRegistry.Contains(orderNumber))
             {
                 return;
             }
@@ -200,6 +200,12 @@ namespace DN_Henkel_Vision.Interface
             catch { }
 
             return output;
+        }
+
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+            OrdersPanel_Select(string.Empty);
+            Workspace.Navigate(typeof(Exports));
         }
     }
 }

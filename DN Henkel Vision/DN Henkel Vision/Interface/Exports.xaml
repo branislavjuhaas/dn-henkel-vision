@@ -6,10 +6,242 @@
     xmlns:local="using:DN_Henkel_Vision.Interface"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
-    <Grid>
+    <Grid RowSpacing="2">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1300"/>
+                    </VisualState.StateTriggers>
 
+                    <VisualState.Setters>
+                        <Setter Target="ControlPanel.Orientation" Value="Vertical"/>
+                        <Setter Target="Machine.Width" Value="150"/>
+                        <Setter Target="Return.Width" Value="150"/>
+                        <Setter Target="GraphPanel.Margin" Value="170,20,20,20"/>
+                        <Setter Target="ControlPanel.VerticalAlignment" Value="Center"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+
+                    <VisualState.Setters>
+                        <Setter Target="ControlPanel.Orientation" Value="Horizontal"/>
+                        <Setter Target="Machine.Width" Value="Auto"/>
+                        <Setter Target="Return.Width" Value="Auto"/>
+                        <Setter Target="GraphPanel.Margin" Value="20,72,20,20"/>
+                        <Setter Target="ControlPanel.VerticalAlignment" Value="Top"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Grid.Resources>
+            <DataTemplate
+                x:Key="FrontGraph"
+                x:DataType="x:Int32">
+                <Rectangle
+                    Width="8"
+                    Height="{x:Bind}"
+                    VerticalAlignment="Bottom"
+                    RadiusX="4"
+                    RadiusY="4">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush
+                            StartPoint="0,0"
+                            EndPoint="0,1">
+                            <GradientStop
+                                Color="#009287"
+                                Offset="0"/>
+                            <GradientStop
+                                Color="#006D7F"
+                                Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </DataTemplate>
+            <DataTemplate
+                x:Key="BackGraph"
+                x:DataType="x:Int32">
+                <Rectangle
+                    Width="8"
+                    Height="{x:Bind}"
+                    VerticalAlignment="Bottom"
+                    RadiusX="4"
+                    RadiusY="4">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush
+                            StartPoint="0,0"
+                            EndPoint="0,1">
+                            <GradientStop
+                                Color="#FF9287"
+                                Offset="0"/>
+                            <GradientStop
+                                Color="#FF6D7F"
+                                Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </DataTemplate>
+            <StackLayout
+                x:Key="GraphLayout"
+                x:Name="GraphingLayout"
+                Orientation="Horizontal"
+                Spacing="12"/>
+
+        </Grid.Resources>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="154"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--The title of the page-->
+        <Grid
+            Background="{ThemeResource CardBackgroundFillColorDefault}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultSolid}" 
+            Grid.Row="0"
+            BorderThickness="1,0,0,1"
+            CornerRadius="0,0,0,4">
+
+            <TextBlock
+                Text="Export"
+                FontSize="{ThemeResource TitleTextBlockFontSize}"
+                FontWeight="{ThemeResource InfoBarTitleFontWeight}"
+                Margin="32,82,0,0"/>
+        </Grid>
+
+        <Grid
+            x:Name="GraphGrid"
+            Background="{ThemeResource CardBackgroundFillColorDefault}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultSolid}" 
+            Grid.Row="1"
+            BorderThickness="1,1,0,1"
+            CornerRadius="4,0,0,4"
+            SizeChanged="GraphGrid_SizeChanged">
+
+            <StackPanel
+                x:Name="ControlPanel"
+                Orientation="Horizontal"
+                Spacing="20"
+                Margin="20,20,20,0"
+                VerticalAlignment="Top">
+                <ComboBox
+                    x:Name="GraphType"
+                    Width="150"
+                    SelectedIndex="0"
+                    VerticalAlignment="Top">
+                    <x:String>Service</x:String>
+                    <x:String>Export</x:String>
+                </ComboBox>
+                <ToggleButton
+                    x:Name="Machine"
+                    Grid.Row="1"
+                    VerticalAlignment="Top"
+                    IsChecked="True"
+                    Content="Machine"
+                    Click="Machine_Click"/>
+                <Button
+                    x:Name="Return"
+                    Content="Return: 20€ - 17%"
+                    VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <Grid
+                x:Name="GraphPanel"
+                Width="778"
+                Margin="20,72,20,20">
+                <TextBlock
+                    Text="24h"
+                    FontSize="11"
+                    Margin="20,12"
+                    Opacity="0.7"/>
+                <TextBlock
+                    Text="12h"
+                    FontSize="11"
+                    Margin="20,91"
+                    Opacity="0.7"/>
+                <Grid
+                    Margin="43,20,20,20"
+                    CornerRadius="0,0,4,4"
+                    HorizontalAlignment="Left">
+                    <ItemsRepeater
+                        x:Name="BackGraph"
+                        ItemTemplate="{StaticResource BackGraph}"
+                        ItemsSource="{x:Bind BackHeights}"
+                        Layout="{StaticResource GraphLayout}"
+                        Width="Auto"
+                        HorizontalAlignment="Right"/>
+                    <ItemsRepeater
+                        x:Name="FrontGraph"
+                        ItemTemplate="{StaticResource FrontGraph}"
+                        ItemsSource="{x:Bind FrontHeights}"
+                        Layout="{StaticResource GraphLayout}"
+                        Width="Auto"
+                        HorizontalAlignment="Right"/>
+                    <Rectangle
+                        Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top"
+                        Opacity="0.3"
+                        Height="2"/>
+                    <Rectangle
+                        Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top"
+                        Opacity="0.3"
+                        Height="2"
+                        Margin="0,80,0,0"/>
+                </Grid>
+
+                <StackPanel
+                    x:Name="Legend"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Margin="31,0,9,5"
+                    Orientation="Horizontal"
+                    Spacing="110">
+                    <TextBlock
+                        Text="{x:Bind Date(35)}"
+                        FontSize="11"
+                        Opacity="0.7"
+                        TextAlignment="Center"
+                        Width="30"/>
+                    <TextBlock
+                        Text="{x:Bind Date(28)}"
+                        FontSize="11"
+                        Opacity="0.7"
+                        TextAlignment="Center"
+                        Width="30"/>
+                    <TextBlock
+                        Text="{x:Bind Date(21)}"
+                        FontSize="11"
+                        Opacity="0.7"
+                        TextAlignment="Center"
+                        Width="30"/>
+                    <TextBlock
+                        Text="{x:Bind Date(14)}"
+                        FontSize="11"
+                        Opacity="0.7"
+                        TextAlignment="Center"
+                        Width="30"/>
+                    <TextBlock
+                        Text="{x:Bind Date(7)}"
+                        FontSize="11"
+                        Opacity="0.7"
+                        TextAlignment="Center"
+                        Width="30"/>
+                    <TextBlock
+                        Text="{x:Bind Date(0)}"
+                        FontSize="11"
+                        Opacity="0.7"
+                        TextAlignment="Center"
+                        Width="30"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

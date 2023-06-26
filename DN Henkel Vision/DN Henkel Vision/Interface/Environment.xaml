@@ -114,7 +114,8 @@
                             Background="Transparent"
                             BorderBrush="Transparent"
                             HorizontalAlignment="Left"
-                            HorizontalContentAlignment="Left">
+                            HorizontalContentAlignment="Left"
+                            Click="Export_Click">
 
                             <Grid>
                                 <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xE74E;" Margin="-2" FontSize="16" />
