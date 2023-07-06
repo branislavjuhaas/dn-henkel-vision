@@ -112,6 +112,14 @@ namespace DN_Henkel_Vision.Interface
         {
             Manager.Selected.Faults.Add(PrepareFault());
 
+            if (Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime <= 0f)
+            {
+                Manager.Selected.ReviewFaults[Cache.CurrentReview].UserTime = Manager.AverageTime;
+            }
+
+            Manager.Selected.User += Manager.Selected.ReviewFaults[Cache.CurrentReview].UserTime;
+            Manager.Selected.Machine += Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime;
+
             //If it is not set to remove, function can return, because following code is just for removing the fault
             if (keep) { return; }
 

@@ -19,6 +19,8 @@ namespace DN_Henkel_Vision.Memory
         public string Type;
         public int Index;
         public int[] ClassIndexes = { -1, -1, -1 };
+        public float UserTime;
+        public float MachineTime;
 
         /// <summary>
         /// The fault class storing all the pieces of information about a fault.
@@ -44,6 +46,7 @@ namespace DN_Henkel_Vision.Memory
             clone.Type = Type;
             clone.Index = Index;
             clone.ClassIndexes = ClassIndexes;
+            clone.UserTime = UserTime;
             return clone;
 
         }
@@ -55,6 +58,13 @@ namespace DN_Henkel_Vision.Memory
         public override string ToString()
         {
             return $"{Component}\t{Placement}\t{Description}\t{Cause}\t{Classification}\t{Type}\t{ClassIndexes[0]}\t{ClassIndexes[1]}\t{ClassIndexes[2]}";
+        }
+
+        public string Export(string order, string user, string date)
+        {
+            string ordernumber = order.Replace(" ", "");
+            
+            return $"{ordernumber}\t{Placement}\t{Description}\t{Component}\t{Memory.Classification.OriginalCauses[ClassIndexes[0]]}\t{Memory.Classification.OriginalClassifications[ClassIndexes[0]][ClassIndexes[1]]}\t{Memory.Classification.OriginalTypes[Memory.Classification.ClassificationsPointers[ClassIndexes[0]][ClassIndexes[1]]][ClassIndexes[2]]}\t{user}\t{date}";
         }
 
         /// <summary>

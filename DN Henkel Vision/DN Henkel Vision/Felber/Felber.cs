@@ -100,6 +100,9 @@ namespace DN_Henkel_Vision.Felber
 
             output.ClassIndexes = AssignIndexes(output.Cause, output.Classification, output.Type);
 
+            output.UserTime = input.UserTime;
+            output.MachineTime = MachineTime(output.UserTime, output.Description.Length);
+
             return output;
         }
 
@@ -313,6 +316,19 @@ namespace DN_Henkel_Vision.Felber
                 Ready = true; };
 
             loader.RunWorkerAsync();
+        }
+
+        private static float MachineTime(float user, int length)
+        {
+            float factor = (float)Math.Pow(1.12, (double)length / (double)Manager.AverageLength);
+
+            float time = (Manager.AverageTime - ( user / factor ));
+
+            if (time < 0) { return 0f; }
+
+            time *= ((float)Random.Shared.Next(100, 120) / 100f);
+
+            return time;
         }
     }
 }

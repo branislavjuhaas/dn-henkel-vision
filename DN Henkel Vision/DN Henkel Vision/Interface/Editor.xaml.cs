@@ -37,6 +37,10 @@ namespace DN_Henkel_Vision.Interface
         private bool _locked;
         private bool _reviewing;
 
+        private bool _counting;
+
+        private DateTime _begin;
+
         public Preview CurrentPreview;
 
         /// <summary>
@@ -97,12 +101,20 @@ namespace DN_Henkel_Vision.Interface
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 FaultPush();
+                return;
             }
-            else if (e.Key == VirtualKey.Tab && Tact.Content.ToString() != "Cause" && !_locked)
+            
+            if (e.Key == VirtualKey.Tab && Tact.Content.ToString() != "Cause" && !_locked)
             {
                 Lock();
                 e.Handled = true;
             }
+
+            if (_counting) { return; }
+
+            _begin = DateTime.UtcNow;
+
+            _counting = true;
         }
 
         /// <summary>
@@ -264,7 +276,11 @@ namespace DN_Henkel_Vision.Interface
                 placement = NetstalPlacement.Content.ToString();
             }
 
-            Fault input = new(FaultInput.Text, Tact.Content.ToString()) { Placement = placement };
+            _counting = false;
+
+            float user = (float)(DateTime.UtcNow - _begin).TotalMinutes + Manager.Addition;
+
+            Fault input = new(FaultInput.Text, Tact.Content.ToString()) { Placement = placement, UserTime = user };
 
             Manager.Selected.PendingFaults.Add(input);
 

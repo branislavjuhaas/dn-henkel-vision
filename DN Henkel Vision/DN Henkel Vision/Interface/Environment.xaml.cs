@@ -204,8 +204,14 @@ namespace DN_Henkel_Vision.Interface
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
+            Manager.UpdateRegistry();
             OrdersPanel_Select(string.Empty);
             Workspace.Navigate(typeof(Exports));
+        }
+
+        private void Environment_Closed(object sender, WindowEventArgs args)
+        {
+            Drive.SaveRegistry();
         }
     }
 }

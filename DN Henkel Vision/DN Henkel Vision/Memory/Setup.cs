@@ -15,12 +15,16 @@ namespace DN_Henkel_Vision.Memory
             Directory.CreateDirectory(s_regdir);
             Directory.CreateDirectory(s_orders);
             
-            Write(s_registry, "38 655 127\t1000\t1000\t1\n38 621 846\t1000\t1000\t1\n38 621 848\t1000\t1000\t1\n2023  0001\t1000\t1000\t1");
+            Write(s_registry, "38 655 127\t0\t0\t0\t0\n38 621 846\t0\t0\t0\t0\n38 621 848\t0\t0\t0\t0\n2023  0001\t0\t0\t0\t0");
+
+            Write(s_exports, "26062023\n100\t60\t100\t40\n500\t120\t500\t140");
 
             Write(CreateFaultsPath("38 655 127"), "Preview:\nPending:");
             Write(CreateFaultsPath("38 621 846"), "Preview:\nPending:");
             Write(CreateFaultsPath("38 621 848"), "Preview:\nPending:");
             Write(CreateFaultsPath("2023  0001"), "Preview:\nPending:");
+
+            Write(s_system, string.Empty);
         }
     }
 }

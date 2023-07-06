@@ -11,26 +11,22 @@ namespace DN_Henkel_Vision.Memory
     {
         #region Export Constants
 
-        public const int Complete = 0;
-        public const int Exported = 1;
-        public const int Partial = 2;
-
         #endregion
 
         public string OrderNumber;
 
-        public int User;
-        public int Machine;
+        public float User;
+        public float Machine;
 
-        public int OrderTotalTime;
-        public int ExportModifiedTime;
+        public float OrderTotalTime;
+        public float ExportModifiedTime;
 
         public ObservableCollection<Fault> Faults = new();
         public List<Fault> Loader = new();
         public List<Fault> PendingFaults = new();
         public List<Fault> ReviewFaults = new();
 
-        public int State = Complete;
+        public int Exports;
 
         /// <summary>
         /// This Bool checks if the order is a Netstal order.

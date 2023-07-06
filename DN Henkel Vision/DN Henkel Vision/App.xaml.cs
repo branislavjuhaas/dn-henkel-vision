@@ -34,6 +34,7 @@ namespace DN_Henkel_Vision
         {
             environment = new Interface.Environment();
             environment.Activate();
+            Manager.CurrentWindow = environment;
         }
 
         /// <summary>

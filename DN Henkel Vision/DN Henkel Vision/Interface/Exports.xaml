@@ -6,6 +6,7 @@
     xmlns:local="using:DN_Henkel_Vision.Interface"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:memory="using:DN_Henkel_Vision.Memory"
     mc:Ignorable="d">
 
     <Grid RowSpacing="2">
@@ -130,10 +131,11 @@
                 Margin="20,20,20,0"
                 VerticalAlignment="Top">
                 <ComboBox
-                    x:Name="GraphType"
+                    x:Name="Type"
                     Width="150"
                     SelectedIndex="0"
-                    VerticalAlignment="Top">
+                    VerticalAlignment="Top"
+                    SelectionChanged="Type_SelectionChanged">
                     <x:String>Service</x:String>
                     <x:String>Export</x:String>
                 </ComboBox>
@@ -155,15 +157,23 @@
                 Width="778"
                 Margin="20,72,20,20">
                 <TextBlock
-                    Text="24h"
+                    x:Name="FullTime"
+                    Text="{x:Bind memory:Export.GraphTime(0)}"
                     FontSize="11"
                     Margin="20,12"
-                    Opacity="0.7"/>
+                    Opacity="0.7"
+                    Width="20"
+                    HorizontalAlignment="Left"
+                    TextAlignment="Right"/>
                 <TextBlock
-                    Text="12h"
+                    x:Name="HalfTime"
+                    Text="{x:Bind memory:Export.GraphTime(1)}"
                     FontSize="11"
                     Margin="20,91"
-                    Opacity="0.7"/>
+                    Opacity="0.7"
+                    Width="20"
+                    HorizontalAlignment="Left"
+                    TextAlignment="Right"/>
                 <Grid
                     Margin="43,20,20,20"
                     CornerRadius="0,0,4,4"
@@ -171,14 +181,14 @@
                     <ItemsRepeater
                         x:Name="BackGraph"
                         ItemTemplate="{StaticResource BackGraph}"
-                        ItemsSource="{x:Bind BackHeights}"
+                        ItemsSource="{x:Bind memory:Export.MachServiceGraph}"
                         Layout="{StaticResource GraphLayout}"
                         Width="Auto"
                         HorizontalAlignment="Right"/>
                     <ItemsRepeater
                         x:Name="FrontGraph"
                         ItemTemplate="{StaticResource FrontGraph}"
-                        ItemsSource="{x:Bind FrontHeights}"
+                        ItemsSource="{x:Bind memory:Export.UserServiceGraph}"
                         Layout="{StaticResource GraphLayout}"
                         Width="Auto"
                         HorizontalAlignment="Right"/>
@@ -242,6 +252,117 @@
                         Width="30"/>
                 </StackPanel>
             </Grid>
+        </Grid>
+        <Grid
+            Background="{ThemeResource CardBackgroundFillColorDefault}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultSolid}" 
+            Grid.Row="2"
+            BorderThickness="1,1,0,0"
+            CornerRadius="4,0,0,0">
+            <Grid
+                Margin="20,20,20,76"
+                ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox
+                    Name="Category"
+                    Header="Category"
+                    HorizontalAlignment="Stretch"
+                    SelectedIndex="0"
+                    Grid.Column="0"
+                    SelectionChanged="Category_SelectionChanged">
+                    <x:String>Auftrag</x:String>
+                    <x:String>Netstal</x:String>
+                </ComboBox>
+                <ComboBox
+                    Name="Criterium"
+                    Header="Criterium"
+                    HorizontalAlignment="Stretch"
+                    SelectedIndex="0"
+                    Grid.Column="1"
+                    SelectionChanged="Criterium_SelectionChanged">
+                    <x:String>Everything</x:String>
+                    <x:String>Humanity</x:String>
+                    <x:String>Duration</x:String>
+                </ComboBox>
+                <NumberBox
+                    x:Name="Selected"
+                    Height="59"
+                    Header="Selected Time"
+                    PlaceholderText="0"
+                    VerticalAlignment="Top"
+                    IsEnabled="False"
+                    Grid.Column="2"
+                    ValueChanged="Selected_ValueChanged"/>
+                <NumberBox
+                    x:Name="Display"
+                    Height="59"
+                    Header="Display Time"
+                    VerticalAlignment="Top"
+                    Grid.Column="3"/>
+                <TextBox
+                    x:Name="UserName"
+                    Height="59"
+                    Header="User Name"
+                    VerticalAlignment="Top"
+                    Grid.Column="4"/>
+                <CalendarDatePicker
+                    x:Name="RegistryDate"
+                    Header="Registration Date"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Grid.Column="5"
+                    Date="{x:Bind _today}"/>
+
+            </Grid>
+
+            <Grid  
+                Background="{ThemeResource CardBackgroundFillColorDefault}"
+                CornerRadius="4"
+                Height="36"
+                VerticalAlignment="Bottom"
+                Margin="20,20,190,20">
+                <StackPanel
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Padding="35,0">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        Glyph="&#xED5A;"
+                        FontSize="16"
+                        HorizontalAlignment="Left"
+                        Margin="9,0"/>
+                    <TextBlock
+                        Text="{x:Bind _totalTime}"
+                        VerticalAlignment="Center"/>
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
+                        Glyph="&#xE77B;"
+                        FontSize="16"
+                        HorizontalAlignment="Left"
+                        Margin="9,0"/>
+                    <TextBlock
+                        Text="{x:Bind _userTime}"
+                        VerticalAlignment="Center"
+                        Margin="0,0,8,0"/>
+                </StackPanel>
+            </Grid>
+            <Button
+                x:Name="Exporter"
+                Margin="20"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Content="Export"
+                Width="150"
+                Height="36"
+                Click="Exporter_Click"/>
         </Grid>
     </Grid>
 </Page>

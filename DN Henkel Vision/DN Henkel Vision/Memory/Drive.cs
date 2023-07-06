@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Windows.Storage.Pickers;
+using Windows.Storage.Provider;
+using Windows.Storage;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -44,22 +49,37 @@ namespace DN_Henkel_Vision.Memory
             Manager.OrdersRegistry.Clear();
             Manager.Users.Clear();
             Manager.Machines.Clear();
-            Manager.States.Clear();
+            Manager.Exports.Clear();
+            Manager.Contents.Clear();
             
             string source = Read(s_registry);
 
             foreach (string order in source.Split('\n'))
             {
+                if (order == string.Empty) { continue; }
+
                 string[] parameters = order.Split('\t');
                 Manager.OrdersRegistry.Add(parameters[0]);
                 Manager.Users.Add(Int32.Parse(parameters[1]));
                 Manager.Machines.Add(Int32.Parse(parameters[2]));
-                Manager.States.Add(Int32.Parse(parameters[3]));
+                Manager.Exports.Add(Int32.Parse(parameters[3]));
+                Manager.Contents.Add(Int32.Parse(parameters[4]));
 
-                if (parameters[3] == "0") { continue; }
+                if (Int32.Parse(parameters[3]) >= Int32.Parse(parameters[4])) { continue; }
 
                 Export.Unexported.Add(parameters[0]);
             }
+        }
+
+        public static void SaveRegistry()
+        {
+            string output = "";
+            for (int i = 0; i < Manager.OrdersRegistry.Count; i++)
+            {
+                output += $"{Manager.OrdersRegistry[i]}\t{Manager.Users[i]}\t{Manager.Machines[i]}\t{Manager.Exports[i]}\t{Manager.Contents[i]}\n";
+            }
+            output += $"SP{Export.AuftragSplitter}\t{Export.NetstalSplitter}";
+            Write(s_registry, output);
         }
 
         public static List<Fault>[] LoadFaults(string orderNumber)
@@ -165,6 +185,79 @@ namespace DN_Henkel_Vision.Memory
             if (!File.Exists(file))
             {
                 File.Create(file);
+            }
+        }
+
+        public static void LoadExportHistory()
+        {
+            string[] source = Read(s_exports).Split('\n');
+
+            int[] datea = new int[3];
+
+            datea[0] = Int32.Parse(source[0].Substring(0,2));
+            datea[1] = Int32.Parse(source[0].Substring(2,2));
+            datea[2] = Int32.Parse(source[0].Substring(4));
+
+            DateTime date = new DateTime(datea[2], datea[1], datea[0]);
+
+            int offset = (int)(DateTime.UtcNow - date).TotalDays;
+
+            int x = 1;
+            for (int i = Export.GraphicalCount - offset - 1; i >= 0; i--)
+            {
+                if (x >= source.Length) { continue; }
+
+                if (source[x] == "\n") { x++; continue; }
+
+                string[] parts = source[x].Split("\t");
+
+                Export.UserService[i] = (float)Int32.Parse(parts[0]) / 60f;
+                Export.MachService[i] = (float)Int32.Parse(parts[1]) / 60f;
+
+                Export.UserExports[i] = (float)Int32.Parse(parts[2]) / 60f;
+                Export.MachExports[i] = (float)Int32.Parse(parts[3]) / 60f;
+
+                x++;
+            }
+        }
+
+        public static async void DialogSave(string content, bool netstal = false)
+        {
+            string filetype = ".dnha";
+            string filetext = "Auftrag File";
+
+            if (netstal)
+            {
+                filetype = ".dnhn";
+                filetext = "Netstal File";
+            }
+            
+            FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
+
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(Manager.CurrentWindow);
+
+            // Initialize the file picker with the window handle (HWND).
+            WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
+
+            // Set options for your file picker
+            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            // Dropdown of file types the user can save the file as
+            savePicker.FileTypeChoices.Add(filetext, new List<string>() { filetype });
+
+            // Open the picker for the user to pick a file
+            StorageFile file = await savePicker.PickSaveFileAsync();
+            if (file != null)
+            {
+                // Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
+                CachedFileManager.DeferUpdates(file);
+
+                using (var stream = await file.OpenStreamForWriteAsync())
+                {
+                    using (var tw = new StreamWriter(stream))
+                    {
+                        tw.Write(content);
+                    }
+                }
             }
         }
     }

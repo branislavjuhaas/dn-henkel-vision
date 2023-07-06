@@ -1,4 +1,5 @@
 ﻿using DN_Henkel_Vision.Interface;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,13 +15,20 @@ namespace DN_Henkel_Vision.Memory
         public static List<string> OrdersRegistry = new();
         public static List<int> Users = new();
         public static List<int> Machines = new();
-        public static List<int> States = new();
+        public static List<int> Exports = new();
+        public static List<int> Contents = new();
 
         public static ObservableCollection<string> VisualRegistry = new();
 
         public static Order Selected = new();
 
         public static Editor CurrentEditor;
+        public static Window CurrentWindow;
+
+        public static readonly float Addition = 0.17f;
+        public static readonly float AverageTime = 1f;
+
+        public static readonly float AverageLength = 33.09f; // 33.09144927536232 : average of 13 800 samples length
 
         /// <summary>
         /// This method initializes the global memory of the application.
@@ -32,6 +40,8 @@ namespace DN_Henkel_Vision.Memory
 
             Drive.LoadRegistry();
             VisualRegistry = new(OrdersRegistry);
+            Drive.LoadExportHistory();
+            Export.Evaluate();
         }
 
         /// <summary>
@@ -40,19 +50,25 @@ namespace DN_Henkel_Vision.Memory
         /// <param name="orderNumber">Number of the order.</param>
         public static void SelectOrder(string orderNumber)
         {
-            if (Selected.OrderNumber == null) { Selected = new() { OrderNumber = orderNumber }; return; }
-            
-            int index = OrdersRegistry.IndexOf(Selected.OrderNumber);
+            if (Selected.OrderNumber == null)
+            {
+                int inx = OrdersRegistry.IndexOf(orderNumber);
 
-            Users[index] = Selected.User;
-            Machines[index] = Selected.Machine;
-            States[index] = Selected.State;
+                Selected = new() { OrderNumber = orderNumber,
+                    User = Users[inx],
+                    Machine = Machines[inx],
+                    Exports = Exports[inx] };
+
+                return;
+            }
+
+            UpdateRegistry();
 
             Drive.SaveFaults(Selected.OrderNumber, Selected.Faults.ToList(), Selected.ReviewFaults, Selected.PendingFaults);
 
             List<Fault>[] faults = Drive.LoadFaults(orderNumber);
             
-            index = OrdersRegistry.IndexOf(orderNumber);
+            int index = OrdersRegistry.IndexOf(orderNumber);
 
             Selected = new() {
                 OrderNumber = orderNumber,
@@ -61,7 +77,7 @@ namespace DN_Henkel_Vision.Memory
                 PendingFaults = faults[2],
                 User = Users[index],
                 Machine = Machines[index],
-                State = States[index]
+                Exports = Exports[index]
             };
 
             if (Selected.ReviewFaults.Count > 0)
@@ -69,6 +85,21 @@ namespace DN_Henkel_Vision.Memory
                 Cache.CurrentReview = 0;
                 Cache.LastPlacement = Selected.ReviewFaults[0].Placement;
                 
+            }
+        }
+
+        public static void UpdateRegistry()
+        {
+            int index = OrdersRegistry.IndexOf(Selected.OrderNumber);
+
+            Users[index] = (int)Math.Ceiling(Selected.User);
+            Machines[index] = (int)Math.Ceiling(Selected.Machine);
+            Exports[index] = Selected.Exports;
+            Contents[index] = Selected.Faults.Count;
+
+            if (!Export.Unexported.Contains(Selected.OrderNumber) && Exports[index] < Contents[index])
+            {
+                Export.Unexported.Add(Selected.OrderNumber);
             }
         }
 
