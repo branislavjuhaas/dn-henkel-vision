@@ -9,6 +9,5 @@ namespace DN_Henkel_Vision.Memory
     internal class Settings
     {
         public static bool SetAutoTesting = true;
-        public static string Dating = "d.M.yyyy";
     }
 }

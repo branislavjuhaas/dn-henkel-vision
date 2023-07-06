@@ -11,15 +11,16 @@ namespace DN_Henkel_Vision.Memory
 {
     internal class Export : Drive
     {
-        private static string s_header = "SZSK2ZZ69JA93CDNHENKELVISION84SAW4K7DNHENKELVISIONXNESVGSYDNHENKELVISIONFMRR4YD5DNHENKELVISION3VY0RS\n"
-                                       + "LQZF15    N85J1DNHENKELVISIONJXG7Z5PEDNHENKELVISIONPXBXJCHRDNHENKELVISION50PUYSK7DNHENKELVISIONTU6EP\n"
-                                       + "S1PX  6N  02W7Q3DNHENKELVISION2YCSP43WDNHENKELVISIONCFFQAQT2DNHENKELVISIONTG8W2H03DNHENKELVISION7UTJ\n"
-                                       + "4C9Y  BL    R50EUDNHENKELVISIONCE6WZVLGDNHENKELVISION52FPJS6PDNHENKELVISION1K3U7H63DNHENKELVISIONWYA\n"
-                                       + "QLNF  16X1  V1ALR7DNHENKELVISIONTJH0LHPSDNHENKELVISIONQN0USUBXDNHENKELVISIONK7AX8B21DNHENKELVISION4Z\n"
-                                       + "Y3  F0LGYV4LFQ0QTGQDNHENKELVISION3QHAW00HDNHENKELVISIONEJGLJTWJDNHENKELVISION7CB9J59GDNHENKELVISIONH\n";
+        private static string s_header = "SZSK2ZZ69JA93CDNHENKELVISION84SAW4K7DNHENKELVISIONXNESVGSYDNHENKELVISIONFMRR4YD5DNHENKELVISION3VY0RS\r\n"
+                                       + "LQZF15    N85J1DNHENKELVISIONJXG7Z5PEDNHENKELVISIONPXBXJCHRDNHENKELVISION50PUYSK7DNHENKELVISIONTU6EP\r\n"
+                                       + "S1PX  6N  02W7Q3DNHENKELVISION2YCSP43WDNHENKELVISIONCFFQAQT2DNHENKELVISIONTG8W2H03DNHENKELVISION7UTJ\r\n"
+                                       + "4C9Y  BL    R50EUDNHENKELVISIONCE6WZVLGDNHENKELVISION52FPJS6PDNHENKELVISION1K3U7H63DNHENKELVISIONWYA\r\n"
+                                       + "QLNF  16X1  V1ALR7DNHENKELVISIONTJH0LHPSDNHENKELVISIONQN0USUBXDNHENKELVISIONK7AX8B21DNHENKELVISION4Z\r\n"
+                                       + "Y3  F0LGYV4LFQ0QTGQDNHENKELVISION3QHAW00HDNHENKELVISIONEJGLJTWJDNHENKELVISION7CB9J59GDNHENKELVISIONH\r\n";
 
         private static string s_adnetstal = "NWEWT0SCTTAEL1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION";
         private static string s_adauftrag = "AWUWF0TCRTAEG1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION";
+        private static string s_adauftragfeauf = "AWUWF0TCRTAEG1FBANUCFNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION";
 
 
         public static int GraphicalCount = 36;
@@ -166,7 +167,7 @@ namespace DN_Henkel_Vision.Memory
 
                 for (int i = Manager.Exports[index]; i < exports.Length; i++)
                 {
-                    output += "\n" + (exports[i].Export(order, username, date.ToString(Settings.Dating)));
+                    output += "\r\n" + (exports[i].Export(order, username, date.ToString("yyyy-MM-dd")));
                     remain -= timeperfault;
                     ex++;
                     if (remain <= 0f) { break; }
@@ -244,10 +245,10 @@ namespace DN_Henkel_Vision.Memory
 
         public static void HeaderReplace( ref string pseudoheader, ref List<int> replacedindex, ref List<char> replacedvalue, int index, char replacement )
         {
-            while (pseudoheader.ToCharArray()[index] == '#' || pseudoheader.ToCharArray()[index] == ' ' || pseudoheader.ToCharArray()[index] == '$' || pseudoheader.ToCharArray()[index] == '@' || pseudoheader.ToCharArray()[index] == '\n') 
+            while (pseudoheader.ToCharArray()[index] == '#' || pseudoheader.ToCharArray()[index] == ' ' || pseudoheader.ToCharArray()[index] == '$' || pseudoheader.ToCharArray()[index] == '\r' || pseudoheader.ToCharArray()[index] == '\n') 
             {
                 index += 2; 
-                if (index >= 605) { index = 0; }
+                if (index >= pseudoheader.Length) { index = 0; }
             }
 
             replacedindex.Add(index);
