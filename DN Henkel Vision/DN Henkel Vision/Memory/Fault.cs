@@ -9,7 +9,7 @@ namespace DN_Henkel_Vision.Memory
     /// <summary>
     /// The fault class storing all the pieces of information about a fault.
     /// </summary>
-    public class Fault : Order
+    public class Fault
     {
         public string Placement;
         public string Component;
