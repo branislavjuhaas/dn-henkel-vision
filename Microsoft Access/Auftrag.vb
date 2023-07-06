@@ -1,7 +1,7 @@
 Private Sub Import()
     
     '************************************************************************
-    '  Product Name: DN Database Import Auftrag 1.1
+    '  Product Name: DN Database Import Auftrag 1.7
     '  Author: Branislav Juhás
     '  Date: 2022-7-4
     '  Part of the DN Software Heritage
@@ -10,20 +10,24 @@ Private Sub Import()
     ' Declarations
     Dim Content() As String
     Dim File As Object
-    Dim Header As String
+    Dim AHeader As String
+    Dim FHeader As String
     Dim I As Long
     Dim ID As Long
     Dim Inputs() As String
     Dim Path As String
     Dim PathNotNull As Boolean
+    Dim Fauf As Boolean
     Dim Skipped As Integer
 
-    Header = "AWUWF0TCRTAEG1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION"
+    AHeader = "AWUWF0TCRTAEG1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION"
+    FHeader = "AWUWF0TCRTAEG1FBANUCFNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION"
 
     ' Open the file dialog and get the selected file path
     With Application.FileDialog(3)
         .AllowMultiSelect = False
         .Filters.Clear
+        .Filters.Add "DN Fauf Import File", "*.dnff", 1
         .Filters.Add "DN Auftrag Import File", "*.dnfa", 1
         .Show
 
@@ -49,9 +53,13 @@ Private Sub Import()
         File.Close
         Set File = Nothing
         
-        ' Check if the file is in the correct format
-        If Content(6) <> Header Then
-            MsgBox "Selected file is not valid Netstal Export Format", vbCritical, "Error"
+        ' Check if the file is in the correct format and decide if it is Fauf
+        If Content(6) = AHeader Then
+            Fauf = False
+        ElseIf Content(6) = FHeader Then
+            Fauf = True
+        Else
+            MsgBox "Selected file is not valid DN Auftrag Import File format", vbCritical, "Error"
             Exit Sub
         End If
         
@@ -62,9 +70,14 @@ Private Sub Import()
             ' Check if the array contains enough elements
             If (UBound(Inputs) - LBound(Inputs) >= 8) Then
 
-                ' Check if the first column is not empty and insert the record
+                ' Check if the first column is not empty and insert the record based on the Fauf value
                 If Inputs(0) <> "" Then
-                    CurrentDb.Execute "INSERT INTO Fehler (Auftragsnummer) VALUES ('" & Inputs(0) & "');", dbFailOnError
+                    If Fauf = False Then
+                        CurrentDb.Execute "INSERT INTO Fehler (Auftragsnummer) VALUES ('" & Inputs(0) & "');", dbFailOnError
+                    Else
+                        CurrentDb.Execute "INSERT INTO Fehler (Fauf) VALUES ('" & Inputs(0) & "');", dbFailOnError
+                    End If
+
                     ID = CurrentDb.OpenRecordset("SELECT @@IDENTITY AS ID").Fields("ID").Value
                     
                     ' Update the values for each column
@@ -90,7 +103,7 @@ Private Sub Import()
                         CurrentDb.Execute "UPDATE Fehler SET Name = '" & Inputs(7) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
                     If Inputs(8) <> "" Then
-                        CurrentDb.Execute "UPDATE Fehler SET Erfassungsdatum = '" & Inputs(8) & "' WHERE ID = " & ID & ";", dbFailOnError
+                        CurrentDb.Execute "UPDATE Fehler SET Erfassungsdatum = '" & CDate(Inputs(8)) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
                     CurrentDb.Execute "UPDATE Fehler SET Klassifizierung_NR = 0 WHERE ID = " & ID & ";", dbFailOnError
                     CurrentDb.Execute "UPDATE Fehler SET Zeit = 0 WHERE ID = " & ID & ";", dbFailOnError
@@ -103,7 +116,7 @@ Private Sub Import()
         Next I
 
         ' Write the reprt to the user
-        msgBox "Import finished succesfully:" & vbCrLf & I - 7 - Skipped & " records imported. " & vbCrLf & Skipped & " records skipped.", vbInformation, "Finished"
+        MsgBox "DN Import finished succesfully:" & vbCrLf & vbCrLf & "Records imported:       " & I - 7 - Skipped & vbCrLf & "Records skipped:         " & Skipped, vbInformation, "DN Import Finished"
 
     End If
 

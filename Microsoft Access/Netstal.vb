@@ -1,7 +1,7 @@
 Private Sub Import()
     
     '************************************************************************
-    '  Product Name: DN Database Import Netstal 1.3
+    '  Product Name: DN Database Import Netstal 1.5
     '  Author: Branislav Juhás
     '  Date: 2022-7-4
     '  Part of the DN Software Heritage
@@ -51,7 +51,7 @@ Private Sub Import()
         
         ' Check if the file is in the correct format
         If Content(6) <> Header Then
-            MsgBox "Selected file is not valid Netstal Export Format", vbCritical, "Error"
+            MsgBox "Selected file is not valid DN Netstal Import File format", vbCritical, "Error"
             Exit Sub
         End If
         
@@ -90,7 +90,7 @@ Private Sub Import()
                         CurrentDb.Execute "UPDATE T_Fehler SET UserName = '" & Inputs(7) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
                     If Inputs(8) <> "" Then
-                        CurrentDb.Execute "UPDATE T_Fehler SET Erfassungsdatum = '" & Inputs(8) & "' WHERE ID = " & ID & ";", dbFailOnError
+                        CurrentDb.Execute "UPDATE T_Fehler SET Erfassungsdatum = '" & CDate(Inputs(8)) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
                     CurrentDb.Execute "UPDATE T_Fehler SET Klassifizierung_NR = 0 WHERE ID = " & ID & ";", dbFailOnError
                     CurrentDb.Execute "UPDATE T_Fehler SET Zeit = 0 WHERE ID = " & ID & ";", dbFailOnError
@@ -103,7 +103,7 @@ Private Sub Import()
         Next I
 
         ' Write the reprt to the user
-        msgBox "Import finished succesfully:" & vbCrLf & I - 7 - Skipped & " records imported. " & vbCrLf & Skipped & " records skipped.", vbInformation, "Finished"
+        MsgBox "DN Import finished succesfully:" & vbCrLf & vbCrLf & "Records imported:       " & I - 7 - Skipped & vbCrLf & "Records skipped:         " & Skipped, vbInformation, "DN Import Finished"
 
     End If
 
