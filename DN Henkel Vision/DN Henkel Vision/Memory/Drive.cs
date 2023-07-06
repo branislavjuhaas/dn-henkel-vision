@@ -18,12 +18,12 @@ namespace DN_Henkel_Vision.Memory
 
         #region File Paths
 
-        internal static readonly string s_regdir =   $"{Folder}\\FileSystem\\Registry\\";
+        internal static readonly string s_regdir =   $"{Folder}\\Files\\Registry\\";
 
-        internal static readonly string s_system =      $"{Folder}\\FileSystem\\System.dntf";
-        internal static readonly string s_orders =      $"{Folder}\\FileSystem\\Orders\\";
-        internal static readonly string s_registry =    $"{Folder}\\FileSystem\\Registry\\Registry.dntf";
-        internal static readonly string s_exports =     $"{Folder}\\FileSystem\\Registry\\Exports.dntf";
+        internal static readonly string s_system =      $"{Folder}\\Files\\System.dntf";
+        internal static readonly string s_orders =      $"{Folder}\\Files\\Orders\\";
+        internal static readonly string s_registry =    $"{Folder}\\Files\\Registry\\Registry.dntf";
+        internal static readonly string s_exports =     $"{Folder}\\Files\\Registry\\Exports.dntf";
         
         #endregion
 
@@ -78,7 +78,6 @@ namespace DN_Henkel_Vision.Memory
             {
                 output += $"{Manager.OrdersRegistry[i]}\t{Manager.Users[i]}\t{Manager.Machines[i]}\t{Manager.Exports[i]}\t{Manager.Contents[i]}\n";
             }
-            output += $"SP{Export.AuftragSplitter}\t{Export.NetstalSplitter}";
             Write(s_registry, output);
         }
 
@@ -223,13 +222,13 @@ namespace DN_Henkel_Vision.Memory
 
         public static async void DialogSave(string content, bool netstal = false)
         {
-            string filetype = ".dnha";
-            string filetext = "Auftrag File";
+            string filetype = ".dnfa";
+            string filetext = "DN Auftrag Export File";
 
             if (netstal)
             {
-                filetype = ".dnhn";
-                filetext = "Netstal File";
+                filetype = ".dnfn";
+                filetext = "DN Netstal Export File";
             }
             
             FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();

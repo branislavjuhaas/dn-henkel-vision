@@ -108,7 +108,7 @@ namespace DN_Henkel_Vision.Interface
             ApproveFault(true);
         }
 
-        private void ApproveFault(bool keep = false)
+        public void ApproveFault(bool keep = false)
         {
             Manager.Selected.Faults.Add(PrepareFault());
 

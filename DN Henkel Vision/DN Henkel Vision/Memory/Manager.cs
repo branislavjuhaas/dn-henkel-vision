@@ -113,5 +113,17 @@ namespace DN_Henkel_Vision.Memory
             Cache.LastIndex++;
             return Cache.LastIndex;
         }
+
+        public static void CreateOrder(string order)
+        {
+            OrdersRegistry.Add(order);
+            VisualRegistry.Add(order);
+            Users.Add(0);
+            Machines.Add(0);
+            Exports.Add(0);
+            Contents.Add(0);
+
+            Drive.SaveFaults(order, new(), new(), new());
+        }
     }
 }

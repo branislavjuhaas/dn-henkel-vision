@@ -77,9 +77,9 @@ namespace DN_Henkel_Vision.Felber
         {
             if (input.Cause == "" || input.Cause == "Cause")
             {
-                if (s_orderNumber.StartsWith("20")) { return PredictLimitedFault(input); }
-                
-                input.Cause = PredictCause(input.Description);
+                if (s_orderNumber.StartsWith("20") && Settings.SetAutoTesting) { input.Cause = "Testing"; }
+                else if (s_orderNumber.StartsWith("20")){ return PredictLimitedFault(input); }
+                else { input.Cause = PredictCause(input.Description); }
             }
             
             Fault output = new(input.Description, input.Cause);

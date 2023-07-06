@@ -122,6 +122,8 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         private void OrdersPanel_Loaded(object sender, RoutedEventArgs e)
         {
+            if (Manager.OrdersRegistry.Count == 0) { return; }
+            
             OrdersPanel_Select(Manager.OrdersRegistry[0]);
         }
 
@@ -181,7 +183,7 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="input">input string</param>
         /// <returns>Formatted string in (net)'xxxx  xxxx' and (ord)'xx xxx xxx'</returns>
-        private static string Format(string input)
+        public static string Format(string input)
         {
             string output = input;
 
@@ -205,6 +207,7 @@ namespace DN_Henkel_Vision.Interface
         private void Export_Click(object sender, RoutedEventArgs e)
         {
             Manager.UpdateRegistry();
+            Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
             OrdersPanel_Select(string.Empty);
             Workspace.Navigate(typeof(Exports));
         }
@@ -212,6 +215,45 @@ namespace DN_Henkel_Vision.Interface
         private void Environment_Closed(object sender, WindowEventArgs args)
         {
             Drive.SaveRegistry();
+        }
+
+        private  async void Create_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog OrderDialog = new ContentDialog();
+
+            OrderDialog.XamlRoot = Manager.CurrentWindow.Content.XamlRoot;
+            OrderDialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            OrderDialog.Title = "Create Order";
+            OrderDialog.PrimaryButtonText = "Create";
+            OrderDialog.CloseButtonText = "Cancel";
+            OrderDialog.DefaultButton = ContentDialogButton.Primary;
+            OrderDialog.Content = new Order();
+            OrderDialog.Loaded += OrderDialog_Loaded;
+
+            ContentDialogResult result = await OrderDialog.ShowAsync();
+
+            if (result != ContentDialogResult.Primary) { return; }
+            
+            string chip = ((Order)OrderDialog.Content).CategoryText.Text;
+
+            if (chip == "Invalid" || chip == "Existing") { return; }
+
+            Manager.CreateOrder(((Order)OrderDialog.Content).Number.Text);
+        }
+
+        private void OrderDialog_Loaded(object sender, RoutedEventArgs e)
+        {
+            var parent = VisualTreeHelper.GetParent((DependencyObject)sender);
+            var child = VisualTreeHelper.GetChild(parent, 0);
+            var frame = (Microsoft.UI.Xaml.Shapes.Rectangle)child;
+            frame.Margin = new Thickness(0);
+            frame.RegisterPropertyChangedCallback(
+                FrameworkElement.MarginProperty,
+                (DependencyObject sender, DependencyProperty dp) =>
+                {
+                    if (dp == FrameworkElement.MarginProperty)
+                        sender.ClearValue(dp);
+                });
         }
     }
 }

@@ -107,7 +107,4 @@ Private Sub Import()
 
     End If
 
-    ' Refresh the form
-    Forms!F_Fehlerformular.Refresh
-
 End Sub

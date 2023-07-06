@@ -145,7 +145,8 @@
                             Width="32"
                             Background="Transparent"
                             BorderBrush="Transparent"
-                            Margin="256,0,0,0">
+                            Margin="256,0,0,0"
+                            Click="Create_Click">
 
                             <FontIcon
                                 FontFamily="Segoe Fluent Icons"

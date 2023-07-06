@@ -18,8 +18,8 @@ namespace DN_Henkel_Vision.Memory
                                        + "QLNF  16X1  V1ALR7DNHENKELVISIONTJH0LHPSDNHENKELVISIONQN0USUBXDNHENKELVISIONK7AX8B21DNHENKELVISION4Z\n"
                                        + "Y3  F0LGYV4LFQ0QTGQDNHENKELVISION3QHAW00HDNHENKELVISIONEJGLJTWJDNHENKELVISION7CB9J59GDNHENKELVISIONH\n";
 
-        private static string s_adnetstal = "NWEWT0SCTTAEL1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION\n";
-        private static string s_adauftrag = "AWUWF0TCRTAEG1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION\n";
+        private static string s_adnetstal = "NWEWT0SCTTAEL1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION";
+        private static string s_adauftrag = "AWUWF0TCRTAEG1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION";
 
 
         public static int GraphicalCount = 36;
@@ -166,7 +166,7 @@ namespace DN_Henkel_Vision.Memory
 
                 for (int i = Manager.Exports[index]; i < exports.Length; i++)
                 {
-                    output += (exports[i].Export(order, username, date.ToString())) + "\n";
+                    output += "\n" + (exports[i].Export(order, username, date.ToString(Settings.Dating)));
                     remain -= timeperfault;
                     ex++;
                     if (remain <= 0f) { break; }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="DN_Henkel_Vision.Interface.Order"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid
+        VerticalAlignment="Stretch"
+        HorizontalAlignment="Stretch">
+        <TextBox
+            x:Name="Number"
+            x:FieldModifier="public"
+            TextWrapping="Wrap"
+            PlaceholderText="Order Number"
+            Width="400"
+            Margin="0,10,0,0"
+            Height="32"
+            Padding="10,5,62,5"
+            MaxLength="10"
+            KeyUp="Number_KeyUp"
+            />
+        <Border
+            x:Name="CategoryChip"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Margin="0,10,7,0"
+            Background="#D15E5E"
+            CornerRadius="2">
+            <TextBlock
+                x:FieldModifier="public"
+                x:Name="CategoryText"
+                Text="Invalid"
+                Margin="5,0"/>
+        </Border>
+    </Grid>
+</Page>
