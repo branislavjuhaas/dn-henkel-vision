@@ -312,7 +312,8 @@
                     Height="59"
                     Header="User Name"
                     VerticalAlignment="Top"
-                    Grid.Column="4"/>
+                    Grid.Column="4"
+                    Text="{x:Bind memory:Settings.UserName}"/>
                 <CalendarDatePicker
                     x:Name="RegistryDate"
                     Header="Registration Date"

@@ -91,12 +91,7 @@ namespace DN_Henkel_Vision.Interface
         private void FaultInput_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
-            {
-                if (IsCtrl() && _reviewing)
-                {
-                    CurrentPreview.ApproveFault();
-                }
-                
+            {               
                 FaultPush();
                 return;
             }
@@ -112,13 +107,6 @@ namespace DN_Henkel_Vision.Interface
             _begin = DateTime.UtcNow;
 
             _counting = true;
-        }
-
-        private static bool IsCtrl()
-        {
-            CoreVirtualKeyStates state = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control); 
-
-            return (state & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         }
 
         /// <summary>
@@ -354,6 +342,23 @@ namespace DN_Henkel_Vision.Interface
             Grid preview = (Grid)parent.Children[0];
             Grid changer = (Grid)parent.Children[1];
 
+            int index = FaultsList.GetElementIndex((((sender as Button).Parent as Grid).Parent as Grid).Parent as UIElement);
+
+            Manager.Selected.Faults[index].Component = ((changer.Children[0] as Grid).Children[0] as TextBox).Text;
+            Manager.Selected.Faults[index].Placement = ((changer.Children[0] as Grid).Children[1] as TextBox).Text;
+            Manager.Selected.Faults[index].Description = ((changer.Children[0] as Grid).Children[2] as TextBox).Text;
+            
+            Manager.Selected.Faults[index].Cause = ((changer.Children[1] as Grid).Children[0] as ComboBox).SelectedValue.ToString();
+            Manager.Selected.Faults[index].Classification = ((changer.Children[1] as Grid).Children[1] as ComboBox).SelectedValue.ToString();
+            Manager.Selected.Faults[index].Type = ((changer.Children[1] as Grid).Children[2] as ComboBox).SelectedValue.ToString();
+
+            Manager.Selected.Faults[index].ClassIndexes[0] = ((changer.Children[1] as Grid).Children[0] as ComboBox).SelectedIndex;
+            Manager.Selected.Faults[index].ClassIndexes[1] = ((changer.Children[1] as Grid).Children[1] as ComboBox).SelectedIndex;
+            Manager.Selected.Faults[index].ClassIndexes[2] = ((changer.Children[1] as Grid).Children[2] as ComboBox).SelectedIndex;
+
+            (preview.Children[0] as TextBlock).Text = Manager.Selected.Faults[index].Description;
+            (preview.Children[1] as TextBlock).Text = Manager.Selected.Faults[index].Cause;
+
             changer.Visibility = Visibility.Collapsed;
             preview.Visibility = Visibility.Visible;
         }
@@ -367,10 +372,17 @@ namespace DN_Henkel_Vision.Interface
 
         private void FaultsList_Loaded(object sender, RoutedEventArgs e)
         {         
-            foreach (Fault fault in Manager.Selected.Loader)
-            {
-                //Manager.Selected.Faults.Add(fault);
-            }
+
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            int index = FaultsList.GetElementIndex((((sender as Button).Parent as Grid).Parent as Grid).Parent as UIElement);
+
+            Manager.Selected.Faults.RemoveAt(index);
+
+            FaultsList.ItemTemplate = new DataTemplate();
+            FaultsList.ItemTemplate = EditorGrid.Resources["SelectiveFaultTemplate"];
         }
     }
 

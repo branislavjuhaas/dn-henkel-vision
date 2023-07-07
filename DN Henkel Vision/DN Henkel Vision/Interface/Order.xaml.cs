@@ -33,13 +33,14 @@ namespace DN_Henkel_Vision.Interface
 
         private void Number_KeyUp  (object sender, KeyRoutedEventArgs e)
         {
-            if (e.Key == Windows.System.VirtualKey.Delete || e.Key == Windows.System.VirtualKey.Back) { return; }
-            
-            int position = Number.Text.Length - Number.SelectionStart;
-            
-            Number.Text = Environment.Format(Number.Text.Replace(" ", ""));
+            if (e.Key != Windows.System.VirtualKey.Delete && e.Key != Windows.System.VirtualKey.Back)
+            {
+                int position = Number.Text.Length - Number.SelectionStart;
 
-            Number.SelectionStart = Number.Text.Length - position;
+                Number.Text = Environment.Format(Number.Text.Replace(" ", ""));
+
+                Number.SelectionStart = Number.Text.Length - position;
+            }
 
             if (Manager.OrdersRegistry.Contains(Number.Text))
             {

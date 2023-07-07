@@ -63,6 +63,8 @@ namespace DN_Henkel_Vision.Memory
         public string Export(string order, string user, string date)
         {
             string ordernumber = order.Replace(" ", "");
+
+            if (order.StartsWith("38")) { ordernumber = ordernumber.Substring(2); }
             
             return $"{ordernumber}\t{Placement}\t{Description}\t{Component}\t{Memory.Classification.OriginalCauses[ClassIndexes[0]]}\t{Memory.Classification.OriginalClassifications[ClassIndexes[0]][ClassIndexes[1]]}\t{Memory.Classification.OriginalTypes[Memory.Classification.ClassificationsPointers[ClassIndexes[0]][ClassIndexes[1]]][ClassIndexes[2]]}\t{user}\t{date}";
         }

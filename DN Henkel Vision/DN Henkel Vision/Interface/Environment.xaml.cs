@@ -29,7 +29,7 @@ namespace DN_Henkel_Vision.Interface
     public sealed partial class Environment : Window
     {
         private static string _selectedOrder = "";
-        
+
         /// <summary>
         /// Constructor of the main application's window.
         /// </summary>
@@ -45,7 +45,7 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         #pragma warning disable CA1822 // Mark members as static
         private void NavigationSearch_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-#pragma warning restore CA1822 // Mark members as static
+        #pragma warning restore CA1822 // Mark members as static
         {
             // Since selecting an item will also change the text,
             // only listen to changes caused by user entering text.

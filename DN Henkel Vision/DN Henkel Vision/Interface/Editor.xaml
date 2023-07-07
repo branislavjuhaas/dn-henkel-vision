@@ -14,6 +14,7 @@
 
     <!--The main grid for the page-->
     <Grid
+        x:Name="EditorGrid"
         RowSpacing="2">
 
         <Grid.Resources>
@@ -121,7 +122,8 @@
                                 x:Name="Delete"
                                 Width="32"
                                 Height="32"
-                                Grid.Column="3">
+                                Grid.Column="3"
+                                Click="Delete_Click">
                                 <FontIcon
                                     FontFamily="Segoe Fluent Icons"
                                     Glyph="&#xE74D;"
@@ -261,7 +263,8 @@
                                 x:Name="Delete"
                                 Width="32"
                                 Height="32"
-                                Grid.Column="3">
+                                Grid.Column="3"
+                                Click="Delete_Click">
                                 <FontIcon
                                     FontFamily="Segoe Fluent Icons"
                                     Glyph="&#xE74D;"
@@ -371,6 +374,9 @@
                     Height="33"
                     Width="103"
                     CornerRadius="4,0,0,4">
+                    <Button.KeyboardAccelerators>
+                        <KeyboardAccelerator Modifiers="Menu" Key="C"/>
+                    </Button.KeyboardAccelerators>
                     <Button.Flyout>
                         <Flyout>
                             <ScrollViewer

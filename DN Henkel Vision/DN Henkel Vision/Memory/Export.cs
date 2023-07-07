@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -204,7 +205,7 @@ namespace DN_Henkel_Vision.Memory
             int seed = ri * rii;
 
             char[] date = DateTime.Now.ToString("ddMMyy").ToCharArray();
-            char[] user = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToUpper().ToCharArray();
+            char[] user = Regex.Replace(System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToUpper(), "[^A-Z0-9]", "").ToCharArray();
             char[] version = Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace('.', 'N').ToCharArray();
 
             HeaderReplace(ref pseudoheader, ref indexes, ref values, 77, (char)ri);
@@ -218,10 +219,14 @@ namespace DN_Henkel_Vision.Memory
             HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), date[4]);
             HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), date[5]);
 
+            HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), (char)(user.Length + 65));
+
             foreach (char userchar in user)
             {
                 HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), userchar);
             }
+
+            HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), (char)(version.Length + 65));
 
             foreach (char versionchar in version)
             {

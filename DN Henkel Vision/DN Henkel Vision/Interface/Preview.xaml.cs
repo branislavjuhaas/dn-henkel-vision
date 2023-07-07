@@ -29,6 +29,8 @@ namespace DN_Henkel_Vision.Interface
     /// </summary>
     public sealed partial class Preview : Page
     {
+        private bool _fromui = false;
+        
         public ObservableCollection<string> Previews = new();
 
         public Fault Current = Manager.Selected.ReviewFaults[Cache.CurrentReview];
@@ -57,6 +59,7 @@ namespace DN_Henkel_Vision.Interface
             if (Cause.SelectedIndex >= 0)
             {   
                 Classification.ItemsSource = DN_Henkel_Vision.Memory.Classification.Classifications[((ComboBox)sender).SelectedIndex].ToList();
+                if (!_fromui) { return; }
                 Classification.Focus(FocusState.Programmatic);
                 Classification.IsDropDownOpen = true;
             }
@@ -74,6 +77,7 @@ namespace DN_Henkel_Vision.Interface
             if (Classification.SelectedIndex >= 0)
             {
                 Type.ItemsSource = DN_Henkel_Vision.Memory.Classification.Types[DN_Henkel_Vision.Memory.Classification.ClassificationsPointers[Cause.SelectedIndex][Classification.SelectedIndex]];
+                if (!_fromui) { return; }
                 Type.Focus(FocusState.Programmatic);
                 Type.IsDropDownOpen = true;
             }
@@ -236,6 +240,11 @@ namespace DN_Henkel_Vision.Interface
 
             Placement.SelectionStart = index;
             Placement.SelectionLength = length;
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            _fromui = true;
         }
     }
 }

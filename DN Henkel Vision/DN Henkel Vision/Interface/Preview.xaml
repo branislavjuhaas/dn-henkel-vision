@@ -11,7 +11,8 @@
     xmlns:memory="using:DN_Henkel_Vision.Memory"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid
+        Loaded="Grid_Loaded">
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.ThemeDictionaries>
@@ -127,6 +128,9 @@
                 Grid.Column="4"
                 IsRightTapEnabled="True"
                 Click="Approve_Click" RightTapped="Approve_RightTapped">
+                <Button.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Menu" Key="Enter"/>
+                </Button.KeyboardAccelerators>
                 <FontIcon
                     FontFamily="Segoe Fluent Icons"
                     Glyph="&#xE73E;"
