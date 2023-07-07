@@ -139,7 +139,7 @@ namespace DN_Henkel_Vision.Memory
             Types[11] = new string[] { "Wrong" };
             Types[12] = new string[] { "Missing", "Mechanically Demaged", "Missing Placement", "Wrong Placement", "Extra", "Wrong" };
             Types[13] = new string[] { "Missing", "Wrong Processing" };
-            Types[14] = new string[] { "Wrong Construction" };
+            Types[14] = new string[] { "Wrong" };
             Types[15] = new string[] { "Missing", "Wrong" };
             Types[16] = new string[] { "Missing", "Wrong" };
             Types[17] = new string[] { "Missing", "Demaged", "Wrong" };
