@@ -1,10 +1,10 @@
 Private Sub Import()
     
     '************************************************************************
-    '  Product Name: DN Database Import Netstal 1.5
-    '  Author: Branislav Juhás
-    '  Date: 2022-7-4
-    '  Part of the DN Software Heritage
+    ' Product Name: DN Database Import Netstal 1.6
+    ' Author: Branislav Juhás
+    ' Date: 2022-07-08
+    ' Part of the DN Software Heritage
     '************************************************************************
     
     ' Declarations
@@ -61,7 +61,6 @@ Private Sub Import()
             
             ' Check if the array contains enough elements
             If (UBound(Inputs) - LBound(Inputs) >= 8) Then
-
                 ' Check if the first column is not empty and insert the record
                 If Inputs(0) <> "" Then
                     CurrentDb.Execute "INSERT INTO T_Fehler (Auftragsnummer) VALUES ('" & Inputs(0) & "');", dbFailOnError
@@ -71,43 +70,47 @@ Private Sub Import()
                     If Inputs(1) <> "" Then
                         CurrentDb.Execute "UPDATE T_Fehler SET Ort = '" & Inputs(1) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
+                    
                     If Inputs(2) <> "" Then
                         CurrentDb.Execute "UPDATE T_Fehler SET Fehler = '" & Inputs(2) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
+                    
                     If Inputs(3) <> "" Then
                         CurrentDb.Execute "UPDATE T_Fehler SET BMK = '" & Inputs(3) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
+                    
                     If Inputs(4) <> "" Then
                         CurrentDb.Execute "UPDATE T_Fehler SET Verursacher = '" & Inputs(4) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
+                    
                     If Inputs(5) <> "" Then
                         CurrentDb.Execute "UPDATE T_Fehler SET Klassifizierung = '" & Inputs(5) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
+                    
                     If Inputs(6) <> "" Then
                         CurrentDb.Execute "UPDATE T_Fehler SET Fehlerart = '" & Inputs(6) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
+                    
                     If Inputs(7) <> "" Then
                         CurrentDb.Execute "UPDATE T_Fehler SET UserName = '" & Inputs(7) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
+                    
                     If Inputs(8) <> "" Then
                         CurrentDb.Execute "UPDATE T_Fehler SET Erfassungsdatum = '" & CDate(Inputs(8)) & "' WHERE ID = " & ID & ";", dbFailOnError
                     End If
+                    
                     CurrentDb.Execute "UPDATE T_Fehler SET Klassifizierung_NR = 0 WHERE ID = " & ID & ";", dbFailOnError
                     CurrentDb.Execute "UPDATE T_Fehler SET Zeit = 0 WHERE ID = " & ID & ";", dbFailOnError
                 Else
                     Skipped = Skipped + 1
                 End If
-
             End If
-
         Next I
 
-        ' Write the reprt to the user
-        MsgBox "DN Import finished succesfully:" & vbCrLf & vbCrLf & "Records imported:       " & I - 7 - Skipped & vbCrLf & "Records skipped:         " & Skipped, vbInformation, "DN Import Finished"
-
+        ' Write the report to the user
+        MsgBox "DN Import finished successfully:" & vbCrLf & vbCrLf & "Records imported:       " & I - 7 - Skipped & vbCrLf & "Records skipped:         " & Skipped, vbInformation, "DN Import Finished"
     End If
 
     ' Refresh the form
     Forms!F_Auftragsformular.Refresh
-
 End Sub
