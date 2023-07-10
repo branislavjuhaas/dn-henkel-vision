@@ -87,6 +87,9 @@ namespace DN_Henkel_Vision.Memory
             
             int index = OrdersRegistry.IndexOf(Selected.OrderNumber);
 
+            int oldusers = Users[index];
+            int oldmachs = Machines[index];
+
             Users[index] = (int)Math.Ceiling(Selected.User);
             Machines[index] = (int)Math.Ceiling(Selected.Machine);
             Exports[index] = Selected.Exports;

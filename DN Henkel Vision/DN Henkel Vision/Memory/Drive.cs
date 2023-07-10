@@ -201,7 +201,7 @@ namespace DN_Henkel_Vision.Memory
 
             DateTime date = new DateTime(datea[2], datea[1], datea[0]);
 
-            int offset = (int)(DateTime.UtcNow - date).TotalDays;
+            int offset = (int)(DateTime.Now - date).TotalDays;
 
             int x = 1;
             for (int i = Export.GraphicalCount - offset - 1; i >= 0; i--)

@@ -27,6 +27,6 @@ using System.Reflection;
     int Build = 0;
     int Patch = 0;
 
-    int Major = (int)DateTime.UtcNow.Year;
+    int Major = (int)DateTime.Now.Year;
     int Minor = 1;
 #>

@@ -1,4 +1,6 @@
-﻿namespace DN_Henkel_Vision.Memory
+﻿using System;
+
+namespace DN_Henkel_Vision.Memory
 {
     internal class Cache
     {
@@ -8,6 +10,8 @@
 
         public static int LastIndex = 0;
 
+        public static DateTime LastDate = DateTime.Now.Date;
+
         /// <summary>
         /// Clears the cache and resets all the variables.
         /// </summary>
@@ -16,6 +20,7 @@
             LastPlacement = "";
             CurrentReview = 0;
             LastIndex = 0;
+            LastDate = DateTime.Now.Date;
         }
     }
 }

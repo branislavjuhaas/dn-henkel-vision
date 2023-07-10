@@ -104,7 +104,7 @@ namespace DN_Henkel_Vision.Interface
 
             if (_counting) { return; }
 
-            _begin = DateTime.UtcNow;
+            _begin = DateTime.Now;
 
             _counting = true;
         }
@@ -270,7 +270,7 @@ namespace DN_Henkel_Vision.Interface
 
             _counting = false;
 
-            float user = (float)(DateTime.UtcNow - _begin).TotalMinutes + Manager.Addition;
+            float user = (float)(DateTime.Now - _begin).TotalMinutes + Manager.Addition;
 
             Fault input = new(FaultInput.Text, Tact.Content.ToString()) { Placement = placement, UserTime = user };
 

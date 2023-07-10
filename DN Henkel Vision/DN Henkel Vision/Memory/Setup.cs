@@ -18,7 +18,7 @@ namespace DN_Henkel_Vision.Memory
             
             Write(s_registry, "");
 
-            Write(s_exports, DateTime.UtcNow.ToString("ddMMyyyy"));
+            Write(s_exports, DateTime.Now.ToString("ddMMyyyy"));
 
             //Write(CreateFaultsPath("XX XXX XXX"), "Preview:\nPending:");
 

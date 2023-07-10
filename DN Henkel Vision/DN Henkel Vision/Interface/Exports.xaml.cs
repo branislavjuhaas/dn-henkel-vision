@@ -28,7 +28,7 @@ namespace DN_Henkel_Vision.Interface
         private string _userTime = $"{Math.Round((Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f, 2)} hours";
         private string _totalTime = $"{Math.Round(((Export.OrdersTime(Export.Unexported.ToArray()) + Export.OrdersTime(Export.Unexported.ToArray(), true, true)) / 60f), 2)} hours";
 
-        private DateTimeOffset _today = DateTime.UtcNow;
+        private DateTimeOffset _today = DateTime.Now;
 
         public Exports()
         {
@@ -44,7 +44,7 @@ namespace DN_Henkel_Vision.Interface
 
         public string Date(int days)
         {
-            return DateTime.UtcNow.AddDays(-days).ToString("dd.MM");
+            return DateTime.Now.AddDays(-days).ToString("dd.MM");
         }
 
         private void Machine_Click(object sender, RoutedEventArgs e)
