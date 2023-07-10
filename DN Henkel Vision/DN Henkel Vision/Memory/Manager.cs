@@ -50,21 +50,12 @@ namespace DN_Henkel_Vision.Memory
         /// <param name="orderNumber">Number of the order.</param>
         public static void SelectOrder(string orderNumber)
         {
-            if (Selected.OrderNumber == null)
+            if (Selected.OrderNumber != null)
             {
-                int inx = OrdersRegistry.IndexOf(orderNumber);
+                UpdateRegistry();
 
-                Selected = new() { OrderNumber = orderNumber,
-                    User = Users[inx],
-                    Machine = Machines[inx],
-                    Exports = Exports[inx] };
-
-                return;
+                Drive.SaveFaults(Selected.OrderNumber, Selected.Faults.ToList(), Selected.ReviewFaults, Selected.PendingFaults);
             }
-
-            UpdateRegistry();
-
-            Drive.SaveFaults(Selected.OrderNumber, Selected.Faults.ToList(), Selected.ReviewFaults, Selected.PendingFaults);
 
             List<Fault>[] faults = Drive.LoadFaults(orderNumber);
             
