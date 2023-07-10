@@ -206,14 +206,19 @@ namespace DN_Henkel_Vision.Interface
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
-            Manager.UpdateRegistry();
-            Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
+            if (Workspace.Content.GetType() == typeof(Editor))
+            {
+                Manager.UpdateRegistry();
+                Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
+            }
+
             OrdersPanel_Select(string.Empty);
             Workspace.Navigate(typeof(Exports));
         }
 
         private void Environment_Closed(object sender, WindowEventArgs args)
         {
+            Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
             Drive.SaveRegistry();
         }
 

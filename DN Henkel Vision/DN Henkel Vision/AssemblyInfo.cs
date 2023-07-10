@@ -5,6 +5,6 @@
 
 using System.Reflection;
 
-[assembly: AssemblyVersion("2023.1.2.1218")]
-[assembly: AssemblyFileVersion("2023.1.2.1218")]
-[assembly: AssemblyInformationalVersion("2023.1.2.1218")]
+[assembly: AssemblyVersion("2023.1.2.1241")]
+[assembly: AssemblyFileVersion("2023.1.2.1241")]
+[assembly: AssemblyInformationalVersion("2023.1.2.1241")]

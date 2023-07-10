@@ -81,26 +81,26 @@
                 <ColumnDefinition Width="32"/>
             </Grid.ColumnDefinitions>
             <ComboBox
-                    x:Name="Cause"
-                    HorizontalAlignment="Stretch"
-                    Grid.Column="0"
-                    IsTextSearchEnabled="True"
-                    ItemsSource="{x:Bind memory:Classification.Causes}"
-                    SelectedIndex="{x:Bind Current.ClassIndexes[0]}"
-                    SelectionChanged="Cause_SelectionChanged"/>
+                x:Name="Cause"
+                HorizontalAlignment="Stretch"
+                Grid.Column="0"
+                IsTextSearchEnabled="True"
+                ItemsSource="{x:Bind memory:Classification.Causes}"
+                SelectedIndex="{x:Bind Current.ClassIndexes[0]}"
+                SelectionChanged="Cause_SelectionChanged"/>
             <ComboBox
-                    x:Name="Classification"
-                    HorizontalAlignment="Stretch"
-                    Grid.Column="1"
-                    IsTextSearchEnabled="True"
-                    SelectionChanged="Classification_SelectionChanged"
-                    SelectedIndex="{x:Bind Current.ClassIndexes[1]}"/>
+                x:Name="Classification"
+                HorizontalAlignment="Stretch"
+                Grid.Column="1"
+                IsTextSearchEnabled="True"
+                SelectionChanged="Classification_SelectionChanged"
+                SelectedIndex="{x:Bind Current.ClassIndexes[1]}"/>
             <ComboBox
-                    x:Name="Type"
-                    HorizontalAlignment="Stretch"
-                    Grid.Column="2"
-                    IsTextSearchEnabled="True"
-                    SelectedIndex="{x:Bind Current.ClassIndexes[2]}"/>
+                x:Name="Type"
+                HorizontalAlignment="Stretch"
+                Grid.Column="2"
+                IsTextSearchEnabled="True"
+                SelectedIndex="{x:Bind Current.ClassIndexes[2]}"/>
             <Button
                 x:Name="Count"
                 x:FieldModifier="public"
@@ -130,6 +130,7 @@
                 Click="Approve_Click" RightTapped="Approve_RightTapped">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="Menu" Key="Enter"/>
+                    <KeyboardAccelerator Modifiers="Menu" Key="E"/>
                 </Button.KeyboardAccelerators>
                 <FontIcon
                     FontFamily="Segoe Fluent Icons"

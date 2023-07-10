@@ -50,7 +50,7 @@ namespace DN_Henkel_Vision.Memory
         /// <param name="orderNumber">Number of the order.</param>
         public static void SelectOrder(string orderNumber)
         {
-            if (Selected.OrderNumber != null)
+            if (!string.IsNullOrEmpty(Selected.OrderNumber))
             {
                 UpdateRegistry();
 
@@ -81,6 +81,8 @@ namespace DN_Henkel_Vision.Memory
 
         public static void UpdateRegistry()
         {
+            if (string.IsNullOrEmpty(Selected.OrderNumber)) { return; }
+            
             int index = OrdersRegistry.IndexOf(Selected.OrderNumber);
 
             Users[index] = (int)Math.Ceiling(Selected.User);

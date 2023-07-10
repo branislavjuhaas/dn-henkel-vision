@@ -39,6 +39,7 @@ namespace DN_Henkel_Vision.Interface
             Display.PlaceholderText = Selected.Text;
             Display.Text = Selected.Text;
             Display.Minimum = Math.Round(Selected.Value, 2);
+            Manager.Selected.OrderNumber = null;
         }
 
         public string Date(int days)
