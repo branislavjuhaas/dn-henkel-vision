@@ -106,6 +106,10 @@ namespace DN_Henkel_Vision.Interface
         private void Approve_Click(object sender, RoutedEventArgs e)
         {
             ApproveFault();
+
+            if (Manager.CurrentEditor.FaultInput.FocusState != FocusState.Unfocused) { return; }
+
+            Manager.CurrentEditor.FaultInput.Focus(FocusState.Programmatic);
         }
 
         /// <summary>
