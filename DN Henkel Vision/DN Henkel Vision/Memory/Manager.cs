@@ -99,12 +99,41 @@ namespace DN_Henkel_Vision.Memory
             {
                 Export.Unexported.Add(Selected.OrderNumber);
             }
+
+            if (Cache.LastDate != DateTime.Now.Date)
+            {
+                int offset = (int)(DateTime.Now - Cache.LastDate).TotalDays;
+
+                Cache.LastDate = DateTime.Now.Date;
+
+                for (int i = 0; i < Export.GraphicalCount; i++)
+                {
+                    if (i + offset < Export.GraphicalCount)
+                    {
+                        Export.UserService[i] = Export.UserService[i + offset];
+                        Export.MachService[i] = Export.MachService[i + offset];
+                        Export.UserExports[i] = Export.UserExports[i + offset];
+                        Export.MachExports[i] = Export.MachExports[i + offset];
+                        continue;
+                    }
+
+                    Export.UserService[i] = 0f;
+                    Export.MachService[i] = 0f;
+                    Export.UserExports[i] = 0f;
+                    Export.MachExports[i] = 0f;
+                }
+            }
+
+            Export.UserService[Export.GraphicalCount - 1] += (float)(Users[index] - oldusers) / 60f;
+            Export.MachService[Export.GraphicalCount - 1] += (float)(Machines[index] - oldmachs) / 60f;
+
+            if (oldusers != Users[index] || oldmachs != Machines[index]) { Export.ChangedData = true; }
         }
 
-        public static int CreateIndex()
+        public static uint CreateIndex()
         {
-            //NOTE: Working just up to year 2092
-            int index = (int)(DateTime.Now - new DateTime(2023, 4, 3)).TotalSeconds;
+            //NOTE: Working just up to year 2159
+            uint index = (uint)(DateTime.Now - new DateTime(2023, 4, 3)).TotalSeconds;
 
             if (index > Cache.LastIndex) { Cache.LastIndex = index; return index; }
                 

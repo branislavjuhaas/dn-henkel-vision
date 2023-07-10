@@ -212,14 +212,24 @@ namespace DN_Henkel_Vision.Interface
                 Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
             }
 
+            if (Memory.Export.ChangedData)
+            {
+                Memory.Export.ChangedData = false;
+                Memory.Export.Evaluate();
+            }
+
             OrdersPanel_Select(string.Empty);
             Workspace.Navigate(typeof(Exports));
         }
 
         private void Environment_Closed(object sender, WindowEventArgs args)
         {
-            Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
+            if (!string.IsNullOrEmpty(Manager.Selected.OrderNumber))
+            {
+                Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
+            }
             Drive.SaveRegistry();
+            Drive.SaveExportHistory();
         }
 
         private  async void Create_Click(object sender, RoutedEventArgs e)
@@ -243,7 +253,7 @@ namespace DN_Henkel_Vision.Interface
 
             if (chip == "Invalid" || chip == "Existing") { return; }
 
-            Manager.CreateOrder(((Order)orderDialog.Content).Number.Text);
+            Manager.CreateOrder(Format(((Order)orderDialog.Content).Number.Text));
         }
 
         private void OrderDialog_Loaded(object sender, RoutedEventArgs e)

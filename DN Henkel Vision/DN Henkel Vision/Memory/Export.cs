@@ -53,6 +53,8 @@ namespace DN_Henkel_Vision.Memory
 
         public static int AuftragSplitter = 0;
         public static int NetstalSplitter = 0;
+
+        public static bool ChangedData = false;
         #endregion
 
         public static void Evaluate()
@@ -269,6 +271,37 @@ namespace DN_Henkel_Vision.Memory
             seed = (seed * 1103515245 + 12345) & int.MaxValue;
 
             return (seed % (max - min + 1)) + min;
+        }
+
+        public static void UpdateExportValues(float user, float mach)
+        {
+            if (Cache.LastDate != DateTime.Now.Date)
+            {
+                int offset = (int)(DateTime.Now - Cache.LastDate).TotalDays;
+
+                Cache.LastDate = DateTime.Now.Date;
+
+                for (int i = 0; i < Export.GraphicalCount; i++)
+                {
+                    if (i + offset < Export.GraphicalCount)
+                    {
+                        Export.UserService[i] = Export.UserService[i + offset];
+                        Export.MachService[i] = Export.MachService[i + offset];
+                        Export.UserExports[i] = Export.UserExports[i + offset];
+                        Export.MachExports[i] = Export.MachExports[i + offset];
+                        continue;
+                    }
+
+                    Export.UserService[i] = 0f;
+                    Export.MachService[i] = 0f;
+                    Export.UserExports[i] = 0f;
+                    Export.MachExports[i] = 0f;
+                }
+            }
+
+            Export.UserExports[Export.GraphicalCount - 1] += user;
+            Export.MachExports[Export.GraphicalCount - 1] += mach;
+            ChangedData = true;
         }
     }
 }

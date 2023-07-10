@@ -8,7 +8,7 @@ namespace DN_Henkel_Vision.Memory
 
         public static int CurrentReview = 0;
 
-        public static int LastIndex = 0;
+        public static uint LastIndex = 0;
 
         public static DateTime LastDate = DateTime.Now.Date;
 

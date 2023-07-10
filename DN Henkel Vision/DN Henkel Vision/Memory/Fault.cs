@@ -17,7 +17,7 @@ namespace DN_Henkel_Vision.Memory
         public string Cause;
         public string Classification;
         public string Type;
-        public int Index;
+        public uint Index;
         public int[] ClassIndexes = { -1, -1, -1 };
         public float UserTime;
         public float MachineTime;

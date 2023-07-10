@@ -104,7 +104,7 @@ namespace DN_Henkel_Vision.Memory
 
                 Fault fault = new(parts[3]);
 
-                fault.Index = int.Parse(parts[0]);
+                fault.Index = uint.Parse(parts[0]);
                 fault.Component = parts[1];
                 fault.Placement = parts[2];
                 fault.Cause = parts[4];
@@ -222,6 +222,45 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        public static void SaveExportHistory()
+        {
+            string output = DateTime.Now.ToString("ddMMyyyy");
+
+            if (Cache.LastDate != DateTime.Now.Date)
+            {
+                int offset = (int)(DateTime.Now - Cache.LastDate).TotalDays;
+
+                Cache.LastDate = DateTime.Now.Date;
+
+                for (int i = 0; i < Export.GraphicalCount; i++)
+                {
+                    if (i + offset < Export.GraphicalCount)
+                    {
+                        Export.UserService[i] = Export.UserService[i + offset];
+                        Export.MachService[i] = Export.MachService[i + offset];
+                        Export.UserExports[i] = Export.UserExports[i + offset];
+                        Export.MachExports[i] = Export.MachExports[i + offset];
+                        continue;
+                    }
+
+                    Export.UserService[i] = 0f;
+                    Export.MachService[i] = 0f;
+                    Export.UserExports[i] = 0f;
+                    Export.MachExports[i] = 0f;
+                }
+            }
+
+            for (int i = Export.GraphicalCount - 1; i >= 0; i--)
+            {
+                output += "\n" + Math.Ceiling(Export.UserService[i] * 60f).ToString();
+                output += "\t" + Math.Ceiling(Export.MachService[i] * 60f).ToString();
+                output += "\t" + Math.Ceiling(Export.UserExports[i] * 60f).ToString();
+                output += "\t" + Math.Ceiling(Export.MachExports[i] * 60f).ToString();
+            }
+
+            Write(s_exports, output);
+        }
+
         public static async void ExportsSave(float time, string username, DateTime date, bool netstal = false)
         {
             string filetype = ".dnfa";
@@ -248,8 +287,20 @@ namespace DN_Henkel_Vision.Memory
             // Open the picker for the user to pick a file
             StorageFile file = await savePicker.PickSaveFileAsync();
             if (file != null)
-            {                
+            {
+                float user = time;
+
+                if (user > (Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f)
+                {
+                    user = (Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f;
+                }
+
+                float mach = time - user;
+
                 string content = await Export.ExportFaults(time, username, date, netstal);
+
+                Export.UpdateExportValues(user, mach);
+
                 // Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
                 CachedFileManager.DeferUpdates(file);
 
