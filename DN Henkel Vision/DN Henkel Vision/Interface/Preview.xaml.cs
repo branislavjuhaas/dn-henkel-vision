@@ -103,8 +103,27 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Arguments of the event</param>
-        private void Approve_Click(object sender, RoutedEventArgs e)
+        private async void Approve_Click(object sender, RoutedEventArgs e)
         {
+            if (Placement.Text == string.Empty)
+            {
+                ContentDialog message = new();
+
+                message.XamlRoot = Manager.CurrentWindow.Content.XamlRoot;
+                message.Title = "Missing Placement";
+                message.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                message.Content = "Do you want to continue without valid placement?";
+                message.PrimaryButtonText = "Close";
+                message.SecondaryButtonText = "Continue";
+                message.DefaultButton = ContentDialogButton.Primary;
+
+                message.Loaded += Message_Loaded;
+
+                ContentDialogResult result = await message.ShowAsync();
+
+                if (result == ContentDialogResult.Primary) { return; }
+            }
+            
             ApproveFault();
 
             if (Manager.CurrentEditor.FaultInput.FocusState != FocusState.Unfocused) { return; }
@@ -118,9 +137,43 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Arguments of the event</param>
-        private void Approve_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        private async void Approve_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
+            if (Placement.Text == string.Empty)
+            {
+                ContentDialog message = new();
+
+                message.XamlRoot = Manager.CurrentWindow.Content.XamlRoot;
+                message.Title = "Missing Placement";
+                message.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                message.Content = "Do you want to continue without valid placement?";
+                message.PrimaryButtonText = "Close";
+                message.SecondaryButtonText = "Continue";
+                message.DefaultButton = ContentDialogButton.Primary;
+
+                message.Loaded += Message_Loaded;
+
+                ContentDialogResult result = await message.ShowAsync();
+
+                if (result == ContentDialogResult.Primary) { return; }
+            }
+
             ApproveFault(true);
+        }
+
+        private void Message_Loaded(object sender, RoutedEventArgs e)
+        {
+            var parent = VisualTreeHelper.GetParent((DependencyObject)sender);
+            var child = VisualTreeHelper.GetChild(parent, 0);
+            var frame = (Microsoft.UI.Xaml.Shapes.Rectangle)child;
+            frame.Margin = new Thickness(0);
+            frame.RegisterPropertyChangedCallback(
+                FrameworkElement.MarginProperty,
+                (DependencyObject sender, DependencyProperty dp) =>
+                {
+                    if (dp == FrameworkElement.MarginProperty)
+                        sender.ClearValue(dp);
+                });
         }
 
         public void ApproveFault(bool keep = false)

@@ -146,7 +146,7 @@ namespace DN_Henkel_Vision.Memory
             return output;
         }
 
-        public static void ExportFaults(float time,string username, DateTime date , bool netstal = false)
+        public static async Task<string> ExportFaults(float time,string username, DateTime date, bool netstal = false)
         {
             float remain = time * 60f;
 
@@ -189,7 +189,7 @@ namespace DN_Henkel_Vision.Memory
                 Unexported.Remove(order);
             }
 
-            Drive.DialogSave(output, netstal);
+            return output;
         }
 
         public static string Header(bool netstal = false)

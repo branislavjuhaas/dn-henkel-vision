@@ -6,6 +6,8 @@ using System.Linq;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.Storage;
+using System.Threading.Tasks;
+using Windows.UI.Shell;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -220,7 +222,7 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
-        public static async void DialogSave(string content, bool netstal = false)
+        public static async void ExportsSave(float time, string username, DateTime date, bool netstal = false)
         {
             string filetype = ".dnfa";
             string filetext = "DN Auftrag Export File";
@@ -246,7 +248,8 @@ namespace DN_Henkel_Vision.Memory
             // Open the picker for the user to pick a file
             StorageFile file = await savePicker.PickSaveFileAsync();
             if (file != null)
-            {
+            {                
+                string content = await Export.ExportFaults(time, username, date, netstal);
                 // Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
                 CachedFileManager.DeferUpdates(file);
 

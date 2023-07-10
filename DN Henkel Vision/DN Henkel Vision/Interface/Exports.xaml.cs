@@ -153,7 +153,7 @@ namespace DN_Henkel_Vision.Interface
 
         private void Exporter_Click(object sender, RoutedEventArgs e)
         {
-            Export.ExportFaults((float)Selected.Value, UserName.Text, ((DateTimeOffset)RegistryDate.Date).DateTime, Convert.ToBoolean(Category.SelectedIndex));
+            Drive.ExportsSave((float)Selected.Value, UserName.Text, ((DateTimeOffset)RegistryDate.Date).DateTime, Convert.ToBoolean(Category.SelectedIndex));
         }
     }
 }

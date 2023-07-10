@@ -77,6 +77,8 @@ namespace DN_Henkel_Vision.Memory
                 Cache.LastPlacement = Selected.ReviewFaults[0].Placement;
                 
             }
+
+            Cache.LastPlacement = string.Empty;
         }
 
         public static void UpdateRegistry()

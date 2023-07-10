@@ -224,26 +224,26 @@ namespace DN_Henkel_Vision.Interface
 
         private  async void Create_Click(object sender, RoutedEventArgs e)
         {
-            ContentDialog OrderDialog = new ContentDialog();
+            ContentDialog orderDialog = new();
 
-            OrderDialog.XamlRoot = Manager.CurrentWindow.Content.XamlRoot;
-            OrderDialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            OrderDialog.Title = "Create Order";
-            OrderDialog.PrimaryButtonText = "Create";
-            OrderDialog.CloseButtonText = "Cancel";
-            OrderDialog.DefaultButton = ContentDialogButton.Primary;
-            OrderDialog.Content = new Order();
-            OrderDialog.Loaded += OrderDialog_Loaded;
+            orderDialog.XamlRoot = Manager.CurrentWindow.Content.XamlRoot;
+            orderDialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            orderDialog.Title = "Create Order";
+            orderDialog.PrimaryButtonText = "Create";
+            orderDialog.CloseButtonText = "Cancel";
+            orderDialog.DefaultButton = ContentDialogButton.Primary;
+            orderDialog.Content = new Order();
+            orderDialog.Loaded += OrderDialog_Loaded;
 
-            ContentDialogResult result = await OrderDialog.ShowAsync();
+            ContentDialogResult result = await orderDialog.ShowAsync();
 
             if (result != ContentDialogResult.Primary) { return; }
             
-            string chip = ((Order)OrderDialog.Content).CategoryText.Text;
+            string chip = ((Order)orderDialog.Content).CategoryText.Text;
 
             if (chip == "Invalid" || chip == "Existing") { return; }
 
-            Manager.CreateOrder(((Order)OrderDialog.Content).Number.Text);
+            Manager.CreateOrder(((Order)orderDialog.Content).Number.Text);
         }
 
         private void OrderDialog_Loaded(object sender, RoutedEventArgs e)
