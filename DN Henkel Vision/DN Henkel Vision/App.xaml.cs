@@ -21,9 +21,7 @@ namespace DN_Henkel_Vision
         /// </summary>
         public App()
         {
-            Manager.Initialize();
             this.InitializeComponent();
-            Felber.Felber.Initialize();
         }
 
         /// <summary>
@@ -32,14 +30,13 @@ namespace DN_Henkel_Vision
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            environment = new Interface.Environment();
-            environment.Activate();
-            Manager.CurrentWindow = environment;
+            splash = new Interface.Splash();
+            splash.Activate();
         }
 
         /// <summary>
         /// Initializes the environment of the application. This variable stores the main application's window.
         /// </summary>
-        private Window environment;
+        private Window splash;
     }
 }

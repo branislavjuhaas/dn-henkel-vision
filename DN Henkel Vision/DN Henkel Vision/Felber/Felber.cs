@@ -327,15 +327,10 @@ namespace DN_Henkel_Vision.Felber
         /// </summary>
         private static void LoadModels()
         {
-            BackgroundWorker loader = new();
-
-            loader.DoWork += (sender, e) => { 
-                PredictCause("");
-                s_orderNumber = "38 000 000";
-                PredictFaultProperties(new("DN7 HV7", "Preparation"));
-                Ready = true; };
-
-            loader.RunWorkerAsync();
+            PredictCause("");
+            s_orderNumber = "38 000 000";
+            PredictFaultProperties(new("DN7 HV7", "Preparation"));
+            Ready = true;
         }
 
         private static float MachineTime(float user, int length)
