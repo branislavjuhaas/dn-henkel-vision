@@ -259,7 +259,7 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         public void FaultPush()
         {
-            if (FaultInput.Text == string.Empty) { return; }
+            if (string.IsNullOrEmpty(FaultInput.Text)) { return; }
             
             string placement = string.Empty;
 

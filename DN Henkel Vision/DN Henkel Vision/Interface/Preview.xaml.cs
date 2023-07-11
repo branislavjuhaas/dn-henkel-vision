@@ -105,7 +105,7 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">Arguments of the event</param>
         private async void Approve_Click(object sender, RoutedEventArgs e)
         {
-            if (Placement.Text == string.Empty)
+            if (string.IsNullOrEmpty(Placement.Text))
             {
                 ContentDialog message = new();
 
@@ -139,7 +139,7 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">Arguments of the event</param>
         private async void Approve_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (Placement.Text == string.Empty)
+            if (string.IsNullOrEmpty(Placement.Text))
             {
                 ContentDialog message = new();
 
@@ -282,7 +282,7 @@ namespace DN_Henkel_Vision.Interface
         {
             //TODO: Upgrade method of replacing based on the index of the Felber's detection 
             if (Component.Text == Manager.Selected.ReviewFaults[Cache.CurrentReview].Component) { return; }
-            if (Manager.Selected.ReviewFaults[Cache.CurrentReview].Component == string.Empty) {
+            if (string.IsNullOrEmpty(Manager.Selected.ReviewFaults[Cache.CurrentReview].Component)) {
                 Manager.Selected.ReviewFaults[Cache.CurrentReview].Component = Component.Text;
                 return; }
 

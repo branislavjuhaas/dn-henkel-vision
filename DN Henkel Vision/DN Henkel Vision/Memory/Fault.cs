@@ -77,7 +77,7 @@ namespace DN_Henkel_Vision.Memory
         /// <returns>Whether the input is valid netstal placement</returns>
         public static bool IsValidNetstalPlacement(string placement)
         {
-            if (placement == null || placement.Length != 2) { return false; }
+            if (string.IsNullOrEmpty(placement) || placement.Length != 2) { return false; }
             if (placement.ToLower().ToCharArray()[0] != 'a') { return false; }
             if (!placement.Substring(1, 1).All(char.IsDigit)) { return false; }
 

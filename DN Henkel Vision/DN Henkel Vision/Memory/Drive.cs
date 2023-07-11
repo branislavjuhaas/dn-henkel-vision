@@ -58,7 +58,7 @@ namespace DN_Henkel_Vision.Memory
 
             foreach (string order in source.Split('\n'))
             {
-                if (order == string.Empty) { continue; }
+                if (string.IsNullOrEmpty(order)) { continue; }
 
                 string[] parameters = order.Split('\t');
                 Manager.OrdersRegistry.Add(parameters[0]);
@@ -99,7 +99,7 @@ namespace DN_Henkel_Vision.Memory
             {
                 if (line == "Preview:") { header = "Preview"; continue; }
                 if (line == "Pending:") { header = "Pending"; continue; }
-                if (line == "") { continue; }
+                if (string.IsNullOrEmpty(line)) { continue; }
                 string[] parts = line.Split('\t');
 
                 Fault fault = new(parts[3]);

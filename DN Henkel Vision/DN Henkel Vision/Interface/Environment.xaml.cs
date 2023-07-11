@@ -84,7 +84,7 @@ namespace DN_Henkel_Vision.Interface
         {
             string selection = (string)args.ChosenSuggestion;
 
-            if (selection == null)
+            if (string.IsNullOrEmpty(selection))
             {
                 List<string> suitableItems = new();
                 string[] splitText = Format(sender.Text).Split(" ");

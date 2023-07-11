@@ -75,7 +75,7 @@ namespace DN_Henkel_Vision.Felber
         /// <returns>Fault with predicted properties</returns>
         private static Fault PredictFaultProperties(Fault input)
         {
-            if (input.Cause == "" || input.Cause == "Cause")
+            if (string.IsNullOrEmpty(input.Cause) || input.Cause == "Cause")
             {
                 if (s_orderNumber.StartsWith("20") && Settings.SetAutoTesting) { input.Cause = "Testing"; }
                 else if (s_orderNumber.StartsWith("20")){ return PredictLimitedFault(input); }
