@@ -11,11 +11,13 @@
     xmlns:memory="using:DN_Henkel_Vision.Memory"
     mc:Ignorable="d"
     Closed="Environment_Closed">
+    <Window.SystemBackdrop>
+        <MicaBackdrop/>
+    </Window.SystemBackdrop>
     <Grid>
         <!--This grid acts as a root panel for the page-->
         <Grid 
-            x:Name="EnvironmentalGrid"
-            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            x:Name="EnvironmentalGrid">
 
             <Grid.Resources>
                 <DataTemplate
