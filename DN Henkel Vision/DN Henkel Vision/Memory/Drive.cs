@@ -261,15 +261,20 @@ namespace DN_Henkel_Vision.Memory
             Write(s_exports, output);
         }
 
-        public static async void ExportsSave(float time, string username, DateTime date, bool netstal = false)
+        public static async void ExportsSave(float time, string username, DateTime date, bool netstal = false, bool inkognito = false)
         {
             string filetype = ".dnfa";
-            string filetext = "DN Auftrag Export File";
+            string filetext = "DN Auftrag Export File (*.dnfa)";
 
             if (netstal)
             {
                 filetype = ".dnfn";
-                filetext = "DN Netstal Export File";
+                filetext = "DN Netstal Export File (*.dnfn)";
+            }
+
+            if (inkognito)
+            {
+                filetext = filetext.Substring(0, 22) + " - Inkognito" + filetext.Substring(22);
             }
             
             FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
@@ -288,18 +293,21 @@ namespace DN_Henkel_Vision.Memory
             StorageFile file = await savePicker.PickSaveFileAsync();
             if (file != null)
             {
-                float user = time;
-
-                if (user > (Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f)
+                if (!inkognito)
                 {
-                    user = (Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f;
+                    float user = time;
+
+                    if (user > (Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f)
+                    {
+                        user = (Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f;
+                    }
+
+                    float mach = time - user;
+
+                    Export.UpdateExportValues(user, mach);
                 }
 
-                float mach = time - user;
-
-                string content = await Export.ExportFaults(time, username, date, netstal);
-
-                Export.UpdateExportValues(user, mach);
+                string content = await Export.ExportFaults(time, username, date, netstal, inkognito);
 
                 // Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
                 CachedFileManager.DeferUpdates(file);

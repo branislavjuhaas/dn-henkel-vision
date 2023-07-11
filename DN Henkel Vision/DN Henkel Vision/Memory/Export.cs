@@ -148,13 +148,13 @@ namespace DN_Henkel_Vision.Memory
             return output;
         }
 
-        public static async Task<string> ExportFaults(float time,string username, DateTime date, bool netstal = false)
+        public static async Task<string> ExportFaults(float time,string username, DateTime date, bool netstal = false, bool inkognito = false)
         {
             float remain = time * 60f;
 
             List<string> exported = new();
 
-            string output = Header();
+            string output = Header(netstal, inkognito);
 
             foreach (string order in Unexported)
             {
@@ -176,11 +176,14 @@ namespace DN_Henkel_Vision.Memory
                     if (remain <= 0f) { break; }
                 }
 
-                Manager.Exports[index] += ex;
-
-                if (Manager.Exports[index] >= Manager.Contents[index])
+                if (!inkognito)
                 {
-                    exported.Add(order);
+                    Manager.Exports[index] += ex;
+
+                    if (Manager.Exports[index] >= Manager.Contents[index])
+                    {
+                        exported.Add(order);
+                    }
                 }
 
                 if (remain <= 0f) { break; }
@@ -194,7 +197,7 @@ namespace DN_Henkel_Vision.Memory
             return output;
         }
 
-        public static string Header(bool netstal = false)
+        public static string Header(bool netstal = false, bool inkognito = false)
         {
             string pseudoheader = s_header.Replace("DNHENKELVISION", "##############");
 
@@ -233,6 +236,15 @@ namespace DN_Henkel_Vision.Memory
             foreach (char versionchar in version)
             {
                 HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), versionchar);
+            }
+
+            if (inkognito)
+            {
+                HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), 'I');
+            }
+            else
+            {
+                HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), 'P');
             }
 
             char[] pseudo = pseudoheader.Replace("##############", "DNHENKELVISION").ToCharArray();
