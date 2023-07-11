@@ -11,7 +11,6 @@
     xmlns:memory="using:DN_Henkel_Vision.Memory"
     mc:Ignorable="d"
     Closed="Environment_Closed">
-
     <Grid>
         <!--This grid acts as a root panel for the page-->
         <Grid 
