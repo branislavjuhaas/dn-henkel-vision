@@ -96,6 +96,8 @@ namespace DN_Henkel_Vision.Interface
         {
             Display.PlaceholderText = Selected.Value.ToString();
             Display.Minimum = Selected.Value;
+
+            Exporter.IsEnabled = Selected.Value > 0f;
         }
 
         private void Criterium_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -154,6 +156,11 @@ namespace DN_Henkel_Vision.Interface
         private void Exporter_Click(object sender, RoutedEventArgs e)
         {
             Drive.ExportsSave((float)Selected.Value, UserName.Text, ((DateTimeOffset)RegistryDate.Date).DateTime, Convert.ToBoolean(Category.SelectedIndex));
+        }
+
+        public bool CanExport()
+        {
+            return Selected.Value > 0f;
         }
     }
 }

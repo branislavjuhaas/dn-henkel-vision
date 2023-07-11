@@ -148,7 +148,7 @@
                     Click="Machine_Click"/>
                 <Button
                     x:Name="Return"
-                    Content="Return: 20€ - 17%"
+                    Content="Report"
                     VerticalAlignment="Center"/>
             </StackPanel>
 
@@ -363,7 +363,8 @@
                 Content="Export"
                 Width="150"
                 Height="36"
-                Click="Exporter_Click"/>
+                Click="Exporter_Click"
+                IsEnabled="{x:Bind CanExport()}"/>
         </Grid>
     </Grid>
 </Page>
