@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Data.Text;
 using Windows.Media.Capture;
 
 namespace DN_Henkel_Vision.Felber
@@ -82,7 +83,9 @@ namespace DN_Henkel_Vision.Felber
                 else { input.Cause = PredictCause(input.Description); }
             }
             
-            Fault output = new(input.Description, input.Cause);
+            string description = Capitalize(input.Description);
+
+            Fault output = new(description, input.Cause);
 
             output.Classification = PredictClassification(output.Description, output.Cause);
             output.Type = PredictType(output.Description, output.Cause, output.Classification);
@@ -173,6 +176,23 @@ namespace DN_Henkel_Vision.Felber
             s_analyticDescription = description;
 
             Analyzer.RunWorkerAsync();
+        }
+
+        public static string Capitalize(string input)
+        {
+            string output = input;
+            
+            string[] words = input.Split(' ', '-');
+
+            foreach (string word in words)
+            {
+                if (word.Any(char.IsDigit))
+                {
+                    input = input.Replace(word, word.ToUpper());
+                }
+            }
+
+            return input;
         }
 
         #endregion
@@ -268,7 +288,7 @@ namespace DN_Henkel_Vision.Felber
                 // For each potentional component checks the probability by the AI model
                 // and returns the one with the highest probability
                 foreach (string word in potentionals)
-                {
+                {                   
                     float current;
 
                     Component.ModelInput inputcomponent = new Component.ModelInput()
