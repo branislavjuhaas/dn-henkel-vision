@@ -235,6 +235,7 @@ namespace DN_Henkel_Vision.Interface
             orderDialog.PrimaryButtonText = "Create";
             orderDialog.CloseButtonText = "Cancel";
             orderDialog.DefaultButton = ContentDialogButton.Primary;
+            orderDialog.RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme;
             orderDialog.Content = new Order();
             orderDialog.Loaded += OrderDialog_Loaded;
 

@@ -120,6 +120,7 @@ namespace DN_Henkel_Vision.Interface
                 message.PrimaryButtonText = "Close";
                 message.SecondaryButtonText = "Continue";
                 message.DefaultButton = ContentDialogButton.Primary;
+                message.RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme;
 
                 message.Loaded += Message_Loaded;
 
