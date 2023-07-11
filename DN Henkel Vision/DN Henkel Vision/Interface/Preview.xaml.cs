@@ -62,6 +62,8 @@ namespace DN_Henkel_Vision.Interface
             if (Cause.SelectedIndex >= 0)
             {   
                 Classification.ItemsSource = DN_Henkel_Vision.Memory.Classification.Classifications[((ComboBox)sender).SelectedIndex].ToList();
+                if (Classification.Items.Count == 1) Classification.SelectedIndex = 0; return;
+
                 if (!_fromui) { return; }
                 Classification.Focus(FocusState.Programmatic);
                 Classification.IsDropDownOpen = true;
@@ -80,7 +82,9 @@ namespace DN_Henkel_Vision.Interface
             if (Classification.SelectedIndex >= 0)
             {
                 Type.ItemsSource = DN_Henkel_Vision.Memory.Classification.Types[DN_Henkel_Vision.Memory.Classification.ClassificationsPointers[Cause.SelectedIndex][Classification.SelectedIndex]];
-                if (!_fromui) { return; }
+                if (Type.Items.Count == 1) Type.SelectedIndex = 0; return;
+
+                if (!_fromui) return;
                 Type.Focus(FocusState.Programmatic);
                 Type.IsDropDownOpen = true;
             }
