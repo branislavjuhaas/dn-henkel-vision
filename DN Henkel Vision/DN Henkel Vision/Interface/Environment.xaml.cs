@@ -235,6 +235,7 @@ namespace DN_Henkel_Vision.Interface
             orderDialog.PrimaryButtonText = "Create";
             orderDialog.CloseButtonText = "Cancel";
             orderDialog.DefaultButton = ContentDialogButton.Primary;
+            orderDialog.IsPrimaryButtonEnabled = false;
             orderDialog.RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme;
             orderDialog.Content = new Order();
             orderDialog.Loaded += OrderDialog_Loaded;
@@ -245,7 +246,13 @@ namespace DN_Henkel_Vision.Interface
             
             string chip = ((Order)orderDialog.Content).CategoryText.Text;
 
-            if (chip == "Invalid" || chip == "Existing") { return; }
+            if (chip == "Invalid") { return; }
+
+            if (chip == "Existing")
+            {
+                OrdersPanel_Select(Format(((Order)orderDialog.Content).Number.Text));
+                return;
+            }
 
             Manager.CreateOrder(Format(((Order)orderDialog.Content).Number.Text));
         }

@@ -35,29 +35,42 @@ namespace DN_Henkel_Vision.Interface
         {
             string order = Environment.Format(Number.Text.Replace(" ", ""));
 
+            ContentDialog dialog = this.Parent as ContentDialog;
+
             if (Manager.OrdersRegistry.Contains(order))
             {
-                //CategoryChip.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 209, 94, 94));
                 CategoryText.Text = "Existing";
+                dialog.IsPrimaryButtonEnabled = true;
+                dialog.PrimaryButtonText = "Select";
                 return;
             }
 
             if (Number.Text.StartsWith("20") && order.Length == 10)
             {
-                //CategoryChip.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 33, 135, 33));
                 CategoryText.Text = "Netstal";
+                dialog.IsPrimaryButtonEnabled = true;
+                dialog.PrimaryButtonText = "Create";
                 return;
             }
 
             if (order.StartsWith("38") && order.Length == 10)
             {
-                //CategoryChip.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 33, 135, 33));
                 CategoryText.Text = "Auftrag";
+                dialog.IsPrimaryButtonEnabled = true;
+                dialog.PrimaryButtonText = "Create";
                 return;
             }
 
-            //CategoryChip.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 209, 94, 94));
+            if (order.StartsWith("101") && order.Length == 9)
+            {
+                CategoryText.Text = "Feauf";
+                dialog.IsPrimaryButtonEnabled = true;
+                dialog.PrimaryButtonText = "Create";
+                return;
+            }
+
             CategoryText.Text = "Invalid";
+            dialog.IsPrimaryButtonEnabled = false;
         }
     }
 }
