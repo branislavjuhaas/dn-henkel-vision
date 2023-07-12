@@ -1,9 +1,6 @@
-﻿using DN_Henkel_Vision.Memory;
-using DN_Henkel_Vision.Interface;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using System;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Threading;
 
 // Copyright(c) DN Foundation and Branislav Juhás.
 // Trade secret of DN Foundation.
@@ -15,6 +12,7 @@ namespace DN_Henkel_Vision
     /// </summary>
     public partial class App
     {
+        private static readonly Mutex mutex = new Mutex(true, "{b2a44102-131d-4742-95a6-f3e80c85d275}");
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -22,6 +20,10 @@ namespace DN_Henkel_Vision
         public App()
         {
             this.InitializeComponent();
+            if (!mutex.WaitOne(TimeSpan.Zero, true))
+            {
+                System.Environment.Exit(0);
+            }
         }
 
         /// <summary>
