@@ -56,6 +56,7 @@
     <None Remove="Interface\Exports.xaml" />
     <None Remove="Interface\Order.xaml" />
     <None Remove="Interface\Preview.xaml" />
+    <None Remove="Interface\Settings.xaml" />
     <None Remove="Interface\Splash.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +87,9 @@
       <DependentUpon>Cause.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Interface\Settings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Interface\Splash.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,5 @@
 ﻿using DN_Henkel_Vision.Memory;
+using DN_Henkel_Vision.Interface;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,8 @@ namespace DN_Henkel_Vision.Felber
         private static string s_analyticDescription;
 
         private static string s_orderNumber;
+
+        public static string Version = "1.3.2";
 
         /// <summary>
         /// Loads the AI models and initializes the background workers.

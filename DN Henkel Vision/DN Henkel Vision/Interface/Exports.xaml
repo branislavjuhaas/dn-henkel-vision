@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:memory="using:DN_Henkel_Vision.Memory"
+    xmlns:interface="using:DN_Henkel_Vision.Interface"
     mc:Ignorable="d">
 
     <Grid RowSpacing="2">
@@ -313,7 +314,7 @@
                     Header="User Name"
                     VerticalAlignment="Top"
                     Grid.Column="4"
-                    Text="{x:Bind memory:Settings.UserName}"/>
+                    Text="{x:Bind interface:Settings.UserName}"/>
                 <CalendarDatePicker
                     x:Name="RegistryDate"
                     Header="Registration Date"

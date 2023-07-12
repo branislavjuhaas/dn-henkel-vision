@@ -271,5 +271,17 @@ namespace DN_Henkel_Vision.Interface
                         sender.ClearValue(dp);
                 });
         }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            if (Workspace.Content.GetType() == typeof(Editor))
+            {
+                Manager.UpdateRegistry();
+                Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
+            }
+
+            OrdersPanel_Select(string.Empty);
+            Workspace.Navigate(typeof(Settings));
+        }
     }
 }
