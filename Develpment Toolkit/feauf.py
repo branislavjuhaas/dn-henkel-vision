@@ -1,60 +1,59 @@
+# This script reads a DN Autrag Import File (*.dnfa) and splits it into two files:
+# one containing the lines with a 9 character long string as the first element (feaufs) and
+# the other containing the remaining lines (auftrags).
+# The script then writes the auftrags list to a new file with the same header as the original file
+# and the aheader as the 7th line and the feaufs list to another new file with the same header as the original file
+# and the fheader as the 7th line.
+# The user is prompted to enter the input filename and output filename if they are not provided as command line arguments.
+# The output filename is appended with .dnfa and .dnff extensions for the auftrags and feaufs files respectively.
+# The script uses utf-8 encoding and \r\n as the line separator.
+
 import sys
 
-# Headers
+# Define the header strings for the output files
 fheader = 'AWUWF0TCRTAEG1FBANUCFNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION'
 aheader = 'AWUWF0TCRTAEG1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION'
 
-# Variables
+# Initialize empty lists for the auftrags and feaufs lines
 auftrags = []
 feaufs = []
 
+# Check if the input filename is provided as a command line argument
 filename = ''
-outputfilename = ''
-
-# Check if the first argument is valid *.dnfa file and if not, ask for the filename again
 if len(sys.argv) > 1:
     filename = sys.argv[1]
 
+# If the input filename is not provided or does not end with .dnfa, prompt the user to enter the filename
 if filename[-5:] != '.dnfa':
     filename = input('Enter the filename (*.dnfa): ')
 
+# Read the content of the input file
 content = open(filename, 'r', encoding='utf-8').read()
 
-# Split the file into lines
-
+# Split the content into lines
 lines = content.split('\n')
 
-# Check if the file is a dnfa or dnfn file if not exit the program
-# by comparing the 7th line of the file with the header
-
-
-
+# Check if the file has a valid header
 if lines[6] != aheader:
     print('This is not a valid DN Autrag Import File file')
     exit()
 
-# For each line from the 8th line to the end of the file, check if the first
-# element separated by the tab is a 9 character long string and if it is,
-# append it to the feaufs list, otherwise append it to the auftrags list
-
+# Iterate over the lines and append them to the auftrags or feaufs list depending on the first element
 for line in lines[7:]:
     if len(line.split('\t')[0]) == 9:
         feaufs.append(line)
     else:
         auftrags.append(line)
 
-# Ask for the output filename and append the .dnfa extension to it and write the auftrags list to it using utf-8 encoding
-# Now, append the .dnff extension to the output filename and write the feaufs list to it using utf-8 encoding
-# Use the first 6 lines of the original file as the header for both files and for the auftrags file, use the aheader
-# and for the feaufs file, use the fheader and after it, write the auftrags list to the auftrags file and the feaufs list to the feaufs file
-# Use \r\n as the line separator
-
-# If the second argument is valid, use it as the output filename
+# Check if the output filename is provided as a command line argument
+outputfilename = ''
 if len(sys.argv) > 2:
     outputfilename = sys.argv[2]
 
+# If the output filename is not provided or does not end with .dnfa, prompt the user to enter the filename
 if outputfilename[-5:] != '.dnfa':
     outputfilename = input('Enter the output filename: ')
 
+# Write the auftrags and feaufs lists to separate output files
 open(outputfilename + '.dnfa', 'w', encoding='utf-8').write('\n'.join(line.rstrip() for line in lines[:6]) + '\n' + aheader + '\n' + '\n'.join(line.rstrip() for line in auftrags))
 open(outputfilename + '.dnff', 'w', encoding='utf-8').write('\n'.join(line.rstrip() for line in lines[:6]) + '\n' + fheader + '\n' + '\n'.join(line.rstrip() for line in feaufs))
