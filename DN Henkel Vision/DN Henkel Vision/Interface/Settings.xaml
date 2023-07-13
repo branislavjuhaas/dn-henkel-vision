@@ -568,7 +568,7 @@
                                 Margin="40,0"
                                 HorizontalAlignment="Left"/>
                             <TextBlock
-                                Text="Developed with financial aid of KraussMaffei Corporation"
+                                Text="Partially funded by KraussMaffei Corporation"
                                 Margin="40,0"
                                 HorizontalAlignment="Right"
                                 Foreground="{ThemeResource TextFillColorSecondary}"/>
