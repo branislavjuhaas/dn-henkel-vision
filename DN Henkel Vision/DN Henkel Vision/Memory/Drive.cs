@@ -8,6 +8,8 @@ using Windows.Storage.Provider;
 using Windows.Storage;
 using System.Threading.Tasks;
 using Windows.UI.Shell;
+using DN_Henkel_Vision.Interface;
+using Microsoft.UI.Xaml;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -23,6 +25,7 @@ namespace DN_Henkel_Vision.Memory
         internal static readonly string s_regdir =   $"{Folder}\\Files\\Registry\\";
 
         internal static readonly string s_system =      $"{Folder}\\Files\\System.dntf";
+        internal static readonly string s_settings =    $"{Folder}\\Files\\Settings.dntf";
         internal static readonly string s_orders =      $"{Folder}\\Files\\Orders\\";
         internal static readonly string s_registry =    $"{Folder}\\Files\\Registry\\Registry.dntf";
         internal static readonly string s_exports =     $"{Folder}\\Files\\Registry\\Exports.dntf";
@@ -320,6 +323,91 @@ namespace DN_Henkel_Vision.Memory
                     }
                 }
             }
+        }
+        
+        public static void LoadSettings()
+        {
+            string source = Read(s_settings);
+
+            char theme = source[0];
+            char testing = source[1];
+            char collection = source[2];
+            string username = source.Substring(3);
+
+            switch (theme)
+            {
+                case '0':
+                    Settings.Theme = ElementTheme.Light;
+                    break;
+                case '1':
+                    Settings.Theme = ElementTheme.Dark;
+                    break;
+                case '2':
+                    Settings.Theme = ElementTheme.Default;
+                    break;
+            }
+
+            switch (testing)
+            {
+                case '0':
+                    Settings.SetAutoTesting = false;
+                    break;
+                case '1':
+                    Settings.SetAutoTesting = true;
+                    break;
+            }
+
+            switch (collection)
+            {
+                case '0':
+                    Settings.DataCollection = false;
+                    break;
+                case '1':
+                    Settings.DataCollection = true;
+                    break;
+            }
+
+            Settings.UserName = username;
+        }
+
+        public static void SaveSettings()
+        {
+            string output = "";
+
+            switch (Settings.Theme)
+            {
+                case ElementTheme.Light:
+                    output += "0";
+                    break;
+                case ElementTheme.Dark:
+                    output += "1";
+                    break;
+                case ElementTheme.Default:
+                    output += "2";
+                    break;
+            }
+
+            if (Settings.SetAutoTesting)
+            {
+                output += "1";
+            }
+            else
+            {
+                output += "0";
+            }
+
+            if (Settings.DataCollection)
+            {
+                output += "1";
+            }
+            else
+            {
+                output += "0";
+            }
+
+            output += Settings.UserName;
+
+            Write(s_settings, output);
         }
     }
 }
