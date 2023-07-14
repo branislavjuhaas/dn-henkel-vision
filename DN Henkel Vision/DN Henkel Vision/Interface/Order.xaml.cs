@@ -36,6 +36,8 @@ namespace DN_Henkel_Vision.Interface
                 return;
             }
 
+            if (order.Length < 2) return;
+
             switch (order.Substring(0, 2))
             {
                 case "10":
