@@ -2,9 +2,6 @@
 using System;
 using System.Threading;
 
-// Copyright(c) DN Foundation and Branislav Juhás.
-// Trade secret of DN Foundation.
-
 namespace DN_Henkel_Vision
 {
     /// <summary>
@@ -37,7 +34,7 @@ namespace DN_Henkel_Vision
         }
 
         /// <summary>
-        /// Initializes the environment of the application. This variable stores the main application's window.
+        /// Initializes the splash screen of the application. This variable stores the main application's splash screen window.
         /// </summary>
         private Window splash;
     }

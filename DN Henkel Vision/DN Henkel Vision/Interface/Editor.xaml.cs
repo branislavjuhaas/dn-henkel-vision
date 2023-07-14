@@ -1,6 +1,3 @@
-// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
-
 using DN_Henkel_Vision.Memory;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -11,16 +8,11 @@ using System;
 using System.Linq;
 using Windows.System;
 using Windows.UI;
-using Windows.UI.Core;
-using Microsoft.UI.Input;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace DN_Henkel_Vision.Interface
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Editor page of the application.
     /// </summary>
     public sealed partial class Editor : Page
     {
@@ -290,6 +282,11 @@ namespace DN_Henkel_Vision.Interface
             ResetEditor();
         }
 
+        /// <summary>
+        /// Handles the click event of the Fault button.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The arguments for the event.</param>
         private void Fault_Click(object sender, PointerRoutedEventArgs e)
         {
 
@@ -304,6 +301,12 @@ namespace DN_Henkel_Vision.Interface
             changer.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Handles the selection change of the cause ComboBox. 
+        /// Updates the classification ComboBox's items source according to the selected item.
+        /// </summary>
+        /// <param name="sender">The object which raised the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Cause_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if ((((ComboBox)sender).Parent) == null) { return; }
@@ -316,6 +319,11 @@ namespace DN_Henkel_Vision.Interface
             }
         }
 
+        /// <summary>
+        /// Handles selection change in the classification ComboBox
+        /// </summary>
+        /// <param name="sender">The object that triggered the event</param>
+        /// <param name="e">The selection event arguments</param>
         private void Classification_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cause = ((Grid)((ComboBox)sender).Parent).Children[0] as ComboBox;
@@ -327,6 +335,11 @@ namespace DN_Henkel_Vision.Interface
             }
         }
 
+        /// <summary>
+        /// Called when the cause is loaded into the combobox.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Cause_Loaded(object sender, RoutedEventArgs e)
         {
             int index = ((ComboBox)sender).SelectedIndex;
@@ -336,6 +349,11 @@ namespace DN_Henkel_Vision.Interface
             ((ComboBox)sender).SelectedIndex = index;
         }
 
+        ///<summary>
+        /// Handles the event when the Approve button is clicked.
+        ///</summary>
+        ///<param name="sender">The object that fired the event.</param>
+        ///<param name="e">The event arguments.</param>
         private void Approve_Click(object sender, RoutedEventArgs e)
         {
             Grid parent = ((Grid)((Grid)((Button)sender).Parent).Parent).Parent as Grid;
@@ -363,6 +381,9 @@ namespace DN_Henkel_Vision.Interface
             preview.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Clears the FaultPreview content and sets NoDataText visibility to true, indicating unreviewed state.
+        /// </summary>
         public void Unreview()
         {
             Manager.CurrentEditor.FaultPreview.Content = null;
@@ -370,11 +391,12 @@ namespace DN_Henkel_Vision.Interface
             _reviewing = false;
         }
 
-        private void FaultsList_Loaded(object sender, RoutedEventArgs e)
-        {         
-
-        }
-
+        /// <summary>
+        /// Handles the click event for the delete button.
+        /// Removes the selected fault from the list.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             int index = FaultsList.GetElementIndex((((sender as Button).Parent as Grid).Parent as Grid).Parent as UIElement);
@@ -390,6 +412,12 @@ namespace DN_Henkel_Vision.Interface
     {
         public DataTemplate Normal { get; set; }
         public DataTemplate Accent { get; set; }
+
+        /// <summary>
+        /// Selects a DataTemplate based on whether the index of the Fault item in Manager.Selected.Faults is even or odd
+        /// </summary>
+        /// <param name="item">The item to generate a template for</param>
+        /// <returns>The DataTemplate to use for the given item</returns>
         protected override DataTemplate SelectTemplateCore(object item)
         {
             if (Manager.Selected.Faults.IndexOf((Fault)item) % 2 == 0)

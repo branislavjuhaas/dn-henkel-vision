@@ -1,34 +1,17 @@
-// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
-
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using DN_Henkel_Vision.Memory;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml.Media.Animation;
-using Windows.UI.Core;
-using Microsoft.UI.Input;
-using Windows.System;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using System.Linq;
 
 namespace DN_Henkel_Vision.Interface
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Previewing page of the application.
     /// </summary>
     public sealed partial class Preview : Page
     {
@@ -39,7 +22,7 @@ namespace DN_Henkel_Vision.Interface
         public Fault Current = Manager.Selected.ReviewFaults[Cache.CurrentReview];
 
         /// <summary>
-        /// Constructor of the Preview page.
+        /// Initializes a new instance of the <see cref="Preview"/> class.
         /// </summary>
         public Preview()
         {
@@ -60,11 +43,11 @@ namespace DN_Henkel_Vision.Interface
         private void Cause_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Cause.SelectedIndex >= 0)
-            {   
+            {
                 Classification.ItemsSource = DN_Henkel_Vision.Memory.Classification.Classifications[((ComboBox)sender).SelectedIndex].ToList();
-                if (Classification.Items.Count == 1) Classification.SelectedIndex = 0; return;
+                if (Classification.Items.Count == 1) { Classification.SelectedIndex = 0; return; }
 
-                if (!_fromui) { return; }
+                if (!_fromui) return;
                 Classification.Focus(FocusState.Programmatic);
                 Classification.IsDropDownOpen = true;
             }
@@ -82,7 +65,7 @@ namespace DN_Henkel_Vision.Interface
             if (Classification.SelectedIndex >= 0)
             {
                 Type.ItemsSource = DN_Henkel_Vision.Memory.Classification.Types[DN_Henkel_Vision.Memory.Classification.ClassificationsPointers[Cause.SelectedIndex][Classification.SelectedIndex]];
-                if (Type.Items.Count == 1) Type.SelectedIndex = 0; return;
+                if (Type.Items.Count == 1) { Type.SelectedIndex = 0; return; }
 
                 if (!_fromui) return;
                 Type.Focus(FocusState.Programmatic);
@@ -166,6 +149,12 @@ namespace DN_Henkel_Vision.Interface
             ApproveFault(true);
         }
 
+        /// <summary>
+        /// Handles the loaded event of the Message control.
+        /// Removes the margin of the control's Frame.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
         private void Message_Loaded(object sender, RoutedEventArgs e)
         {
             var parent = VisualTreeHelper.GetParent((DependencyObject)sender);
@@ -181,6 +170,10 @@ namespace DN_Henkel_Vision.Interface
                 });
         }
 
+        /// <summary>
+        /// Approves the current fault and logs the user and machine time to Manager.Selected
+        /// </summary>
+        /// <param name="keep">If true, does not remove the fault from Manager.Selected</param>
         public void ApproveFault(bool keep = false)
         {
             Manager.Selected.Faults.Add(PrepareFault());
@@ -258,6 +251,10 @@ namespace DN_Henkel_Vision.Interface
             Manager.CurrentEditor.FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
         }
 
+        /// <summary>
+        /// Prepares a new Fault object with the specified values.
+        /// </summary>
+        /// <returns>A new Fault object.</returns>
         private Fault PrepareFault()
         {
             Fault output = new(Description.Text);
@@ -283,6 +280,11 @@ namespace DN_Henkel_Vision.Interface
             return output;
         }
 
+        /// <summary>
+        /// Event handler for when the Component text box is changed.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event arguments.</param>
         private void Component_TextChanged(object sender, TextChangedEventArgs e)
         {
             //TODO: Upgrade method of replacing based on the index of the Felber's detection 
@@ -296,6 +298,11 @@ namespace DN_Henkel_Vision.Interface
             Manager.Selected.ReviewFaults[Cache.CurrentReview].Component = Component.Text;
         }
 
+        /// <summary>
+        /// Converts all text in the Placement field to uppercase.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Placement_TextChanged(object sender, TextChangedEventArgs e)
         {
             int index = Placement.SelectionStart;
@@ -307,6 +314,11 @@ namespace DN_Henkel_Vision.Interface
             Placement.SelectionLength = length;
         }
 
+        /// <summary>
+        /// Handles the event when the Preview grid loads.
+        /// </summary>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">The routed event arguments</param>
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             _fromui = true;

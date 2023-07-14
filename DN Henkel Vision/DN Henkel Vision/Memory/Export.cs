@@ -1,15 +1,15 @@
-﻿using DN_Henkel_Vision.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace DN_Henkel_Vision.Memory
 {
+    /// <summary>
+    /// Class containing the environment variables and methods.
+    /// </summary>
     internal class Export : Drive
     {
         private static string s_header = "SZSK2ZZ69JA93CDNHENKELVISION84SAW4K7DNHENKELVISIONXNESVGSYDNHENKELVISIONFMRR4YD5DNHENKELVISION3VY0RS\r\n"
@@ -56,6 +56,9 @@ namespace DN_Henkel_Vision.Memory
         public static bool ChangedData = false;
         #endregion
 
+        /// <summary>
+        /// Evaluates the data and updates export values
+        /// </summary>
         public static void Evaluate()
         {
             UserServiceGraph.Clear();
@@ -88,6 +91,11 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        /// <summary>
+        /// Returns the Graph Time for a given scenario.
+        /// </summary>
+        /// <param name="scenario">The scenario to get the Graph Time for.</param>
+        /// <returns>A string representing the Graph Time for the given scenario.</returns>
         public static string GraphTime(int scenario)
         {
             switch (scenario)
@@ -100,6 +108,10 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        /// <summary>
+        /// Returns an array containing the sum of UserService and MachService.
+        /// </summary>
+        /// <returns>An array of the sum of UserService and MachService.</returns>
         public static float[] ServiceSum()
         {
             float[] output = new float[GraphicalCount];
@@ -112,6 +124,10 @@ namespace DN_Henkel_Vision.Memory
             return output;
         }
 
+        /// <summary>
+        /// Calculates the sum of user exports and machine exports.
+        /// </summary>
+        /// <returns>An array of floats representing the sum of exports.</returns>
         public static float[] ExportsSum()
         {
             float[] output = new float[GraphicalCount];
@@ -124,6 +140,13 @@ namespace DN_Henkel_Vision.Memory
             return output;
         }
 
+        /// <summary>
+        /// Calculates orders processing time based on user performance, machine performance and order content factor
+        /// </summary>
+        /// <param name="orders">Array of order strings</param>
+        /// <param name="machine">Whether to include machine performance in the calculation (defaults to true)</param>
+        /// <param name="netstal">Whether to include orders starting with "20" (defaults to false)</param>
+        /// <returns>The total orders processing time</returns>
         public static float OrdersTime(string[] orders, bool machine = true, bool netstal = false)
         {
             float output = 0f;
@@ -147,6 +170,15 @@ namespace DN_Henkel_Vision.Memory
             return output;
         }
 
+        /// <summary>
+        /// Exports faults from the system.
+        /// </summary>
+        /// <param name="time">The time limit to export faults.</param>
+        /// <param name="username">The username of the person exporting faults.</param>
+        /// <param name="date">The date to export faults.</param>
+        /// <param name="netstal">Specifies whether faults for a Netstal should be exported.</param>
+        /// <param name="inkognito">Specifies whether the export should be done anonymously.</param>
+        /// <returns>A string containing exported faults.</returns>
         public static async Task<string> ExportFaults(float time,string username, DateTime date, bool netstal = false, bool inkognito = false)
         {
             float remain = time * 60f;
@@ -196,6 +228,12 @@ namespace DN_Henkel_Vision.Memory
             return output;
         }
 
+        /// <summary>
+        /// Returns the header string for exports.
+        /// </summary>
+        /// <param name="netstal">Indicates whether export is for Netstal machine or not.</param>
+        /// <param name="inkognito">Indicates whether to show the real project name or not.</param>
+        /// <returns>The header string for exports.</returns>
         public static string Header(bool netstal = false, bool inkognito = false)
         {
             string pseudoheader = s_header.Replace("DNHENKELVISION", "##############");
@@ -261,6 +299,15 @@ namespace DN_Henkel_Vision.Memory
             return new string(pseudo) + s_adauftrag;
         }
 
+        /// <summary>
+        /// Replaces character at given index with given character in the provided pseudoheader string. 
+        /// Adds the replaced index and value to their respective lists. 
+        /// </summary>
+        /// <param name="pseudoheader">The string to replace a character in.</param>
+        /// <param name="replacedindex">The list of replaced indices.</param>
+        /// <param name="replacedvalue">The list of replacement characters.</param>
+        /// <param name="index">The index of the character to replace.</param>
+        /// <param name="replacement">The character to replace with.</param>
         public static void HeaderReplace( ref string pseudoheader, ref List<int> replacedindex, ref List<char> replacedvalue, int index, char replacement )
         {
             while (pseudoheader.ToCharArray()[index] == '#' || pseudoheader.ToCharArray()[index] == ' ' || pseudoheader.ToCharArray()[index] == '$' || pseudoheader.ToCharArray()[index] == '\r' || pseudoheader.ToCharArray()[index] == '\n') 
@@ -277,6 +324,13 @@ namespace DN_Henkel_Vision.Memory
             pseudoheader = new string(pseudo);
         }
 
+        /// <summary>
+        /// Generates a random integer value within a specified range and updates the seed.
+        /// </summary>
+        /// <param name="seed">The seed value to update.</param>
+        /// <param name="min">The minimum value of the range, defaults to the minimum integer value.</param>
+        /// <param name="max">The maximum value of the range, defaults to the maximum integer value.</param>
+        /// <returns>A random integer value within the specified range.</returns>
         public static int Sequence(ref int seed, int min = int.MinValue, int max = int.MaxValue)
         {
             seed = (seed * 1103515245 + 12345) & int.MaxValue;
@@ -284,6 +338,11 @@ namespace DN_Henkel_Vision.Memory
             return (seed % (max - min + 1)) + min;
         }
 
+        /// <summary>
+        /// Updates the export values for a user and machine service.
+        /// </summary>
+        /// <param name="user">The value of the user service.</param>
+        /// <param name="mach">The value of the machine service.</param>
         public static void UpdateExportValues(float user, float mach)
         {
             if (Cache.LastDate != DateTime.Now.Date)

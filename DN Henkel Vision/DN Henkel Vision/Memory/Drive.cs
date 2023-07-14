@@ -1,13 +1,8 @@
-﻿using Microsoft.UI.Xaml.Controls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Windows.Storage.Pickers;
-using Windows.Storage.Provider;
 using Windows.Storage;
-using System.Threading.Tasks;
-using Windows.UI.Shell;
 using DN_Henkel_Vision.Interface;
 using Microsoft.UI.Xaml;
 
@@ -76,6 +71,9 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        /// <summary>
+        /// Saves the data in OrdersRegistry to the registry.
+        /// </summary>
         public static void SaveRegistry()
         {
             string output = "";
@@ -86,6 +84,11 @@ namespace DN_Henkel_Vision.Memory
             Write(s_registry, output);
         }
 
+        /// <summary>
+        /// Loads faults for a given order number from file.
+        /// </summary>
+        /// <param name="orderNumber">The order number.</param>
+        /// <returns>An array of lists of faults. Index 0 contains normal faults, index 1 contains preview faults, index 2 contains pending faults.</returns>
         public static List<Fault>[] LoadFaults(string orderNumber)
         {
             List<Fault>[] output = new List<Fault>[3];
@@ -130,6 +133,13 @@ namespace DN_Henkel_Vision.Memory
             return output;
         }
 
+        /// <summary>
+        /// Saves the list of faults, previews, and pending with given orderNumber to file system.
+        /// </summary>
+        /// <param name="orderNumber">The unique identifier of the order.</param>
+        /// <param name="faults">The list of faults to be saved.</param>
+        /// <param name="previews">The list of fault previews to be saved.</param>
+        /// <param name="pending">The list of pending faults to be saved.</param>
         public static void SaveFaults(string orderNumber, List<Fault> faults, List<Fault> previews, List<Fault> pending)
         {
             string output = "";
@@ -152,6 +162,11 @@ namespace DN_Henkel_Vision.Memory
             Write(CreateFaultsPath(orderNumber), output);
         }
 
+        /// <summary>
+        /// Create file path for faults.
+        /// </summary>
+        /// <param name="orderNumber">The order number.</param>
+        /// <returns>File path for faults</returns>
         internal static string CreateFaultsPath(string orderNumber)
         {
             return $"{s_orders}{orderNumber.Replace(" ", string.Empty)}.dnff";
@@ -192,6 +207,9 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        /// <summary>
+        /// Loads export history from file.
+        /// </summary>
         public static void LoadExportHistory()
         {
             string[] source = Read(s_exports).Split('\n');
@@ -225,6 +243,9 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        /// <summary>
+        /// Saves the export history and appends the service user and export times to a file.
+        /// </summary>
         public static void SaveExportHistory()
         {
             string output = DateTime.Now.ToString("ddMMyyyy");
@@ -264,6 +285,14 @@ namespace DN_Henkel_Vision.Memory
             Write(s_exports, output);
         }
 
+        /// <summary>
+        /// Saves export file for given time, username and date. 
+        /// </summary>
+        /// <param name="time">Time to export</param>
+        /// <param name="username">Username of the person exporting</param>
+        /// <param name="date">Date of the export</param>
+        /// <param name="netstal">Whether Netstal comapny data is being exported or not</param>
+        /// <param name="inkognito">Whether the export is anonymous</param>
         public static async void ExportsSave(float time, string username, DateTime date, bool netstal = false, bool inkognito = false)
         {
             string filetype = ".dnfa";
@@ -284,15 +313,11 @@ namespace DN_Henkel_Vision.Memory
 
             var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(Manager.CurrentWindow);
 
-            // Initialize the file picker with the window handle (HWND).
             WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
 
-            // Set options for your file picker
             savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            // Dropdown of file types the user can save the file as
             savePicker.FileTypeChoices.Add(filetext, new List<string>() { filetype });
 
-            // Open the picker for the user to pick a file
             StorageFile file = await savePicker.PickSaveFileAsync();
             if (file != null)
             {
@@ -312,7 +337,6 @@ namespace DN_Henkel_Vision.Memory
 
                 string content = await Export.ExportFaults(time, username, date, netstal, inkognito);
 
-                // Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
                 CachedFileManager.DeferUpdates(file);
 
                 using (var stream = await file.OpenStreamForWriteAsync())
@@ -324,7 +348,10 @@ namespace DN_Henkel_Vision.Memory
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Loads the settings from the registry.
+        /// </summary>
         public static void LoadSettings()
         {
             string source = Read(s_settings);
@@ -370,6 +397,9 @@ namespace DN_Henkel_Vision.Memory
             Settings.UserName = username;
         }
 
+        /// <summary>
+        /// Saves the application settings to file.
+        /// </summary>
         public static void SaveSettings()
         {
             string output = "";

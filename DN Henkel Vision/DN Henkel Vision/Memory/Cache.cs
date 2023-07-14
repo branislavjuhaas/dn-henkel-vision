@@ -2,6 +2,9 @@
 
 namespace DN_Henkel_Vision.Memory
 {
+    /// <summary>
+    /// The cache class for the application.
+    /// </summary>
     internal class Cache
     {
         public static string LastPlacement = "";

@@ -1,18 +1,15 @@
 ﻿using DN_Henkel_Vision.Memory;
 using DN_Henkel_Vision.Interface;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.Data.Text;
-using Windows.Media.Capture;
 
 namespace DN_Henkel_Vision.Felber
 {
+    /// <summary>
+    /// Arteficial intelligence for fault classification.
+    /// </summary>
     internal static class Felber
     {
         public static BackgroundWorker Analyzer = new();
@@ -112,6 +109,11 @@ namespace DN_Henkel_Vision.Felber
             return output;
         }
 
+        /// <summary>
+        /// Predict a fault with limited information.
+        /// </summary>
+        /// <param name="input">The input fault to predict.</param>
+        /// <returns>The predicted output fault.</returns>
         private static Fault PredictLimitedFault(Fault input)
         {
             Fault output = new(input.Description);
@@ -125,7 +127,7 @@ namespace DN_Henkel_Vision.Felber
 
             return output;
         }
-        
+           
         /// <summary>
         /// Assigns the indexes of the cause, classification and type of the fault.
         /// </summary>
@@ -181,6 +183,11 @@ namespace DN_Henkel_Vision.Felber
             Analyzer.RunWorkerAsync();
         }
 
+        /// <summary>
+        /// Capitalizes all words that contain digits in the input string and returns the modified string.
+        /// </summary>
+        /// <param name="input">The input string.</param>
+        /// <returns>The modified string.</returns>
         public static string Capitalize(string input)
         {
             string output = input;
@@ -336,6 +343,12 @@ namespace DN_Henkel_Vision.Felber
             Ready = true;
         }
 
+        /// <summary>
+        /// Calculates the estimated machine time based on user input and length of task.
+        /// </summary>
+        /// <param name="user">The user input time.</param>
+        /// <param name="length">The length of the task.</param>
+        /// <returns>The estimated machine time.</returns>
         private static float MachineTime(float user, int length)
         {
             float factor = (float)Math.Pow(1.12, (double)length / (double)Manager.AverageLength);

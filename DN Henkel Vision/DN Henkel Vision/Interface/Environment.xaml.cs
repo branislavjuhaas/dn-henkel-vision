@@ -1,8 +1,4 @@
-// Copyright (c) Microsoft Corporation and Contributors.
-// Licensed under the MIT License.
-
 using DN_Henkel_Vision.Memory;
-using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -10,9 +6,6 @@ using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -36,7 +29,7 @@ namespace DN_Henkel_Vision.Interface
         /// <summary>
         /// Sets the completion source for the navigation search bar.
         /// </summary>
-#pragma warning disable CA1822 // Mark members as static
+        #pragma warning disable CA1822 // Mark members as static
         private void NavigationSearch_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         #pragma warning restore CA1822 // Mark members as static
         {
@@ -197,6 +190,12 @@ namespace DN_Henkel_Vision.Interface
             return output;
         }
 
+        /// <summary>
+        /// Handles the click event of the Export button.
+        /// Saves faults, initiates data evaluation and navigates to the Exports page.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event args.</param>
         private void Export_Click(object sender, RoutedEventArgs e)
         {
             if (Workspace.Content.GetType() == typeof(Editor))
@@ -215,6 +214,10 @@ namespace DN_Henkel_Vision.Interface
             Workspace.Navigate(typeof(Exports));
         }
 
+        /// <summary>
+        /// Handles the event when the Environment window is closed.
+        /// Saves any changes made to the selected order before closing the application.
+        /// </summary>
         private void Environment_Closed(object sender, WindowEventArgs args)
         {
             if (!string.IsNullOrEmpty(Manager.Selected.OrderNumber))
@@ -225,7 +228,12 @@ namespace DN_Henkel_Vision.Interface
             Drive.SaveExportHistory();
         }
 
-        private  async void Create_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Event handler for the Create button. Displays a dialog to create a new order and saves it.
+        /// </summary>
+        /// <param name="sender">The object which raised the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private async void Create_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog orderDialog = new();
 
@@ -257,6 +265,11 @@ namespace DN_Henkel_Vision.Interface
             Manager.CreateOrder(Format(((Order)orderDialog.Content).Number.Text));
         }
 
+        /// <summary>
+        /// Event handler for the OrderDialog's Loaded event.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The RoutedEventArgs object containing information about the event.</param>
         private void OrderDialog_Loaded(object sender, RoutedEventArgs e)
         {
             var parent = VisualTreeHelper.GetParent((DependencyObject)sender);
@@ -272,6 +285,11 @@ namespace DN_Henkel_Vision.Interface
                 });
         }
 
+        /// <summary>
+        /// Handles the click event of the settings button and navigates to the settings page.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             if (Workspace.Content.GetType() == typeof(Editor))

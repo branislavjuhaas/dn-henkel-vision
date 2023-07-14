@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace DN_Henkel_Vision.Memory
 {
     /// <summary>
-    /// The fault class storing all the pieces of information about a fault.
+    /// The fault class storing all information about a fault.
     /// </summary>
     public class Fault
     {
@@ -23,7 +19,7 @@ namespace DN_Henkel_Vision.Memory
         public float MachineTime;
 
         /// <summary>
-        /// The fault class storing all the pieces of information about a fault.
+        /// The fault class storing all information about a fault.
         /// </summary>
         /// <param name="description">Main description of the fault</param>
         /// <param name="cause">the cause of the file for classificaiton</param>
@@ -34,9 +30,9 @@ namespace DN_Henkel_Vision.Memory
         }
 
         /// <summary>
-        /// 
+        /// This returns a new Fault struct whose values are copied from the current Fault struct. 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A new Fault with copied values</returns>
         public Fault Clone()
         {
             Fault clone = new Fault(Description, Cause);

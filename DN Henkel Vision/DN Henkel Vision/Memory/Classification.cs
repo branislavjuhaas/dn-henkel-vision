@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DN_Henkel_Vision.Memory
+﻿namespace DN_Henkel_Vision.Memory
 {
     internal class Classification
     {
@@ -67,7 +61,7 @@ namespace DN_Henkel_Vision.Memory
             OriginalClassifications[15] = new string[] { "Súčiastka" };
             OriginalClassifications[16] = new string[] { "Nedefinované oddelenie" };
 
-            // Assign the automatic classifications used by MONIE engine
+            // Assign the automatic classifications used by Felber
             AutomaticClassifications[0] = new string[] { "Cable", "Cable Labeling", "Internal Labeling", "External Labeling", "Cable", "Wire", "Ferrule", "Cable Eye", "Stripping", "Spring Contact", "Soldering", "Screw Clamp", "Component", "Shielding", "Cable Placement" };
             AutomaticClassifications[1] = new string[] { "Cable Labeling", "Internal Labeling", "External Labeling", "Cable", "Wire", "Ferrule", "Cable Eye", "Stripping", "Spring Contact", "Soldering", "Screw Clamp", "Component", "Shielding", "Cable Placement" };
             AutomaticClassifications[2] = new string[] { "Cable Labeling", "Internal Labeling", "External Labeling", "Cable", "Wire", "Ferrule", "Cable Eye", "Stripping", "Spring Contact", "Soldering", "Screw Clamp", "Component", "Shielding", "Cable Placement" };
@@ -85,7 +79,8 @@ namespace DN_Henkel_Vision.Memory
             AutomaticClassifications[14] = new string[] { "Early Processing Fault", "Special Control Reference", "Order Completion", "Physical Values", "Information Problem", "Software Registry", "Serial Error", "Additional Device", "Sonder" };
             AutomaticClassifications[15] = new string[] { "Component" };
             AutomaticClassifications[16] = new string[] { "Undefined Department" };
-            // Assign the automatic original classifications used by MONIE engine
+
+            // Assign the automatic original classifications used by Felber
             OriginalAutomaticClassifications[0] = new string[] { "Kábel", "Popis Kábel", "Popis vnútorný", "Popis vonkajší", "Kábel", "Vodič", "Spracovanie dutinka", "Spracovanie káblové očko", "Spracovanie odizolovanie", "Spracovanie pružinový kontakt", "Spracovanie pájkovanie", "Spracovanie skrutková svorka", "Súčiastka", "Tienenie", "Uloženie Kábel" };
             OriginalAutomaticClassifications[1] = new string[] { "Popis Kábel", "Popis vnútorný", "Popis vonkajší", "Kábel", "Vodič", "Spracovanie dutinka", "Spracovanie káblové očko", "Spracovanie odizolovanie", "Spracovanie pružinový kontakt", "Spracovanie pájkovanie", "Spracovanie skrutková svorka", "Súčiastka", "Tienenie", "Uloženie Kábel" };
             OriginalAutomaticClassifications[2] = new string[] { "Popis Kábel", "Popis vnútorný", "Popis vonkajší", "Kábel", "Vodič", "Spracovanie dutinka", "Spracovanie káblové očko", "Spracovanie odizolovanie", "Spracovanie pružinový kontakt", "Spracovanie pájkovanie", "Spracovanie skrutková svorka", "Súčiastka", "Tienenie", "Uloženie Kábel" };
@@ -103,7 +98,6 @@ namespace DN_Henkel_Vision.Memory
             OriginalAutomaticClassifications[14] = new string[] { "Chyba zaprícinená predcasným spracovaním", "Dokumentácia špeciálne riadenie", "Doplnenie objednávky", "Fyzické hodnoty", "Problém s informáciou", "SW zoznam", "Sériová chyba", "prídavné zariadenie", "špecialita (sonder)" };
             OriginalAutomaticClassifications[15] = new string[] { "Súčiastka" };
             OriginalAutomaticClassifications[16] = new string[] { "Nedefinované oddelenie" };
-
 
             // Assign the original classifications to the new classifications
             ClassificationsPointers[0] = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };

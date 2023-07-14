@@ -1,35 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System.Runtime.InteropServices;
-using Windows.ApplicationModel.Core;
 using Microsoft.UI.Windowing;
 using Microsoft.UI;
-using Windows.Graphics;
 using WinRT.Interop;
-using Windows.UI.WindowManagement;
-using System.Drawing;
 using DN_Henkel_Vision.Memory;
 using System.ComponentModel;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace DN_Henkel_Vision.Interface
 {
     /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
+    /// The splash screen of the application.
     /// </summary>
     public sealed partial class Splash : Window
     {
@@ -39,7 +19,10 @@ namespace DN_Henkel_Vision.Interface
         private Window environment;
 
         private static Window s_loader;
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Splash"/> class.
+        /// </summary>
         public Splash()
         {           
             s_loader = this;
@@ -57,6 +40,10 @@ namespace DN_Henkel_Vision.Interface
             this.AppWindow.MoveAndResize(new Windows.Graphics.RectInt32((area.WorkArea.Width - StartupWidth) / 2, (area.WorkArea.Height - StartupHeight) / 2, StartupWidth, StartupHeight));
         }
 
+        /// <summary>
+        /// Gets the app window and presenter.
+        /// </summary>
+        /// <returns>The overlapped presenter.</returns>
         private OverlappedPresenter GetAppWindowAndPresenter()
         {
             IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
@@ -65,6 +52,11 @@ namespace DN_Henkel_Vision.Interface
             return _apw.Presenter as OverlappedPresenter;
         }
 
+        /// <summary>
+        /// Event handler for Grid.Loaded event.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The RoutedEventArgs object that contains the event data.</param>
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             BackgroundWorker worker = new BackgroundWorker();
@@ -75,6 +67,11 @@ namespace DN_Henkel_Vision.Interface
             worker.RunWorkerAsync();
         }
 
+        /// <summary>
+        /// Executes the background work.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">An instance of DoWorkEventArgs containing event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             LoadApplication();
@@ -85,6 +82,9 @@ namespace DN_Henkel_Vision.Interface
             });
         }
 
+        /// <summary>
+        /// Creates a new Environment, activates it, closes the current window, and sets the CurrentWindow to the new Environment.
+        /// </summary>
         public void Environmentate()
         {
             environment = new Environment();
@@ -93,6 +93,9 @@ namespace DN_Henkel_Vision.Interface
             Manager.CurrentWindow = environment;
         }
 
+        /// <summary>
+        /// Loads the application by initializing the Manager and Felber.Felber classes.
+        /// </summary>
         private void LoadApplication()
         {
             Manager.Initialize();

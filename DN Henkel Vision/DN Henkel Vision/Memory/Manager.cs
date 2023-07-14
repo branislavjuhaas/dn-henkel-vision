@@ -81,6 +81,10 @@ namespace DN_Henkel_Vision.Memory
             Cache.LastPlacement = string.Empty;
         }
 
+        /// <summary>
+        /// Updates the OrdersRegistry with the Selected order data, along with the Users, Machines,
+        /// Exports, and Contents lists with updated values. Also updates the Export data for a graphical display.
+        /// </summary>
         public static void UpdateRegistry()
         {
             if (string.IsNullOrEmpty(Selected.OrderNumber)) { return; }
@@ -130,9 +134,13 @@ namespace DN_Henkel_Vision.Memory
             if (oldusers != Users[index] || oldmachs != Machines[index]) { Export.ChangedData = true; }
         }
 
+        /// <summary>
+        /// This method creates and returns an unique index using the current time and date.
+        /// NOTE: Working just up to year 2159
+        /// </summary>
+        /// <returns>An unsigned integer representing the unique index.</returns>
         public static uint CreateIndex()
         {
-            //NOTE: Working just up to year 2159
             uint index = (uint)(DateTime.Now - new DateTime(2023, 4, 3)).TotalSeconds;
 
             if (index > Cache.LastIndex) { Cache.LastIndex = index; return index; }
@@ -141,6 +149,10 @@ namespace DN_Henkel_Vision.Memory
             return Cache.LastIndex;
         }
 
+        /// <summary>
+        /// Creates and adds an order to the global memory.
+        /// </summary>
+        /// <param name="order">Number of the order to be created and added.</param>
         public static void CreateOrder(string order)
         {
             OrdersRegistry.Add(order);
