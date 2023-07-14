@@ -108,14 +108,16 @@ namespace DN_Henkel_Vision.Memory
                 if (string.IsNullOrEmpty(line)) { continue; }
                 string[] parts = line.Split('\t');
 
-                Fault fault = new(parts[3]);
+                Fault fault = new(parts[3])
+                {
+                    Index = uint.Parse(parts[0]),
+                    Component = parts[1],
+                    Placement = parts[2],
+                    Cause = parts[4],
+                    Classification = parts[5],
+                    Type = parts[6]
+                };
 
-                fault.Index = uint.Parse(parts[0]);
-                fault.Component = parts[1];
-                fault.Placement = parts[2];
-                fault.Cause = parts[4];
-                fault.Classification = parts[5];
-                fault.Type = parts[6];
                 fault.ClassIndexes[0] = int.Parse(parts[7]);
                 fault.ClassIndexes[1] = int.Parse(parts[8]);
                 fault.ClassIndexes[2] = int.Parse(parts[9]);
@@ -146,17 +148,17 @@ namespace DN_Henkel_Vision.Memory
 
             foreach (Fault fault in faults)
             {
-                output += $"{fault.Index}\t{fault.ToString()}\n";
+                output += $"{fault.Index}\t{fault}\n";
             }
             output += "Preview:\n";
             foreach (Fault fault in previews)
             {
-                output += $"{fault.Index}\t{fault.ToString()}\n";
+                output += $"{fault.Index}\t{fault}\n";
             }
             output += "Pending:\n";
             foreach (Fault fault in pending)
             {
-                output += $"{fault.Index}\t{fault.ToString()}\n";
+                output += $"{fault.Index}\t{fault}\n";
             }
 
             Write(CreateFaultsPath(orderNumber), output);
@@ -216,11 +218,11 @@ namespace DN_Henkel_Vision.Memory
 
             int[] datea = new int[3];
 
-            datea[0] = Int32.Parse(source[0].Substring(0,2));
-            datea[1] = Int32.Parse(source[0].Substring(2,2));
-            datea[2] = Int32.Parse(source[0].Substring(4));
+            datea[0] = Int32.Parse(source[0][0..2]);
+            datea[1] = Int32.Parse(source[0][2..2]);
+            datea[2] = Int32.Parse(source[0][4..]);
 
-            DateTime date = new DateTime(datea[2], datea[1], datea[0]);
+            DateTime date = new(datea[2], datea[1], datea[0]);
 
             int offset = (int)(DateTime.Now - date).TotalDays;
 
@@ -306,10 +308,10 @@ namespace DN_Henkel_Vision.Memory
 
             if (inkognito)
             {
-                filetext = filetext.Substring(0, 22) + " - Inkognito" + filetext.Substring(22);
+                filetext = string.Concat(filetext.AsSpan(0, 22), " - Inkognito", filetext.AsSpan(22));
             }
             
-            FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            FileSavePicker savePicker = new();
 
             var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(Manager.CurrentWindow);
 
@@ -339,13 +341,9 @@ namespace DN_Henkel_Vision.Memory
 
                 CachedFileManager.DeferUpdates(file);
 
-                using (var stream = await file.OpenStreamForWriteAsync())
-                {
-                    using (var tw = new StreamWriter(stream))
-                    {
-                        tw.Write(content);
-                    }
-                }
+                using var stream = await file.OpenStreamForWriteAsync();
+                using var tw = new StreamWriter(stream);
+                tw.Write(content);
             }
         }
 
@@ -359,7 +357,7 @@ namespace DN_Henkel_Vision.Memory
             char theme = source[0];
             char testing = source[1];
             char collection = source[2];
-            string username = source.Substring(3);
+            string username = source[3..];
 
             switch (theme)
             {

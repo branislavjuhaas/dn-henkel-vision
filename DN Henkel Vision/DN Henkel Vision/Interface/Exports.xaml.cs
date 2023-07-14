@@ -14,10 +14,10 @@ namespace DN_Henkel_Vision.Interface
     /// </summary>
     public sealed partial class Exports : Page
     {
-        private string _userTime = $"{Math.Round((Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f, 2)} hours";
-        private string _totalTime = $"{Math.Round(((Export.OrdersTime(Export.Unexported.ToArray()) + Export.OrdersTime(Export.Unexported.ToArray(), true, true)) / 60f), 2)} hours";
+        private readonly string _userTime = $"{Math.Round((Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f, 2)} hours";
+        private readonly string _totalTime = $"{Math.Round(((Export.OrdersTime(Export.Unexported.ToArray()) + Export.OrdersTime(Export.Unexported.ToArray(), true, true)) / 60f), 2)} hours";
 
-        private DateTimeOffset _today = DateTime.Now;
+        private readonly DateTimeOffset _today = DateTime.Now;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Exports"/> class.
@@ -49,7 +49,7 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">The event arguments.</param>
-        private void Machine_Click(object sender, RoutedEventArgs e)
+        private void Machine_Click(object sender, RoutedEventArgs se)
         {
             if (((ToggleButton)sender).IsChecked == false)
             {
@@ -204,7 +204,7 @@ namespace DN_Henkel_Vision.Interface
         /// Returns a boolean indicating whether the Shift key is currently pressed.
         /// </summary>
         /// <returns>A boolean value indicating whether the Shift key is currently pressed.</returns>
-        private bool IsShift()
+        private static bool IsShift()
         {
             CoreVirtualKeyStates states = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
 

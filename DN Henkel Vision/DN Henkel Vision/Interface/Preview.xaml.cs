@@ -94,16 +94,17 @@ namespace DN_Henkel_Vision.Interface
         {
             if (string.IsNullOrEmpty(Placement.Text))
             {
-                ContentDialog message = new();
-
-                message.XamlRoot = Manager.CurrentWindow.Content.XamlRoot;
-                message.Title = "Missing Placement";
-                message.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                message.Content = "Do you want to continue without valid placement?";
-                message.PrimaryButtonText = "Close";
-                message.SecondaryButtonText = "Continue";
-                message.DefaultButton = ContentDialogButton.Primary;
-                message.RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme;
+                ContentDialog message = new()
+                {
+                    XamlRoot = Manager.CurrentWindow.Content.XamlRoot,
+                    Title = "Missing Placement",
+                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                    Content = "Do you want to continue without valid placement?",
+                    PrimaryButtonText = "Close",
+                    SecondaryButtonText = "Continue",
+                    DefaultButton = ContentDialogButton.Primary,
+                    RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme
+                };
 
                 message.Loaded += Message_Loaded;
 
@@ -129,15 +130,16 @@ namespace DN_Henkel_Vision.Interface
         {
             if (string.IsNullOrEmpty(Placement.Text))
             {
-                ContentDialog message = new();
-
-                message.XamlRoot = Manager.CurrentWindow.Content.XamlRoot;
-                message.Title = "Missing Placement";
-                message.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                message.Content = "Do you want to continue without valid placement?";
-                message.PrimaryButtonText = "Close";
-                message.SecondaryButtonText = "Continue";
-                message.DefaultButton = ContentDialogButton.Primary;
+                ContentDialog message = new()
+                {
+                    XamlRoot = Manager.CurrentWindow.Content.XamlRoot,
+                    Title = "Missing Placement",
+                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                    Content = "Do you want to continue without valid placement?",
+                    PrimaryButtonText = "Close",
+                    SecondaryButtonText = "Continue",
+                    DefaultButton = ContentDialogButton.Primary
+                };
 
                 message.Loaded += Message_Loaded;
 
@@ -257,10 +259,11 @@ namespace DN_Henkel_Vision.Interface
         /// <returns>A new Fault object.</returns>
         private Fault PrepareFault()
         {
-            Fault output = new(Description.Text);
-
-            output.Component = Component.Text;
-            output.Placement = Placement.Text;
+            Fault output = new(Description.Text)
+            {
+                Component = Component.Text,
+                Placement = Placement.Text
+            };
 
             if (Cause.SelectedValue != null) { output.Cause = Cause.SelectedValue.ToString(); }
             else { output.Cause = string.Empty; }

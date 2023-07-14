@@ -1,4 +1,6 @@
 using DN_Henkel_Vision.Memory;
+using Microsoft.UI.Windowing;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -235,17 +237,18 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event arguments.</param>
         private async void Create_Click(object sender, RoutedEventArgs e)
         {
-            ContentDialog orderDialog = new();
-
-            orderDialog.XamlRoot = Manager.CurrentWindow.Content.XamlRoot;
-            orderDialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            orderDialog.Title = "Create Order";
-            orderDialog.PrimaryButtonText = "Create";
-            orderDialog.CloseButtonText = "Cancel";
-            orderDialog.DefaultButton = ContentDialogButton.Primary;
-            orderDialog.IsPrimaryButtonEnabled = false;
-            orderDialog.RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme;
-            orderDialog.Content = new Order();
+            ContentDialog orderDialog = new()
+            {
+                XamlRoot = Manager.CurrentWindow.Content.XamlRoot,
+                Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                Title = "Create Order",
+                PrimaryButtonText = "Create",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary,
+                IsPrimaryButtonEnabled = false,
+                RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme,
+                Content = new Order()
+            };
             orderDialog.Loaded += OrderDialog_Loaded;
 
             ContentDialogResult result = await orderDialog.ShowAsync();
@@ -300,6 +303,15 @@ namespace DN_Henkel_Vision.Interface
 
             OrdersPanel_Select(string.Empty);
             Workspace.Navigate(typeof(Settings));
+        }
+
+        private void Environment_Loaded(object sender, RoutedEventArgs e)
+        {
+            var windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            var windowId = Win32Interop.GetWindowIdFromWindow(windowHandle);
+            AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
+            OverlappedPresenter presenter = (OverlappedPresenter)appWindow.Presenter;
+            presenter.Maximize();
         }
     }
 }

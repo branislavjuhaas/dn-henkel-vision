@@ -9,7 +9,7 @@ namespace DN_Henkel_Vision
     /// </summary>
     public partial class App
     {
-        private static readonly Mutex mutex = new Mutex(true, "{b2a44102-131d-4742-95a6-f3e80c85d275}");
+        private static readonly Mutex mutex = new(true, "{b2a44102-131d-4742-95a6-f3e80c85d275}");
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().

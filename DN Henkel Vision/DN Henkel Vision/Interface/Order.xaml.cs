@@ -38,7 +38,7 @@ namespace DN_Henkel_Vision.Interface
 
             if (order.Length < 2) return;
 
-            switch (order.Substring(0, 2))
+            switch (order[0..2])
             {
                 case "10":
                     if (order.Length == 9)

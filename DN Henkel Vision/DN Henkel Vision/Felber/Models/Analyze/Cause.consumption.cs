@@ -54,7 +54,7 @@ namespace DN_Henkel_Vision
 
         #endregion
 
-        private static string MLNetModelPath = Drive.Folder + @"\..\DN Henkel Vision\Felber\Models\Analyze\Cause.zip";
+        private static readonly string MLNetModelPath = Drive.Folder + @"\..\DN Henkel Vision\Felber\Models\Analyze\Cause.zip";
 
         public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
 

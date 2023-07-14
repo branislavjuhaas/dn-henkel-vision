@@ -35,14 +35,16 @@ namespace DN_Henkel_Vision.Memory
         /// <returns>A new Fault with copied values</returns>
         public Fault Clone()
         {
-            Fault clone = new Fault(Description, Cause);
-            clone.Placement = Placement;
-            clone.Component = Component;
-            clone.Classification = Classification;
-            clone.Type = Type;
-            clone.Index = Index;
-            clone.ClassIndexes = ClassIndexes;
-            clone.UserTime = UserTime;
+            Fault clone = new(Description, Cause)
+            {
+                Placement = Placement,
+                Component = Component,
+                Classification = Classification,
+                Type = Type,
+                Index = Index,
+                ClassIndexes = ClassIndexes,
+                UserTime = UserTime
+            };
             return clone;
 
         }
@@ -60,8 +62,8 @@ namespace DN_Henkel_Vision.Memory
         {
             string ordernumber = order.Replace(" ", "");
 
-            if (order.StartsWith("38")) { ordernumber = ordernumber.Substring(2); }
-            
+            if (order.StartsWith("38")) { ordernumber = ordernumber.Remove(0, 2); }
+
             return $"{ordernumber}\t{Placement}\t{Description}\t{Component}\t{Memory.Classification.OriginalCauses[ClassIndexes[0]]}\t{Memory.Classification.OriginalClassifications[ClassIndexes[0]][ClassIndexes[1]]}\t{Memory.Classification.OriginalTypes[Memory.Classification.ClassificationsPointers[ClassIndexes[0]][ClassIndexes[1]]][ClassIndexes[2]]}\t{user}\t{date}";
         }
 

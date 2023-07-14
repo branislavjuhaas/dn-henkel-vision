@@ -59,8 +59,10 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The RoutedEventArgs object that contains the event data.</param>
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.WorkerSupportsCancellation = true;
+            BackgroundWorker worker = new()
+            {
+                WorkerSupportsCancellation = true
+            };
 
             worker.DoWork += Worker_DoWork;
 
@@ -96,7 +98,7 @@ namespace DN_Henkel_Vision.Interface
         /// <summary>
         /// Loads the application by initializing the Manager and Felber.Felber classes.
         /// </summary>
-        private void LoadApplication()
+        private static void LoadApplication()
         {
             Manager.Initialize();
             Felber.Felber.Initialize();

@@ -301,7 +301,7 @@ namespace DN_Henkel_Vision.Felber
                 {                   
                     float current;
 
-                    Component.ModelInput inputcomponent = new Component.ModelInput()
+                    Component.ModelInput inputcomponent = new()
                     {
                         Col0 = word
                     };

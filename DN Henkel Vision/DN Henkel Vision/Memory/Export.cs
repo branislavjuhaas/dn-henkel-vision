@@ -12,15 +12,15 @@ namespace DN_Henkel_Vision.Memory
     /// </summary>
     internal class Export : Drive
     {
-        private static string s_header = "SZSK2ZZ69JA93CDNHENKELVISION84SAW4K7DNHENKELVISIONXNESVGSYDNHENKELVISIONFMRR4YD5DNHENKELVISION3VY0RS\r\n"
+        private static readonly string s_header = "SZSK2ZZ69JA93CDNHENKELVISION84SAW4K7DNHENKELVISIONXNESVGSYDNHENKELVISIONFMRR4YD5DNHENKELVISION3VY0RS\r\n"
                                        + "LQZF15    N85J1DNHENKELVISIONJXG7Z5PEDNHENKELVISIONPXBXJCHRDNHENKELVISION50PUYSK7DNHENKELVISIONTU6EP\r\n"
                                        + "S1PX  6N  02W7Q3DNHENKELVISION2YCSP43WDNHENKELVISIONCFFQAQT2DNHENKELVISIONTG8W2H03DNHENKELVISION7UTJ\r\n"
                                        + "4C9Y  BL    R50EUDNHENKELVISIONCE6WZVLGDNHENKELVISION52FPJS6PDNHENKELVISION1K3U7H63DNHENKELVISIONWYA\r\n"
                                        + "QLNF  16X1  V1ALR7DNHENKELVISIONTJH0LHPSDNHENKELVISIONQN0USUBXDNHENKELVISIONK7AX8B21DNHENKELVISION4Z\r\n"
                                        + "Y3  F0LGYV4LFQ0QTGQDNHENKELVISION3QHAW00HDNHENKELVISIONEJGLJTWJDNHENKELVISION7CB9J59GDNHENKELVISIONH\r\n";
 
-        private static string s_adnetstal = "NWEWT0SCTTAEL1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION";
-        private static string s_adauftrag = "AWUWF0TCRTAEG1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION";
+        private static readonly string s_adnetstal = "NWEWT0SCTTAEL1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION";
+        private static readonly string s_adauftrag = "AWUWF0TCRTAEG1PB9NACDNHENKELVISIONNJCEP8XHDNHENKELVISIONW2P1R7QTDNHENKELVISIONR77KK0EBDNHENKELVISION";
 
 
         public static int GraphicalCount = 36;
@@ -98,14 +98,14 @@ namespace DN_Henkel_Vision.Memory
         /// <returns>A string representing the Graph Time for the given scenario.</returns>
         public static string GraphTime(int scenario)
         {
-            switch (scenario)
+            return scenario switch
             {
-                case 0: return ServiceMaximal.ToString() + "h";
-                case 1: return ServiceHalf.ToString() + "h";
-                case 2: return ExportsMaximal.ToString() + "h";
-                case 3: return ExportsHalf.ToString() + "h";
-                default: return String.Empty;
-            }
+                0 => ServiceMaximal.ToString() + "h",
+                1 => ServiceHalf.ToString() + "h",
+                2 => ExportsMaximal.ToString() + "h",
+                3 => ExportsHalf.ToString() + "h",
+                _ => String.Empty,
+            };
         }
 
         /// <summary>
@@ -179,7 +179,9 @@ namespace DN_Henkel_Vision.Memory
         /// <param name="netstal">Specifies whether faults for a Netstal should be exported.</param>
         /// <param name="inkognito">Specifies whether the export should be done anonymously.</param>
         /// <returns>A string containing exported faults.</returns>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public static async Task<string> ExportFaults(float time,string username, DateTime date, bool netstal = false, bool inkognito = false)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             float remain = time * 60f;
 
