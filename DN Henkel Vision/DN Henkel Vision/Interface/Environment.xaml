@@ -66,6 +66,10 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
+                    <Image
+                        Width="18"
+                        Margin="0,14,0,0"
+                        Source="ms-appx:///Assets/Tiles/StoreLogo.scale-100.png"/>
                     <TextBlock
                     x:Name="ApplicationTitle"
                     Text="DN Henkel Vision"

@@ -33,6 +33,13 @@
                     Foreground="{ThemeResource TextFillColorSecondary}"
                     Grid.Column="2"/>
         </Grid>
-        <ProgressRing/>
+        <Image
+            Source="ms-appx:///Assets/Tiles/StoreLogo.scale-400.png"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Width="62"/>
+        <ProgressRing
+            VerticalAlignment="Bottom"
+            Margin="60"/>
     </Grid>
 </Window>
