@@ -456,8 +456,7 @@
                     x:Name="FaultsList"
                     x:FieldModifier="public"
                     ItemsSource="{x:Bind memory:Manager.Selected.Faults}"
-                    ItemTemplate="{StaticResource SelectiveFaultTemplate}"
-                    Loaded="FaultsList_Loaded"/>
+                    ItemTemplate="{StaticResource SelectiveFaultTemplate}"/>
             </ScrollViewer>
         </Grid>
     </Grid>
