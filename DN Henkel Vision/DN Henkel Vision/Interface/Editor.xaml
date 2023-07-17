@@ -18,278 +18,27 @@
         RowSpacing="2">
 
         <Grid.Resources>
-            <DataTemplate
-                x:Key="NormalFaultTemplate"
-                x:DataType="memory:Fault">
+            <DataTemplate x:Key="FaultTemplate" x:DataType="memory:Fault">
                 <Grid
-                    Background="Transparent"
-                    HorizontalAlignment="Stretch"
-                    Height="Auto"
-                    CornerRadius="4">
-                    <Grid
-                        x:Name="Preview"
-                        PointerPressed="Fault_Click"
-                        Height="40">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="1"/>
-                            <ColumnDefinition Width="200"/>
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="{x:Bind Description}" Grid.Column="0" VerticalAlignment="Center" Margin="10,0"/>
-                        <TextBlock Text="{x:Bind Cause}" Grid.Column="2" VerticalAlignment="Center" Margin="15,0"/>
-                        <Rectangle Width="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}" Opacity="0.41" Grid.Column="1"/>
-                    </Grid>
-                    <Grid
-                        x:Name="Changer"
-                        Visibility="Collapsed"
-                        Height="128">
-                        <Grid.Resources>
-                            <ResourceDictionary>
-                                <ResourceDictionary.ThemeDictionaries>
-                                    <ResourceDictionary x:Key="Default">
-                                        <StaticResource x:Key="TextControlBorderBrush" ResourceKey="ControlElevationBorderBrush"/>
-                                        <StaticResource x:Key="TextControlBorderBrushPointerOver" ResourceKey="ControlElevationBorderBrush" />
-                                    </ResourceDictionary>
-                                </ResourceDictionary.ThemeDictionaries>
-                            </ResourceDictionary>
-                        </Grid.Resources>
-                        <Grid
-                            Margin="20"
-                            VerticalAlignment="Top"
-                            Height="33"
-                            ColumnSpacing="20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox
-                                x:Name="Component"
-                                Text="{x:Bind Component}"
-                                Height="32"
-                                TextWrapping="Wrap"
-                                HorizontalAlignment="Left"
-                                MinWidth="25"
-                                Padding="12,5"/>
-                            <TextBox
-                                x:Name="Placement"
-                                Text="{x:Bind Placement}"
-                                Height="32"
-                                TextWrapping="Wrap"
-                                HorizontalAlignment="Left"
-                                MinWidth="25"
-                                Grid.Column="1"/>
-                            <TextBox
-                                x:Name="Description"
-                                Text="{x:Bind Description}"
-                                Height="32"
-                                TextWrapping="Wrap"
-                                Grid.Column="2"
-                                Padding="12,5"/>
-                        </Grid>
-                        <Grid
-                            VerticalAlignment="Bottom"
-                            Height="33"
-                            Margin="20"
-                            ColumnSpacing="20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="32"/>
-                                <ColumnDefinition Width="32"/>
-                            </Grid.ColumnDefinitions>
-                            <ComboBox
-                                HorizontalAlignment="Stretch"
-                                IsTextSearchEnabled="True"
-                                ItemsSource="{x:Bind memory:Classification.Causes}"
-                                SelectedIndex="{x:Bind ClassIndexes[0]}"
-                                SelectionChanged="Cause_SelectionChanged"
-                                Loaded="Cause_Loaded"/>
-                            <ComboBox
-                                HorizontalAlignment="Stretch"
-                                IsTextSearchEnabled="True"
-                                Grid.Column="1"
-                                SelectedIndex="{x:Bind ClassIndexes[1]}"
-                                SelectionChanged="Classification_SelectionChanged"/>
-                            <ComboBox
-                                HorizontalAlignment="Stretch"
-                                IsTextSearchEnabled="True"
-                                Grid.Column="2"
-                                SelectedIndex="{x:Bind ClassIndexes[2]}"/>
-                            <Button
-                                x:Name="Delete"
-                                Width="32"
-                                Height="32"
-                                Grid.Column="3"
-                                Click="Delete_Click">
-                                <FontIcon
-                                    FontFamily="Segoe Fluent Icons"
-                                    Glyph="&#xE74D;"
-                                    Margin="-10"
-                                    FontSize="16"/>
-                            </Button>
-                            <Button
-                                x:Name="Approve"
-                                Width="32"
-                                Height="32"
-                                Grid.Column="4"
-                                Click="Approve_Click">
-                                <FontIcon
-                                    FontFamily="Segoe Fluent Icons"
-                                    Glyph="&#xE73E;"
-                                    Margin="-10"
-                                    FontSize="16"/>
-                            </Button>
-                        </Grid>
-                    </Grid>
-                    <Grid.Transitions>
-                        <TransitionCollection>
-                            <EntranceThemeTransition/>
-                            <RepositionThemeTransition/>
-                            <ReorderThemeTransition/>
-                        </TransitionCollection>
-                    </Grid.Transitions>
-                </Grid>
-            </DataTemplate>
-
-            <DataTemplate
-                x:Key="AccentFaultTemplate"
-                x:DataType="memory:Fault">
-                <Grid
+                    RightTapped="Fault_RightTapped"
                     Background="{ThemeResource CardBackgroundFillColorDefault}"
-                    HorizontalAlignment="Stretch"
-                    Height="Auto"
-                    CornerRadius="4">
-                    <Grid
-                        x:Name="Preview"
-                        PointerPressed="Fault_Click"
-                        Height="40">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="1"/>
-                            <ColumnDefinition Width="200"/>
-                        </Grid.ColumnDefinitions>
+                    CornerRadius="2"
+                    Height="43">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem Icon="Edit" Text="Edit" Click="Edit_Click"/>
+                            <MenuFlyoutItem Icon="Delete" Text="Delete" Click="Delete_Click"/>
+                        </MenuFlyout>
+                    </Grid.ContextFlyout>
 
-                        <TextBlock Text="{x:Bind Description}" Grid.Column="0" VerticalAlignment="Center" Margin="10,0"/>
-                        <TextBlock Text="{x:Bind Cause}" Grid.Column="2" VerticalAlignment="Center" Margin="15,0"/>
-                        <Rectangle Width="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}" Opacity="0.41" Grid.Column="1"/>
-                        <Grid.Transitions>
-                            <TransitionCollection>
-                                <RepositionThemeTransition/>
-                            </TransitionCollection>
-                        </Grid.Transitions>
-                    </Grid>
-                    <Grid
-                        x:Name="Changer"
-                        Visibility="Collapsed"
-                        Height="128">
-                        <Grid.Resources>
-                            <ResourceDictionary>
-                                <ResourceDictionary.ThemeDictionaries>
-                                    <ResourceDictionary x:Key="Default">
-                                        <StaticResource x:Key="TextControlBorderBrush" ResourceKey="ControlElevationBorderBrush"/>
-                                        <StaticResource x:Key="TextControlBorderBrushPointerOver" ResourceKey="ControlElevationBorderBrush" />
-                                    </ResourceDictionary>
-                                </ResourceDictionary.ThemeDictionaries>
-                            </ResourceDictionary>
-                        </Grid.Resources>
-                        <Grid
-                            Margin="20"
-                            VerticalAlignment="Top"
-                            Height="33"
-                            ColumnSpacing="20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox
-                                x:Name="Component"
-                                Text="{x:Bind Component}"
-                                Height="32"
-                                TextWrapping="Wrap"
-                                HorizontalAlignment="Left"
-                                MinWidth="25"
-                                Padding="12,5"/>
-                            <TextBox
-                                x:Name="Placement"
-                                Text="{x:Bind Placement}"
-                                Height="32"
-                                TextWrapping="Wrap"
-                                HorizontalAlignment="Left"
-                                MinWidth="25"
-                                Grid.Column="1"/>
-                            <TextBox
-                                x:Name="Description"
-                                Text="{x:Bind Description}"
-                                Height="32"
-                                TextWrapping="Wrap"
-                                Grid.Column="2"
-                                Padding="12,5"/>
-                        </Grid>
-                        <Grid
-                            VerticalAlignment="Bottom"
-                            Height="33"
-                            Margin="20"
-                            ColumnSpacing="20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="32"/>
-                                <ColumnDefinition Width="32"/>
-                            </Grid.ColumnDefinitions>
-                            <ComboBox
-                                HorizontalAlignment="Stretch"
-                                IsTextSearchEnabled="True"
-                                ItemsSource="{x:Bind memory:Classification.Causes}"
-                                SelectedIndex="{x:Bind ClassIndexes[0]}"
-                                SelectionChanged="Cause_SelectionChanged"
-                                Loaded="Cause_Loaded"/>
-                            <ComboBox
-                                HorizontalAlignment="Stretch"
-                                IsTextSearchEnabled="True"
-                                Grid.Column="1"
-                                SelectedIndex="{x:Bind ClassIndexes[1]}"
-                                SelectionChanged="Classification_SelectionChanged"/>
-                            <ComboBox
-                                HorizontalAlignment="Stretch"
-                                IsTextSearchEnabled="True"
-                                Grid.Column="2"
-                                SelectedIndex="{x:Bind ClassIndexes[2]}"/>
-                            <Button
-                                x:Name="Delete"
-                                Width="32"
-                                Height="32"
-                                Grid.Column="3"
-                                Click="Delete_Click">
-                                <FontIcon
-                                    FontFamily="Segoe Fluent Icons"
-                                    Glyph="&#xE74D;"
-                                    Margin="-10"
-                                    FontSize="16"/>
-                            </Button>
-                            <Button
-                                x:Name="Approve"
-                                Width="32"
-                                Height="32"
-                                Grid.Column="4"
-                                Click="Approve_Click">
-                                <FontIcon
-                                    FontFamily="Segoe Fluent Icons"
-                                    Glyph="&#xE73E;"
-                                    Margin="-10"
-                                    FontSize="16"/>
-                            </Button>
-                        </Grid>
-                        <Grid.Transitions>
-                            <TransitionCollection>
-                                <RepositionThemeTransition/>
-                            </TransitionCollection>
-                        </Grid.Transitions>
-                    </Grid>
+                    <TextBlock Text="{x:Bind Description}" Grid.Column="0" VerticalAlignment="Center" Margin="10,0"/>
+                    <TextBlock Text="{x:Bind Cause}" Grid.Column="2" VerticalAlignment="Center" Margin="15,0"/>
+                    <Rectangle Width="1" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Right" Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}" Opacity="0.32" Grid.Column="1"/>
                     <Grid.Transitions>
                         <TransitionCollection>
                             <EntranceThemeTransition/>
@@ -300,12 +49,7 @@
                 </Grid>
             </DataTemplate>
 
-            <local:FaultDataTemplateSelector
-                x:Key="SelectiveFaultTemplate"
-                Normal="{StaticResource NormalFaultTemplate}"
-                Accent="{StaticResource AccentFaultTemplate}">
-
-            </local:FaultDataTemplateSelector>
+            <StackLayout x:Key="FaultsLayout" Orientation="Vertical" Spacing="4"/>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="154"/>
@@ -451,12 +195,13 @@
             CornerRadius="4,0,0,0">
             <ScrollViewer
                 Margin="20"
-                CornerRadius="4">
+                CornerRadius="2">
                 <ItemsRepeater
                     x:Name="FaultsList"
                     x:FieldModifier="public"
+                    Layout="{StaticResource FaultsLayout}"
                     ItemsSource="{x:Bind memory:Manager.Selected.Faults}"
-                    ItemTemplate="{StaticResource SelectiveFaultTemplate}"/>
+                    ItemTemplate="{StaticResource FaultTemplate}"/>
             </ScrollViewer>
         </Grid>
     </Grid>

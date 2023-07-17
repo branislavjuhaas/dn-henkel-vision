@@ -178,7 +178,7 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="keep">If true, does not remove the fault from Manager.Selected</param>
         public void ApproveFault(bool keep = false)
         {
-            Manager.Selected.Faults.Add(PrepareFault());
+            Manager.Selected.Faults.Insert(0, PrepareFault());
 
             if (Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime <= 0f)
             {
