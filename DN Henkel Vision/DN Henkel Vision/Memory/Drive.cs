@@ -430,22 +430,23 @@ namespace DN_Henkel_Vision.Memory
             Write(s_settings, output);
         }
 
+        /// <summary>
+        /// Gets the safe element theme
+        /// </summary>
+        /// <returns>The element theme</returns>
         public static ElementTheme SafeTheme()
         {
             if (!File.Exists(s_settings)) return ElementTheme.Default;
-            
+
             string source = Read(s_settings);
 
             char theme = source[0];
 
             switch (theme)
             {
-                case '0':
-                    return ElementTheme.Light;
-                case '1':
-                    return ElementTheme.Dark;
-                default:
-                    return ElementTheme.Default;
+                case '0': return ElementTheme.Light;
+                case '1': return ElementTheme.Dark;
+                default: return ElementTheme.Default;
             }
         }
     }

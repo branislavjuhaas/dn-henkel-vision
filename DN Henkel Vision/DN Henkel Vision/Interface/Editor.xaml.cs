@@ -295,6 +295,11 @@ namespace DN_Henkel_Vision.Interface
             _reviewing = false;
         }
 
+        /// <summary>
+        /// Event handler for the Edit button click.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             if (LastTapped == null) return;
@@ -312,6 +317,11 @@ namespace DN_Henkel_Vision.Interface
             FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
         }
 
+        /// <summary>
+        /// Deletes the selected fault from the list of faults.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
             if (LastTapped == null) return;
@@ -321,8 +331,14 @@ namespace DN_Henkel_Vision.Interface
             Manager.Selected.Faults.RemoveAt(index);
         }
 
+        /// <summary>
+        /// Provides logic for handling the right-tapped event for a fault control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void Fault_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
+            // Set the last-tapped element to the tapped grid element.
             LastTapped = sender as Grid;
         }
     }
