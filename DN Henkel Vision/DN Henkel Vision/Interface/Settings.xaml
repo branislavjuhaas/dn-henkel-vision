@@ -441,9 +441,11 @@
                         FontSize="{ThemeResource CaptionTextBlockFontSize}"
                         Foreground="{ThemeResource TextFillColorPrimary}"/>
                     <ComboBox
+                        x:Name="ThemeCombo"
                         Width="150"
                         HorizontalAlignment="Right"
-                        SelectedIndex="{x:Bind _themeIndex}">
+                        SelectedIndex="{x:Bind _themeIndex}"
+                        SelectionChanged="ThemeCombo_SelectionChanged">
                         <x:String>Light</x:String>
                         <x:String>Dark</x:String>
                         <x:String>System</x:String>
@@ -464,12 +466,14 @@
                         FontSize="{ThemeResource CaptionTextBlockFontSize}"
                         Foreground="{ThemeResource TextFillColorPrimary}"/>
                     <TextBox
+                        x:Name="UserText"
                         HorizontalAlignment="Right"
                         Width="150"
                         Height="30"
                         TextWrapping="Wrap"
-                        PlaceholderText="LongsB"
-                        Text="{x:Bind _userName}"/>
+                        PlaceholderText="LongsW"
+                        Text="{x:Bind _userName}"
+                        TextChanged="UserText_TextChanged"/>
                 </Grid>
                 <Grid
                     Style="{StaticResource SettingsCard}">
@@ -486,10 +490,12 @@
                         FontSize="{ThemeResource CaptionTextBlockFontSize}"
                         Foreground="{ThemeResource TextFillColorPrimary}"/>
                     <ToggleSwitch
+                        x:Name="TestingSwitch"
                         HorizontalAlignment="Right"
                         Margin="0,-3,0,0"
                         Style="{StaticResource LeftToggleSwitch}"
-                        IsOn="{x:Bind _setAutoTesting}"/>
+                        IsOn="{x:Bind _setAutoTesting}"
+                        Toggled="TestingSwitch_Toggled"/>
                 </Grid>
                 <Grid
                     Style="{StaticResource SettingsCard}">
@@ -506,10 +512,12 @@
                         FontSize="{ThemeResource CaptionTextBlockFontSize}"
                         Foreground="{ThemeResource TextFillColorPrimary}"/>
                     <ToggleSwitch
+                        x:Name="CollectionSwitch"
                         HorizontalAlignment="Right"
                         Margin="0,-3,0,0"
                         Style="{StaticResource LeftToggleSwitch}"
-                        IsOn="{x:Bind _dataCollection}"/>
+                        IsOn="{x:Bind _dataCollection}"
+                        Toggled="CollectionSwitch_Toggled"/>
                 </Grid>
                 <Expander
                     HorizontalAlignment="Stretch"

@@ -219,7 +219,7 @@ namespace DN_Henkel_Vision.Memory
             int[] datea = new int[3];
 
             datea[0] = Int32.Parse(source[0][0..2]);
-            datea[1] = Int32.Parse(source[0][2..2]);
+            datea[1] = Int32.Parse(source[0][2..4]);
             datea[2] = Int32.Parse(source[0][4..]);
 
             DateTime date = new(datea[2], datea[1], datea[0]);
@@ -363,12 +363,15 @@ namespace DN_Henkel_Vision.Memory
             {
                 case '0':
                     Settings.Theme = ElementTheme.Light;
+                    Settings.ThemeIndex = 0;
                     break;
                 case '1':
                     Settings.Theme = ElementTheme.Dark;
+                    Settings.ThemeIndex = 1;
                     break;
                 case '2':
                     Settings.Theme = ElementTheme.Default;
+                    Settings.ThemeIndex = 2;
                     break;
             }
 
@@ -402,18 +405,7 @@ namespace DN_Henkel_Vision.Memory
         {
             string output = "";
 
-            switch (Settings.Theme)
-            {
-                case ElementTheme.Light:
-                    output += "0";
-                    break;
-                case ElementTheme.Dark:
-                    output += "1";
-                    break;
-                case ElementTheme.Default:
-                    output += "2";
-                    break;
-            }
+            output += Settings.ThemeIndex.ToString();
 
             if (Settings.SetAutoTesting)
             {
@@ -436,6 +428,25 @@ namespace DN_Henkel_Vision.Memory
             output += Settings.UserName;
 
             Write(s_settings, output);
+        }
+
+        public static ElementTheme SafeTheme()
+        {
+            if (!File.Exists(s_settings)) return ElementTheme.Default;
+            
+            string source = Read(s_settings);
+
+            char theme = source[0];
+
+            switch (theme)
+            {
+                case '0':
+                    return ElementTheme.Light;
+                case '1':
+                    return ElementTheme.Dark;
+                default:
+                    return ElementTheme.Default;
+            }
         }
     }
 }

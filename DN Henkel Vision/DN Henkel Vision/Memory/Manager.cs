@@ -38,6 +38,7 @@ namespace DN_Henkel_Vision.Memory
             Classification.Assign();
             Drive.Validate();
 
+            Drive.LoadSettings();
             Drive.LoadRegistry();
             VisualRegistry = new(OrdersRegistry);
             Drive.LoadExportHistory();

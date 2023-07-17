@@ -1,3 +1,4 @@
+using DN_Henkel_Vision.Memory;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Reflection;
@@ -29,6 +30,55 @@ namespace DN_Henkel_Vision.Interface
         public Settings()
         {
             this.InitializeComponent();
+        }
+
+        private void ThemeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _themeIndex = ThemeCombo.SelectedIndex;
+            ThemeIndex = _themeIndex;
+
+            switch (_themeIndex)
+            {
+                case 0:
+                    _theme = ElementTheme.Light;
+                    break;
+                case 1:
+                    _theme = ElementTheme.Dark;
+                    break;
+                case 2:
+                    _theme = ElementTheme.Default;
+                    break;
+            }
+
+            Theme = _theme;
+
+            (Manager.CurrentWindow as Environment).EnvironmentalGrid.RequestedTheme = Theme;
+
+            Drive.SaveSettings();
+        }
+
+        private void UserText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _userName = UserText.Text;
+            UserName = _userName;
+
+            Drive.SaveSettings();
+        }
+
+        private void TestingSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            _setAutoTesting = TestingSwitch.IsOn;
+            SetAutoTesting = _setAutoTesting;
+
+            Drive.SaveSettings();
+        }
+
+        private void CollectionSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            _dataCollection = CollectionSwitch.IsOn;
+            DataCollection = _dataCollection;
+
+            Drive.SaveSettings();
         }
     }
 }
