@@ -14,8 +14,10 @@ namespace DN_Henkel_Vision.Interface
     /// </summary>
     public sealed partial class Exports : Page
     {
-        private readonly string _userTime = $"{Math.Round((Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f, 2)} hours";
-        private readonly string _totalTime = $"{Math.Round(((Export.OrdersTime(Export.Unexported.ToArray()) + Export.OrdersTime(Export.Unexported.ToArray(), true, true)) / 60f), 2)} hours";
+        private static string _hours = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Hours"));
+
+        private string _userTime = $"{Math.Round((Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f, 2)} {_hours}";
+        private string _totalTime = $"{Math.Round(((Export.OrdersTime(Export.Unexported.ToArray()) + Export.OrdersTime(Export.Unexported.ToArray(), true, true)) / 60f), 2)} {_hours}";
 
         private readonly DateTimeOffset _today = DateTime.Now;
 

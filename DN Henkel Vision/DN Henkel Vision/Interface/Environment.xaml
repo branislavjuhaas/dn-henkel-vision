@@ -59,10 +59,10 @@
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid 
-            x:Name="ApplicationTitleBar"
-            VerticalAlignment="Top"
-            Height="32">
+                <Grid
+                    x:Name="ApplicationTitleBar"
+                    VerticalAlignment="Top"
+                    Height="32">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="44"/>
@@ -74,94 +74,95 @@
                     Margin="0,14,0,0"
                     Source="ms-appx:///Assets/Tiles/StoreLogo.scale-100.png"/>
                     <TextBlock
-                x:Name="ApplicationTitle"
-                Text="DN Henkel Vision"
-                Margin="0,15,0,0"
-                FontSize="12"
-                Grid.Column="1"/>
+                        x:Name="ApplicationTitle"
+                        Text="DN Henkel Vision"
+                        Margin="0,15,0,0"
+                        FontSize="12"
+                        Grid.Column="1"/>
                     <TextBlock
-                x:Name="ApplicationDevState" Text="Prerelease"
-                Margin="3,15,0,0"
-                FontSize="12"
-                Foreground="{ThemeResource TextFillColorSecondary}"
-                Grid.Column="2"/>
+                        x:Name="ApplicationDevState" 
+                        Text="Preview"
+                        Margin="3,15,0,0"
+                        FontSize="12"
+                        Foreground="{ThemeResource TextFillColorSecondary}"
+                        Grid.Column="2"/>
                 </Grid>
                 <!--Navigation panel-->
                 <Grid
-            Grid.Row="1"
-            Margin="0,48,0,0">
+                    Grid.Row="1"
+                    Margin="0,48,0,0">
                     <AutoSuggestBox
-                    x:Name="NavigationSearch"
-                    PlaceholderText="Search"
-                    QueryIcon="Find"
-                    Width="288"
-                    VerticalAlignment="Top"
-                    TextChanged="NavigationSearch_TextChanged"
-                    QuerySubmitted="NavigationSearch_QuerySubmitted"/>
+                        x:Name="NavigationSearch"
+                        x:Uid="T_Search"
+                        QueryIcon="Find"
+                        Width="288"
+                        VerticalAlignment="Top"
+                        TextChanged="NavigationSearch_TextChanged"
+                        QuerySubmitted="NavigationSearch_QuerySubmitted"/>
                     <ScrollViewer
-                    Margin="16,60,16,100"
-                    VerticalScrollBarVisibility="Hidden"
-                    CornerRadius="4">
+                        Margin="16,60,16,100"
+                        VerticalScrollBarVisibility="Hidden"
+                        CornerRadius="4">
 
                         <ItemsRepeater
-                        x:Name="OrdersPanel"
-                        ItemsSource="{x:Bind memory:Manager.VisualRegistry}"
-                        ItemTemplate="{StaticResource OrderChip}"
-                        Layout="{StaticResource OrdersLayout}"
-                        Loaded="OrdersPanel_Loaded"/>
+                            x:Name="OrdersPanel"
+                            ItemsSource="{x:Bind memory:Manager.VisualRegistry}"
+                            ItemTemplate="{StaticResource OrderChip}"
+                            Layout="{StaticResource OrdersLayout}"
+                            Loaded="OrdersPanel_Loaded"/>
                     </ScrollViewer>
                     <Grid
-                    VerticalAlignment="Bottom"
-                    Height="44"
-                    Margin="16,0,16,0"
-                    ColumnSpacing="4">
+                        VerticalAlignment="Bottom"
+                        Height="44"
+                        Margin="16,0,16,0"
+                        ColumnSpacing="4">
 
                         <Button
-                        x:Name="Export"
-                        Height="32"
-                        Width="216"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        HorizontalAlignment="Left"
-                        HorizontalContentAlignment="Left"
-                        Click="Export_Click">
+                            x:Name="Export"
+                            Height="32"
+                            Width="216"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            Click="Export_Click">
 
                             <Grid>
                                 <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xE74E;" Margin="-2" FontSize="16" />
-                                <TextBlock Text="Export" Margin="24,0"/>
+                                <TextBlock x:Uid="T_Export" Margin="24,0"/>
                             </Grid>
 
                         </Button>
                         <Button
-                        x:Name="Settings"
-                        Height="32"
-                        Width="32"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        Margin="220,0,0,0"
-                        Click="Settings_Click">
+                            x:Name="Settings"
+                            Height="32"
+                            Width="32"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            Margin="220,0,0,0"
+                            Click="Settings_Click">
 
                             <FontIcon
-                            FontFamily="Segoe Fluent Icons"
-                            Glyph="&#xE713;"
-                            Margin="-10"
-                            FontSize="16"/>
+                                FontFamily="Segoe Fluent Icons"
+                                Glyph="&#xE713;"
+                                Margin="-10"
+                                FontSize="16"/>
                         </Button>
                         <Button
-                        x:Name="Create"
-                        Grid.Column="4"
-                        Height="32"
-                        Width="32"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        Margin="256,0,0,0"
-                        Click="Create_Click">
+                            x:Name="Create"
+                            Grid.Column="4"
+                            Height="32"
+                            Width="32"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            Margin="256,0,0,0"
+                            Click="Create_Click">
 
                             <FontIcon
-                            FontFamily="Segoe Fluent Icons"
-                            Glyph="&#xED0E;"
-                            Margin="-10"
-                            FontSize="16"/>
+                                FontFamily="Segoe Fluent Icons"
+                                Glyph="&#xED0E;"
+                                Margin="-10"
+                                FontSize="16"/>
                         </Button>
                     </Grid>
                 </Grid>

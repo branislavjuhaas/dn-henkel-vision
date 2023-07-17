@@ -31,8 +31,8 @@
                     </Grid.ColumnDefinitions>
                     <Grid.ContextFlyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Icon="Edit" Text="Edit" Click="Edit_Click"/>
-                            <MenuFlyoutItem Icon="Delete" Text="Delete" Click="Delete_Click"/>
+                            <MenuFlyoutItem x:Uid="T_Edit" Icon="Edit" Click="Edit_Click"/>
+                            <MenuFlyoutItem x:Uid="T_Delete" Icon="Delete" Click="Delete_Click"/>
                         </MenuFlyout>
                     </Grid.ContextFlyout>
 
@@ -92,7 +92,7 @@
             <TextBox
                 x:Name="FaultInput"
                 x:FieldModifier="public"
-                PlaceholderText="Fault"
+                x:Uid="T_Fault"
                 VerticalAlignment="Stretch"
                 Height="32"
                 Margin="20,0,180,0"
@@ -113,9 +113,9 @@
 
                 <Button
                     x:Name="Tact"
+                    x:Uid="B_Cause"
                     Foreground="{ThemeResource TextFillColorSecondary}"
                     HorizontalContentAlignment="Left"
-                    Content="Cause"
                     Height="33"
                     Width="103"
                     CornerRadius="4,0,0,4">
@@ -169,9 +169,9 @@
             <TextBlock
                 x:Name="NoDataText"
                 x:FieldModifier="public"
+                x:Uid="T_Data"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Text="No data to display"
                 FontStyle="Italic"
                 Visibility="Visible"/>
             <ProgressRing

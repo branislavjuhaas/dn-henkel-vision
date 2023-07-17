@@ -21,7 +21,7 @@
                     <VisualState.Setters>
                         <Setter Target="ControlPanel.Orientation" Value="Vertical"/>
                         <Setter Target="Machine.Width" Value="150"/>
-                        <Setter Target="Return.Width" Value="150"/>
+                        <Setter Target="Report.Width" Value="150"/>
                         <Setter Target="GraphPanel.Margin" Value="170,20,20,20"/>
                         <Setter Target="ControlPanel.VerticalAlignment" Value="Center"/>
                     </VisualState.Setters>
@@ -34,7 +34,7 @@
                     <VisualState.Setters>
                         <Setter Target="ControlPanel.Orientation" Value="Horizontal"/>
                         <Setter Target="Machine.Width" Value="Auto"/>
-                        <Setter Target="Return.Width" Value="Auto"/>
+                        <Setter Target="Report.Width" Value="Auto"/>
                         <Setter Target="GraphPanel.Margin" Value="20,72,20,20"/>
                         <Setter Target="ControlPanel.VerticalAlignment" Value="Top"/>
                     </VisualState.Setters>
@@ -110,7 +110,7 @@
             CornerRadius="0,0,0,4">
 
             <TextBlock
-                Text="Export"
+                x:Uid="T_Export"
                 FontSize="{ThemeResource TitleTextBlockFontSize}"
                 FontWeight="{ThemeResource InfoBarTitleFontWeight}"
                 Margin="32,82,0,0"/>
@@ -137,19 +137,19 @@
                     SelectedIndex="0"
                     VerticalAlignment="Top"
                     SelectionChanged="Type_SelectionChanged">
-                    <x:String>Service</x:String>
-                    <x:String>Export</x:String>
+                    <ComboBoxItem x:Uid="B_Service"/>
+                    <ComboBoxItem x:Uid="B_Export"/>
                 </ComboBox>
                 <ToggleButton
                     x:Name="Machine"
+                    x:Uid="B_Machine"
                     Grid.Row="1"
                     VerticalAlignment="Top"
                     IsChecked="True"
-                    Content="Machine"
                     Click="Machine_Click"/>
                 <Button
-                    x:Name="Return"
-                    Content="Report"
+                    x:Name="Report"
+                    x:Uid="B_Report"
                     VerticalAlignment="Center"/>
             </StackPanel>
 
@@ -274,7 +274,7 @@
 
                 <ComboBox
                     Name="Category"
-                    Header="Category"
+                    x:Uid="H_Category"
                     HorizontalAlignment="Stretch"
                     SelectedIndex="0"
                     Grid.Column="0"
@@ -284,19 +284,19 @@
                 </ComboBox>
                 <ComboBox
                     Name="Criterium"
-                    Header="Criterium"
+                    x:Uid="H_Criterium"
                     HorizontalAlignment="Stretch"
                     SelectedIndex="0"
                     Grid.Column="1"
                     SelectionChanged="Criterium_SelectionChanged">
-                    <x:String>Everything</x:String>
-                    <x:String>Humanity</x:String>
-                    <x:String>Duration</x:String>
+                    <ComboBoxItem x:Uid="B_Everything"/>
+                    <ComboBoxItem x:Uid="B_Humanity"/>
+                    <ComboBoxItem x:Uid="B_Duration"/>
                 </ComboBox>
                 <NumberBox
                     x:Name="Selected"
+                    x:Uid="H_SctTime"
                     Height="59"
-                    Header="Selected Time"
                     PlaceholderText="0"
                     VerticalAlignment="Top"
                     IsEnabled="False"
@@ -304,20 +304,20 @@
                     ValueChanged="Selected_ValueChanged"/>
                 <NumberBox
                     x:Name="Display"
+                    x:Uid="H_DspTime"
                     Height="59"
-                    Header="Display Time"
                     VerticalAlignment="Top"
                     Grid.Column="3"/>
                 <TextBox
                     x:Name="UserName"
+                    x:Uid="H_UserName"
                     Height="59"
-                    Header="User Name"
                     VerticalAlignment="Top"
                     Grid.Column="4"
                     Text="{x:Bind interface:Settings.UserName}"/>
                 <CalendarDatePicker
                     x:Name="RegistryDate"
-                    Header="Registration Date"
+                    x:Uid="H_RegDate"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
                     Grid.Column="5"
@@ -358,10 +358,10 @@
             </Grid>
             <Button
                 x:Name="Exporter"
+                x:Uid="B_Export"
                 Margin="20"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Content="Export"
                 Width="150"
                 Height="36"
                 Click="Exporter_Click"
