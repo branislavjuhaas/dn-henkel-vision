@@ -15,6 +15,7 @@ namespace DN_Henkel_Vision.Memory
         {
             Directory.CreateDirectory(s_regdir);
             Directory.CreateDirectory(s_orders);
+            Directory.CreateDirectory(s_trainees);
             
             Write(s_registry, "");
 

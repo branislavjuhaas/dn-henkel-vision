@@ -232,6 +232,10 @@ namespace DN_Henkel_Vision.Interface
             }
             Drive.SaveRegistry();
             Drive.SaveExportHistory();
+            if (Interface.Settings.DataCollection)
+            {
+                Drive.WriteTrainees();
+            }
         }
 
         /// <summary>

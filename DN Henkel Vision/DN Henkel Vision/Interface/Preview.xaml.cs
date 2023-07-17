@@ -181,7 +181,9 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="keep">If true, does not remove the fault from Manager.Selected</param>
         public void ApproveFault(bool keep = false)
         {
-            Manager.Selected.Faults.Insert(0, PrepareFault());
+            Fault preparate = PrepareFault();
+
+            Manager.Selected.Faults.Insert(0, preparate);
 
             if (Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime <= 0f)
             {
@@ -193,6 +195,15 @@ namespace DN_Henkel_Vision.Interface
 
             //If it is not set to remove, function can return, because following code is just for removing the fault
             if (keep) { return; }
+
+            if (Manager.Selected.ReviewFaults[Cache.CurrentReview].Equals(preparate))
+            {
+                Trainer.Correct.Add(new Trainee(preparate));
+            }
+            else
+            {
+                Trainer.Incorrect.Add(new Trainee(preparate));
+            }
 
             Manager.Selected.ReviewFaults.RemoveAt(Cache.CurrentReview);
 
@@ -306,7 +317,6 @@ namespace DN_Henkel_Vision.Interface
 
             if (!IsShift()) return;
             
-            //TODO: Upgrade method of replacing based on the index of the Felber's detection 
             if (Component.Text == Manager.Selected.ReviewFaults[Cache.CurrentReview].Component) { return; }
             if (string.IsNullOrEmpty(Manager.Selected.ReviewFaults[Cache.CurrentReview].Component)) {
                 Manager.Selected.ReviewFaults[Cache.CurrentReview].Component = Component.Text;

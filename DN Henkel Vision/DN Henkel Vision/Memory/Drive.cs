@@ -24,6 +24,7 @@ namespace DN_Henkel_Vision.Memory
         internal static readonly string s_orders =      $"{Folder}\\Files\\Orders\\";
         internal static readonly string s_registry =    $"{Folder}\\Files\\Registry\\Registry.dntf";
         internal static readonly string s_exports =     $"{Folder}\\Files\\Registry\\Exports.dntf";
+        internal static readonly string s_trainees =     $"{Folder}\\Files\\Trainee\\";
         
         #endregion
 
@@ -448,6 +449,26 @@ namespace DN_Henkel_Vision.Memory
                 case '1': return ElementTheme.Dark;
                 default: return ElementTheme.Default;
             }
+        }
+
+        public static void WriteTrainees()
+        {
+            string correct = string.Empty;
+            string incorrect = string.Empty;
+            string today = DateTime.Now.ToString("ddMMyy");
+
+            foreach (Trainee trainee in Trainer.Correct)
+            {
+                correct += trainee.ToString() + "\n";
+            }
+
+            foreach (Trainee trainee in Trainer.Incorrect)
+            {
+                incorrect += trainee.ToString() + "\n";
+            }
+
+            Write($"{s_trainees}C{today}.dntf", correct);
+            Write($"{s_trainees}I{today}.dntf", incorrect);
         }
     }
 }

@@ -49,6 +49,18 @@ namespace DN_Henkel_Vision.Memory
 
         }
 
+        public bool Equals(Fault fault)
+        {
+            if (fault == null) return false;
+            if (fault.Component != Component) return false;
+            if (fault.Description != Description) return false;
+            if (fault.Cause != Cause) return false;
+            if (fault.Classification != Classification) return false;
+            if (fault.Type != Type) return false;
+
+            return true;
+        }
+
         /// <summary>
         /// The new ToString method for the fault class.
         /// </summary>
