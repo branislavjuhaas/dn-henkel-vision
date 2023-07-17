@@ -58,6 +58,7 @@
     <None Remove="Interface\Preview.xaml" />
     <None Remove="Interface\Settings.xaml" />
     <None Remove="Interface\Splash.xaml" />
+    <None Remove="Interface\Welcome.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ML" Version="2.0.1" />
@@ -87,6 +88,9 @@
       <DependentUpon>Cause.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Interface\Welcome.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Interface\Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

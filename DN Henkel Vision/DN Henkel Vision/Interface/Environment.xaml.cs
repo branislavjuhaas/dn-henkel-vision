@@ -110,7 +110,11 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         private void OrdersPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Manager.OrdersRegistry.Count == 0) { return; }
+            if (Manager.OrdersRegistry.Count == 0)
+            {
+                Workspace.Navigate(typeof(Welcome));
+                return;
+            }
             
             OrdersPanel_Select(Manager.OrdersRegistry[0]);
         }

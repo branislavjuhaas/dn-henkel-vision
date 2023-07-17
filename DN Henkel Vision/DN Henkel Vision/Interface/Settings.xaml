@@ -10,7 +10,8 @@
     xmlns:interface="DN_Henkel_Vision.Interface"
     mc:Ignorable="d">
 
-    <Grid RowSpacing="2">
+    <Grid
+        RowSpacing="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="154"/>
             <RowDefinition Height="*"/>
