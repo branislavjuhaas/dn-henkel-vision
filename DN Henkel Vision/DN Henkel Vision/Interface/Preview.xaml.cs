@@ -7,6 +7,9 @@ using System;
 using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Linq;
+using Windows.UI.Core;
+using Windows.System;
+using Microsoft.UI.Input;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -290,6 +293,19 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event arguments.</param>
         private void Component_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (Component.Text.Any(char.IsDigit))
+            {
+                int index = Component.SelectionStart;
+                int length = Component.SelectionLength;
+
+                Component.Text = Component.Text.ToUpper();
+
+                Component.SelectionStart = index;
+                Component.SelectionLength = length;
+            }
+
+            if (!IsShift()) return;
+            
             //TODO: Upgrade method of replacing based on the index of the Felber's detection 
             if (Component.Text == Manager.Selected.ReviewFaults[Cache.CurrentReview].Component) { return; }
             if (string.IsNullOrEmpty(Manager.Selected.ReviewFaults[Cache.CurrentReview].Component)) {
@@ -299,6 +315,18 @@ namespace DN_Henkel_Vision.Interface
             Description.Text = Description.Text.Replace(Manager.Selected.ReviewFaults[Cache.CurrentReview].Component, Component.Text);
 
             Manager.Selected.ReviewFaults[Cache.CurrentReview].Component = Component.Text;
+        }
+
+
+        /// <summary>
+        /// Detects if the Shift key is being held down.
+        /// </summary>
+        /// <returns>True if the Shift key is being held down; otherwise false.</returns>
+        private bool IsShift()
+        {
+            CoreVirtualKeyStates states = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
+
+            return (states & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         }
 
         /// <summary>
