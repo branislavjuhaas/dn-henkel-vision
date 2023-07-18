@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using DN_Henkel_Vision.Memory;
+using Microsoft.UI.Xaml;
 using System;
 using System.Threading;
 
@@ -16,6 +17,8 @@ namespace DN_Henkel_Vision
         /// </summary>
         public App()
         {
+            Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = Drive.SafeLanguage();
+
             this.InitializeComponent();
             if (!mutex.WaitOne(TimeSpan.Zero, true))
             {

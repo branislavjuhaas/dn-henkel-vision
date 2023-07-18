@@ -9,11 +9,11 @@
   <Identity
     Name="d61de81d-cd85-4388-bdcb-72407fecb779"
     Publisher="CN=juhas"
-    Version="1.0.0.0" />
+    Version="2023.1.2.0" />
 
   <Properties>
-    <DisplayName>DN Henkel Vision (Package)</DisplayName>
-    <PublisherDisplayName>juhas</PublisherDisplayName>
+    <DisplayName>DN Henkel Vision Preview</DisplayName>
+    <PublisherDisplayName>DN Foundation</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
@@ -23,7 +23,8 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="en-US"/>
+    <Resource Language="sk-SK"/>
   </Resources>
 
   <Applications>
