@@ -455,7 +455,7 @@ namespace DN_Henkel_Vision.Memory
         {
             string correct = string.Empty;
             string incorrect = string.Empty;
-            string today = DateTime.Now.ToString("ddMMyy");
+            string today = DateTime.Now.ToString("ddMMyyHHmm");
 
             foreach (Trainee trainee in Trainer.Correct)
             {
@@ -467,8 +467,15 @@ namespace DN_Henkel_Vision.Memory
                 incorrect += trainee.ToString() + "\n";
             }
 
-            Write($"{s_trainees}C{today}.dntf", correct);
-            Write($"{s_trainees}I{today}.dntf", incorrect);
+            if (correct != string.Empty)
+            {
+                Write($"{s_trainees}C{today}.dntf", correct);
+            }
+            if (incorrect != string.Empty)
+            {
+                Write($"{s_trainees}N{today}.dntf", incorrect);
+            }
+
         }
     }
 }

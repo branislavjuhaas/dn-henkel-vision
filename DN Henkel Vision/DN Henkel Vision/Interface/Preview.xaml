@@ -85,7 +85,7 @@
                 HorizontalAlignment="Stretch"
                 Grid.Column="0"
                 IsTextSearchEnabled="True"
-                ItemsSource="{x:Bind memory:Classification.Causes}"
+                ItemsSource="{x:Bind memory:Classification.LocalCauses}"
                 SelectedIndex="{x:Bind Current.ClassIndexes[0]}"
                 SelectionChanged="Cause_SelectionChanged"/>
             <ComboBox

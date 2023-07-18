@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="B_Cancel.Content" xml:space="preserve">
+    <value>Zrušiť</value>
+    <comment>Content Of The Close Button Of The Dialog</comment>
+  </data>
+  <data name="B_Cause.Content" xml:space="preserve">
+    <value>Počiatočník</value>
+    <comment>Placeholder In The Cause Button In Editor</comment>
+  </data>
+  <data name="B_Continue.Content" xml:space="preserve">
+    <value>Pokračovať</value>
+    <comment>Continue Button Of The Content Dialog</comment>
+  </data>
+  <data name="B_Create.Content" xml:space="preserve">
+    <value>Vytvoriť</value>
+    <comment>Content Of The Create Button Of The Dialog</comment>
+  </data>
+  <data name="B_DarkTheme.Content" xml:space="preserve">
+    <value>Tmavá</value>
+    <comment>Dark Theme Of The Application</comment>
+  </data>
+  <data name="B_Duration.Content" xml:space="preserve">
+    <value>Trvanie</value>
+    <comment>Duration Criterium In Exports Page</comment>
+  </data>
+  <data name="B_Everything.Content" xml:space="preserve">
+    <value>Všetko</value>
+    <comment>Everything Criterium In Exports Page</comment>
+  </data>
+  <data name="B_Export.Content" xml:space="preserve">
+    <value>Exportovať</value>
+    <comment>Content Of The Export Button</comment>
+  </data>
+  <data name="B_Exports.Content" xml:space="preserve">
+    <value>Exporty</value>
+    <comment>Exports Graph Option In Exports Page</comment>
+  </data>
+  <data name="B_Humanity.Content" xml:space="preserve">
+    <value>Človek</value>
+    <comment>Humanity Criterium In Exports Page</comment>
+  </data>
+  <data name="B_LightTheme.Content" xml:space="preserve">
+    <value>Svetlá</value>
+    <comment>Light Theme Of The Application</comment>
+  </data>
+  <data name="B_Machine.Content" xml:space="preserve">
+    <value>Stroj</value>
+    <comment>Content Of The Machine Button In Exports Page</comment>
+  </data>
+  <data name="B_Report.Content" xml:space="preserve">
+    <value>Hlásenie</value>
+    <comment>Content Of The Report Button In Exports Page</comment>
+  </data>
+  <data name="B_Select.Content" xml:space="preserve">
+    <value>Vybrať</value>
+    <comment>Content Of The Select Button Of The Dialog</comment>
+  </data>
+  <data name="B_Service.Content" xml:space="preserve">
+    <value>Manuálne</value>
+    <comment>Service Graph Option In Exports Page</comment>
+  </data>
+  <data name="B_SystemTheme.Content" xml:space="preserve">
+    <value>Systémová</value>
+    <comment>System Theme Of The Application</comment>
+  </data>
+  <data name="H_Category.Header" xml:space="preserve">
+    <value>Kategória</value>
+    <comment>Header Of The Category Combo Box In Exports Page</comment>
+  </data>
+  <data name="H_Criterium.Header" xml:space="preserve">
+    <value>Kritérium</value>
+    <comment>Header Of The Criterium Combo Box In Exports Page</comment>
+  </data>
+  <data name="H_DspTime.Header" xml:space="preserve">
+    <value>Čas zobrazenia</value>
+    <comment>Header Of The Display Time Combo Box In Exports Page</comment>
+  </data>
+  <data name="H_RegDate.Header" xml:space="preserve">
+    <value>Dátum registrácie</value>
+    <comment>Header Of The Registration Date Combo Box In Exports Page</comment>
+  </data>
+  <data name="H_SctTime.Header" xml:space="preserve">
+    <value>Vybraný čas</value>
+    <comment>Header Of The Selected Time Combo Box In Exports Page</comment>
+  </data>
+  <data name="H_UserName.Header" xml:space="preserve">
+    <value>Používateľské meno</value>
+    <comment>Header Of The User Name Combo Box In Exports Page</comment>
+  </data>
+  <data name="S_Hours" xml:space="preserve">
+    <value>hod.</value>
+    <comment>Hours String In Exports Page</comment>
+  </data>
+  <data name="S_Language" xml:space="preserve">
+    <value>sk-SK</value>
+    <comment>Current Language Of The Resource</comment>
+  </data>
+  <data name="S_Results" xml:space="preserve">
+    <value>Neboli nájdené žiadne výsledky</value>
+    <comment>Result Of The Order Search If No Data Found</comment>
+  </data>
+  <data name="T_AppTheme.Text" xml:space="preserve">
+    <value>Téma aplikácie</value>
+    <comment>App Theme Setting Caption</comment>
+  </data>
+  <data name="T_AppThemeDsn.Text" xml:space="preserve">
+    <value>Vyberte, akú tému aplikácie chcete zobraziť.</value>
+    <comment>App Theme Setting Description</comment>
+  </data>
+  <data name="T_CauseRedirect.Text" xml:space="preserve">
+    <value>Presmerovanie počiatočníka</value>
+    <comment>Cause Redirecting Setting Caption</comment>
+  </data>
+  <data name="T_CauseRedirectDsn.Text" xml:space="preserve">
+    <value>Ak nie je vybraná žiadna príčina, bude zvolené testovací oddelenie.</value>
+    <comment>Cause Redirecting Setting Description</comment>
+  </data>
+  <data name="T_ChiefDev.Text" xml:space="preserve">
+    <value>Hlavný vývojár</value>
+    <comment>Caption Of The Chief Developer In Settings Page</comment>
+  </data>
+  <data name="T_CollectData.Text" xml:space="preserve">
+    <value>Zbierať údaje</value>
+    <comment>Collect Data Setting Caption</comment>
+  </data>
+  <data name="T_CollectDataDsn.Text" xml:space="preserve">
+    <value>Povoliť zhromažďovanie údajov pre vývoj.</value>
+    <comment>Collect Data Setting Description</comment>
+  </data>
+  <data name="T_Copyright.Text" xml:space="preserve">
+    <value>©2023 DN Foundation. Všetky práva vyhradené.</value>
+    <comment>Copyright Info In Settigns Page</comment>
+  </data>
+  <data name="T_CreateOrder.Text" xml:space="preserve">
+    <value>Vytvoriť zákazku</value>
+    <comment>Title Of The Create Order Dialog</comment>
+  </data>
+  <data name="T_Data.Text" xml:space="preserve">
+    <value>Žiadne údaje na zobrazenie</value>
+    <comment>Placeholder Text In Preview Frame</comment>
+  </data>
+  <data name="T_Delete.Text" xml:space="preserve">
+    <value>Vymazať</value>
+    <comment>Text Of The Delete Button In Fault Flyout</comment>
+  </data>
+  <data name="T_Edit.Text" xml:space="preserve">
+    <value>Upraviť</value>
+    <comment>Text Of The Edit Button In Fault Flyout</comment>
+  </data>
+  <data name="T_Existing.Text" xml:space="preserve">
+    <value>Existujúce</value>
+    <comment>Caption Of Existance In Create Order Dialog</comment>
+  </data>
+  <data name="T_Export.Text" xml:space="preserve">
+    <value>Exportovať</value>
+    <comment>Export Button Caption</comment>
+  </data>
+  <data name="T_Fault.PlaceholderText" xml:space="preserve">
+    <value>Chyba</value>
+    <comment>Placeholder Of The Fault Description Field In Editor</comment>
+  </data>
+  <data name="T_Felber.Text" xml:space="preserve">
+    <value>Felber AI klasifikátor</value>
+    <comment>Caption Of The Felber In Settings Page</comment>
+  </data>
+  <data name="T_Funding.Text" xml:space="preserve">
+    <value>Čiastočne financované spoločnosťou KraussMaffei Corporation</value>
+    <comment>Funding Caption In Settings Page</comment>
+  </data>
+  <data name="T_Heritage.Text" xml:space="preserve">
+    <value>Súčasť DN Softvérového Dedičstva</value>
+    <comment>DN Software Heritage Caption In Settings Page</comment>
+  </data>
+  <data name="T_Invalid.Text" xml:space="preserve">
+    <value>Neplatné</value>
+    <comment>Caption Of Invalidity In Create Order Dialog</comment>
+  </data>
+  <data name="T_MissingPlacement.Text" xml:space="preserve">
+    <value>Chýbajúce uloženie</value>
+    <comment>Header Of The Missing Placement Dialog</comment>
+  </data>
+  <data name="T_MissingPlacementDsn.Text" xml:space="preserve">
+    <value>Chcete pokračovať bez platného uloženia?</value>
+    <comment>Content Of The Missing Placement Dialog</comment>
+  </data>
+  <data name="T_OrderNumber.PlaceholderText" xml:space="preserve">
+    <value>Číslo zákazky</value>
+    <comment>Placeholder Text Of The Create Order Dialog</comment>
+  </data>
+  <data name="T_RegName.Text" xml:space="preserve">
+    <value>Meno registranta</value>
+    <comment>Registrant Name Setting Caption</comment>
+  </data>
+  <data name="T_RegNameDft.PlaceholderText" xml:space="preserve">
+    <value>LongsW</value>
+    <comment>Registrant Name Setting Default Value</comment>
+  </data>
+  <data name="T_RegNameDsn.Text" xml:space="preserve">
+    <value>Predvolené meno používateľa zobrazené pri exporte.</value>
+    <comment>Registrant Name Setting Description</comment>
+  </data>
+  <data name="T_Search.PlaceholderText" xml:space="preserve">
+    <value>Hľadať</value>
+    <comment>Placeholder Of The Application's Search Bar</comment>
+  </data>
+  <data name="T_Settings.Text" xml:space="preserve">
+    <value>Nastavenia</value>
+    <comment>Header Of The Settings Page</comment>
+  </data>
+</root>

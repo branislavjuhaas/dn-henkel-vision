@@ -1,6 +1,7 @@
 using DN_Henkel_Vision.Memory;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -31,12 +32,20 @@ namespace DN_Henkel_Vision.Interface
 
             if (string.IsNullOrEmpty(order))
             {
-                CategoryText.Text = "Invalid";
+                CategoryText.Text = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Invalid/Text"));
                 dialog.IsPrimaryButtonEnabled = false;
                 return;
             }
 
             if (order.Length < 2) return;
+
+            if (Manager.OrdersRegistry.Contains(order))
+            {
+                CategoryText.Text = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Existing/Text"));
+                dialog.IsPrimaryButtonEnabled = true;
+                dialog.PrimaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Select/Content"));
+                return;
+            }
 
             switch (order[0..2])
             {
@@ -45,7 +54,7 @@ namespace DN_Henkel_Vision.Interface
                     {
                         CategoryText.Text = "Feauf";
                         dialog.IsPrimaryButtonEnabled = true;
-                        dialog.PrimaryButtonText = "Create";
+                        dialog.PrimaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Create/Content"));
                         return;
                     }
                     break;
@@ -54,7 +63,7 @@ namespace DN_Henkel_Vision.Interface
                     {
                         CategoryText.Text = "Netstal";
                         dialog.IsPrimaryButtonEnabled = true;
-                        dialog.PrimaryButtonText = "Create";
+                        dialog.PrimaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Create/Content"));
                         return;
                     }
                     break;
@@ -63,7 +72,7 @@ namespace DN_Henkel_Vision.Interface
                     {
                         CategoryText.Text = "Auftrag";
                         dialog.IsPrimaryButtonEnabled = true;
-                        dialog.PrimaryButtonText = "Create";
+                        dialog.PrimaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Create/Content"));
                         return;
                     }
                     break;
@@ -71,15 +80,7 @@ namespace DN_Henkel_Vision.Interface
                     break;
             }
 
-            if (Manager.OrdersRegistry.Contains(order))
-            {
-                CategoryText.Text = "Existing";
-                dialog.IsPrimaryButtonEnabled = true;
-                dialog.PrimaryButtonText = "Select";
-                return;
-            }
-
-            CategoryText.Text = "Invalid";
+            CategoryText.Text = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Invalid/Text"));
             dialog.IsPrimaryButtonEnabled = false;
         }
     }

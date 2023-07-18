@@ -413,7 +413,7 @@
             CornerRadius="0,0,0,4">
 
             <TextBlock
-                Text="Settings"
+                x:Uid="T_Settings"
                 FontSize="{ThemeResource TitleTextBlockFontSize}"
                 FontWeight="{ThemeResource InfoBarTitleFontWeight}"
                 Margin="32,82,0,0"/>
@@ -433,10 +433,10 @@
                         Glyph="&#xE790;"
                         HorizontalAlignment="Left"/>
                     <TextBlock
-                        Text="App Theme"
+                        x:Uid="T_AppTheme"
                         Margin="40,0"/>
                     <TextBlock
-                        Text="Select which app theme to display."
+                        x:Uid="T_AppThemeDsn"
                         Margin="40,0"
                         VerticalAlignment="Bottom"
                         FontSize="{ThemeResource CaptionTextBlockFontSize}"
@@ -447,9 +447,9 @@
                         HorizontalAlignment="Right"
                         SelectedIndex="{x:Bind _themeIndex}"
                         SelectionChanged="ThemeCombo_SelectionChanged">
-                        <x:String>Light</x:String>
-                        <x:String>Dark</x:String>
-                        <x:String>System</x:String>
+                        <ComboBoxItem x:Uid="B_LightTheme"/>
+                        <ComboBoxItem x:Uid="B_DarkTheme"/>
+                        <ComboBoxItem x:Uid="B_SystemTheme"/>
                     </ComboBox>
                 </Grid>
                 <Grid
@@ -458,21 +458,21 @@
                         Glyph="&#xE77B;"
                         HorizontalAlignment="Left"/>
                     <TextBlock
-                        Text="Registrant Name"
+                        x:Uid="T_RegName"
                         Margin="40,0"/>
                     <TextBlock
-                        Text="The default name of the user."
+                        x:Uid="T_RegNameDsn"
                         Margin="40,0"
                         VerticalAlignment="Bottom"
                         FontSize="{ThemeResource CaptionTextBlockFontSize}"
                         Foreground="{ThemeResource TextFillColorPrimary}"/>
                     <TextBox
                         x:Name="UserText"
+                        x:Uid="T_RegNameDft"
                         HorizontalAlignment="Right"
                         Width="150"
                         Height="30"
                         TextWrapping="Wrap"
-                        PlaceholderText="LongsW"
                         Text="{x:Bind _userName}"
                         TextChanged="UserText_TextChanged"/>
                 </Grid>
@@ -482,10 +482,10 @@
                         Glyph="&#xF71A;"
                         HorizontalAlignment="Left"/>
                     <TextBlock
-                        Text="Cause Redirecting"
+                        x:Uid="T_CauseRedirect"
                         Margin="40,0"/>
                     <TextBlock
-                        Text="If there is no cause selected, choose testing department."
+                        x:Uid="T_CauseRedirectDsn"
                         Margin="40,0"
                         VerticalAlignment="Bottom"
                         FontSize="{ThemeResource CaptionTextBlockFontSize}"
@@ -504,10 +504,10 @@
                         Glyph="&#xEA35;"
                         HorizontalAlignment="Left"/>
                     <TextBlock
-                        Text="Collect Data"
+                        x:Uid="T_CollectData"
                         Margin="40,0"/>
                     <TextBlock
-                        Text="Allow collection of the data for the development."
+                        x:Uid="T_CollectDataDsn"
                         Margin="40,0"
                         VerticalAlignment="Bottom"
                         FontSize="{ThemeResource CaptionTextBlockFontSize}"
@@ -534,7 +534,7 @@
                                 Text="DN Henkel Vision"
                                 Margin="40,0"/>
                             <TextBlock
-                                Text="©2023 DN Foundation. All rights reserved."
+                                x:Uid="T_Copyright"
                                 Margin="40,0"
                                 VerticalAlignment="Bottom"
                                 FontSize="{ThemeResource CaptionTextBlockFontSize}"
@@ -550,7 +550,7 @@
                         Spacing="7">
                         <Grid>
                             <TextBlock
-                                Text="Felber AI Classifier"
+                                x:Uid="T_Felber"
                                 Margin="40,0"
                                 HorizontalAlignment="Left"/>
                             <TextBlock
@@ -562,7 +562,7 @@
                         </Grid>
                         <Grid>
                             <TextBlock
-                                Text="Chief Developer"
+                                x:Uid="T_ChiefDev"
                                 Margin="40,0"
                                 HorizontalAlignment="Left"/>
                             <TextBlock
@@ -573,11 +573,11 @@
                         </Grid>
                         <Grid>
                             <TextBlock
-                                Text="Part of DN Software Heritage"
+                                x:Uid="T_Heritage"
                                 Margin="40,0"
                                 HorizontalAlignment="Left"/>
                             <TextBlock
-                                Text="Partially funded by KraussMaffei Corporation"
+                                x:Uid="T_Funding"
                                 Margin="40,0"
                                 HorizontalAlignment="Right"
                                 Foreground="{ThemeResource TextFillColorSecondary}"/>
