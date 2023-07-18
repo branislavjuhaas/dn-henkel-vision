@@ -251,6 +251,7 @@ namespace DN_Henkel_Vision.Interface
         {
             _locked = false;
             Tact.Foreground = new SolidColorBrush((Color)Application.Current.Resources["TextFillColorSecondary"]);
+            Tact.FontStyle = Windows.UI.Text.FontStyle.Normal;
         }
 
         /// <summary>
