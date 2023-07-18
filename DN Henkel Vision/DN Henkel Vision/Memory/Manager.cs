@@ -35,7 +35,7 @@ namespace DN_Henkel_Vision.Memory
         /// </summary>
         public static void Initialize()
         {
-            Classification.Assign();
+            Classification.Assign(Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Language")));
             Drive.Validate();
 
             Drive.LoadSettings();

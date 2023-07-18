@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="B_Cancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Content Of The Close Button Of The Dialog</comment>
+  </data>
+  <data name="B_Cause.Content" xml:space="preserve">
+    <value>Cause</value>
+    <comment>Placeholder In The Cause Button In Editor</comment>
+  </data>
+  <data name="B_Continue.Content" xml:space="preserve">
+    <value>Continue</value>
+    <comment>Continue Button Of The Content Dialog</comment>
+  </data>
+  <data name="B_Create.Content" xml:space="preserve">
+    <value>Create</value>
+    <comment>Content Of The Create Button Of The Dialog</comment>
+  </data>
+  <data name="B_DarkTheme.Content" xml:space="preserve">
+    <value>Dark</value>
+    <comment>Dark Theme Of The Application</comment>
+  </data>
+  <data name="B_Duration.Content" xml:space="preserve">
+    <value>Duration</value>
+    <comment>Duration Criterium In Exports Page</comment>
+  </data>
+  <data name="B_Everything.Content" xml:space="preserve">
+    <value>Everything</value>
+    <comment>Everything Criterium In Exports Page</comment>
+  </data>
+  <data name="B_Export.Content" xml:space="preserve">
+    <value>Export</value>
+    <comment>Content Of The Export Button</comment>
+  </data>
+  <data name="B_Exports.Content" xml:space="preserve">
+    <value>Exports</value>
+    <comment>Exports Graph Option In Exports Page</comment>
+  </data>
+  <data name="B_Humanity.Content" xml:space="preserve">
+    <value>Humanity</value>
+    <comment>Humanity Criterium In Exports Page</comment>
+  </data>
+  <data name="B_LightTheme.Content" xml:space="preserve">
+    <value>Light</value>
+    <comment>Light Theme Of The Application</comment>
+  </data>
+  <data name="B_Machine.Content" xml:space="preserve">
+    <value>Machine</value>
+    <comment>Content Of The Machine Button In Exports Page</comment>
+  </data>
+  <data name="B_Report.Content" xml:space="preserve">
+    <value>Report</value>
+    <comment>Content Of The Report Button In Exports Page</comment>
+  </data>
+  <data name="B_Select.Content" xml:space="preserve">
+    <value>Select</value>
+    <comment>Content Of The Select Button Of The Dialog</comment>
+  </data>
+  <data name="B_Service.Content" xml:space="preserve">
+    <value>Service</value>
+    <comment>Service Graph Option In Exports Page</comment>
+  </data>
+  <data name="B_SystemTheme.Content" xml:space="preserve">
+    <value>System</value>
+    <comment>System Theme Of The Application</comment>
+  </data>
+  <data name="H_Category.Header" xml:space="preserve">
+    <value>Category</value>
+    <comment>Header Of The Category Combo Box In Exports Page</comment>
+  </data>
+  <data name="H_Criterium.Header" xml:space="preserve">
+    <value>Criterium</value>
+    <comment>Header Of The Criterium Combo Box In Exports Page</comment>
+  </data>
+  <data name="H_DspTime.Header" xml:space="preserve">
+    <value>Display time</value>
+    <comment>Header Of The Display Time Combo Box In Exports Page</comment>
+  </data>
+  <data name="H_RegDate.Header" xml:space="preserve">
+    <value>Registration date</value>
+    <comment>Header Of The Registration Date Combo Box In Exports Page</comment>
+  </data>
+  <data name="H_SctTime.Header" xml:space="preserve">
+    <value>Selected time</value>
+    <comment>Header Of The Selected Time Combo Box In Exports Page</comment>
+  </data>
+  <data name="H_UserName.Header" xml:space="preserve">
+    <value>User name</value>
+    <comment>Header Of The User Name Combo Box In Exports Page</comment>
+  </data>
+  <data name="S_Hours" xml:space="preserve">
+    <value>hours</value>
+    <comment>Hours String In Exports Page</comment>
+  </data>
+  <data name="S_Language" xml:space="preserve">
+    <value>en-US</value>
+    <comment>Current Language Of The Resource</comment>
+  </data>
+  <data name="S_Results" xml:space="preserve">
+    <value>No results found</value>
+    <comment>Result Of The Order Search If No Data Found</comment>
+  </data>
+  <data name="T_AppTheme.Text" xml:space="preserve">
+    <value>App theme</value>
+    <comment>App Theme Setting Caption</comment>
+  </data>
+  <data name="T_AppThemeDsn.Text" xml:space="preserve">
+    <value>Select which app theme to display.</value>
+    <comment>App Theme Setting Description</comment>
+  </data>
+  <data name="T_CauseRedirect.Text" xml:space="preserve">
+    <value>Cause redirecting</value>
+    <comment>Cause Redirecting Setting Caption</comment>
+  </data>
+  <data name="T_CauseRedirectDsn.Text" xml:space="preserve">
+    <value>If there is no cause selected, choose testing department.</value>
+    <comment>Cause Redirecting Setting Description</comment>
+  </data>
+  <data name="T_ChiefDev.Text" xml:space="preserve">
+    <value>Chief developer</value>
+    <comment>Caption Of The Chief Developer In Settings Page</comment>
+  </data>
+  <data name="T_CollectData.Text" xml:space="preserve">
+    <value>Collect data</value>
+    <comment>Collect Data Setting Caption</comment>
+  </data>
+  <data name="T_CollectDataDsn.Text" xml:space="preserve">
+    <value>Allow collection of the data for the development.</value>
+    <comment>Collect Data Setting Description</comment>
+  </data>
+  <data name="T_Copyright.Text" xml:space="preserve">
+    <value>©2023 DN Foundation. All rights reserved.</value>
+    <comment>Copyright Info In Settigns Page</comment>
+  </data>
+  <data name="T_CreateOrder.Text" xml:space="preserve">
+    <value>Create order</value>
+    <comment>Title Of The Create Order Dialog</comment>
+  </data>
+  <data name="T_Data.Text" xml:space="preserve">
+    <value>No data to display</value>
+    <comment>Placeholder Text In Preview Frame</comment>
+  </data>
+  <data name="T_Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Text Of The Delete Button In Fault Flyout</comment>
+  </data>
+  <data name="T_Edit.Text" xml:space="preserve">
+    <value>Edit</value>
+    <comment>Text Of The Edit Button In Fault Flyout</comment>
+  </data>
+  <data name="T_Existing.Text" xml:space="preserve">
+    <value>Existing</value>
+    <comment>Caption Of Existance In Create Order Dialog</comment>
+  </data>
+  <data name="T_Export.Text" xml:space="preserve">
+    <value>Export</value>
+    <comment>Export Button Caption</comment>
+  </data>
+  <data name="T_Fault.PlaceholderText" xml:space="preserve">
+    <value>Fault</value>
+    <comment>Placeholder Of The Fault Description Field In Editor</comment>
+  </data>
+  <data name="T_Felber.Text" xml:space="preserve">
+    <value>Felber AI classifier</value>
+    <comment>Caption Of The Felber In Settings Page</comment>
+  </data>
+  <data name="T_Funding.Text" xml:space="preserve">
+    <value>Partially funded by KraussMaffei Corporation</value>
+    <comment>Funding Caption In Settings Page</comment>
+  </data>
+  <data name="T_Heritage.Text" xml:space="preserve">
+    <value>Part of DN Software Heritage</value>
+    <comment>DN Software Heritage Caption In Settings Page</comment>
+  </data>
+  <data name="T_Invalid.Text" xml:space="preserve">
+    <value>Invalid</value>
+    <comment>Caption Of Invalidity In Create Order Dialog</comment>
+  </data>
+  <data name="T_MissingPlacement.Text" xml:space="preserve">
+    <value>Missing placement</value>
+    <comment>Header Of The Missing Placement Dialog</comment>
+  </data>
+  <data name="T_MissingPlacementDsn.Text" xml:space="preserve">
+    <value>Do you want to continue without valid placement?</value>
+    <comment>Content Of The Missing Placement Dialog</comment>
+  </data>
+  <data name="T_OrderNumber.PlaceholderText" xml:space="preserve">
+    <value>Order number</value>
+    <comment>Placeholder Text Of The Create Order Dialog</comment>
+  </data>
+  <data name="T_RegName.Text" xml:space="preserve">
+    <value>Registrant name</value>
+    <comment>Registrant Name Setting Caption</comment>
+  </data>
+  <data name="T_RegNameDft.PlaceholderText" xml:space="preserve">
+    <value>LongsW</value>
+    <comment>Registrant Name Setting Default Value</comment>
+  </data>
+  <data name="T_RegNameDsn.Text" xml:space="preserve">
+    <value>The default name of the userdisplayed on export.</value>
+    <comment>Registrant Name Setting Description</comment>
+  </data>
+  <data name="T_Search.PlaceholderText" xml:space="preserve">
+    <value>Search</value>
+    <comment>Placeholder Of The Application's Search Bar</comment>
+  </data>
+  <data name="T_Settings.Text" xml:space="preserve">
+    <value>Settings</value>
+    <comment>Header Of The Settings Page</comment>
+  </data>
+</root>

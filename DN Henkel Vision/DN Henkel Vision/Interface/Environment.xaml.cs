@@ -54,7 +54,7 @@ namespace DN_Henkel_Vision.Interface
                 }
                 if (suitableItems.Count == 0)
                 {
-                    suitableItems.Add("No results found");
+                    suitableItems.Add(Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Results")));
                 }
                 sender.ItemsSource = suitableItems;
             }
@@ -249,9 +249,9 @@ namespace DN_Henkel_Vision.Interface
             {
                 XamlRoot = Manager.CurrentWindow.Content.XamlRoot,
                 Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                Title = "Create Order",
-                PrimaryButtonText = "Create",
-                CloseButtonText = "Cancel",
+                Title = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_CreateOrder/Text")),
+                PrimaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Create/Content")),
+                CloseButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Cancel/Content")),
                 DefaultButton = ContentDialogButton.Primary,
                 IsPrimaryButtonEnabled = false,
                 RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme,
@@ -265,9 +265,9 @@ namespace DN_Henkel_Vision.Interface
             
             string chip = ((Order)orderDialog.Content).CategoryText.Text;
 
-            if (chip == "Invalid") { return; }
+            if (chip == Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Invalid/Text"))) { return; }
 
-            if (chip == "Existing")
+            if (chip == Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Existing/Text")))
             {
                 OrdersPanel_Select(Format(((Order)orderDialog.Content).Number.Text));
                 return;

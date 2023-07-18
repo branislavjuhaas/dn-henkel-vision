@@ -9,9 +9,9 @@
         HorizontalAlignment="Stretch">
         <TextBox
             x:Name="Number"
+            x:Uid="T_OrderNumber"
             x:FieldModifier="public"
             TextWrapping="Wrap"
-            PlaceholderText="Order Number"
             Width="400"
             Margin="0,10,0,0"
             Height="32"
@@ -29,7 +29,7 @@
             <TextBlock
                 x:FieldModifier="public"
                 x:Name="CategoryText"
-                Text="Invalid"
+                x:Uid="T_Invalid"
                 Margin="5,0"/>
         </Border>
     </Grid>
