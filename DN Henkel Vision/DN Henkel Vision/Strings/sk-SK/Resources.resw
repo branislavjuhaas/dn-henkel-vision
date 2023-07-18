@@ -325,4 +325,8 @@
     <value>Nastavenia</value>
     <comment>Header Of The Settings Page</comment>
   </data>
+  <data name="T_Welcome.Text" xml:space="preserve">
+    <value>Vitajte</value>
+    <comment>Header Of The Welcome Page</comment>
+  </data>
 </root>

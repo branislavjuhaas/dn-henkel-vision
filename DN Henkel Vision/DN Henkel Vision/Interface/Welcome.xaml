@@ -22,7 +22,7 @@
             CornerRadius="0,0,0,4">
 
             <TextBlock
-                Text="Welcome"
+                x:Uid="T_Welcome"
                 FontSize="{ThemeResource TitleTextBlockFontSize}"
                 FontWeight="{ThemeResource InfoBarTitleFontWeight}"
                 Margin="32,82,0,0"/>

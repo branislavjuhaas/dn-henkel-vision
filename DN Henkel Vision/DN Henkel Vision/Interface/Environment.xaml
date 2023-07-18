@@ -81,7 +81,7 @@
                         Grid.Column="1"/>
                     <TextBlock
                         x:Name="ApplicationDevState" 
-                        Text="Preview"
+                        Text=""
                         Margin="3,15,0,0"
                         FontSize="12"
                         Foreground="{ThemeResource TextFillColorSecondary}"

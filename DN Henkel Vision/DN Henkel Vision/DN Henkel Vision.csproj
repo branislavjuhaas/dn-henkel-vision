@@ -19,6 +19,7 @@
   </PropertyGroup>
   <PropertyGroup>
 	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	  <IsPublishable>True</IsPublishable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <Optimize>False</Optimize>
