@@ -265,9 +265,9 @@ namespace DN_Henkel_Vision.Interface
             
             string chip = ((Order)orderDialog.Content).CategoryText.Text;
 
-            if (chip == "Invalid") { return; }
+            if (chip == Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Invalid/Text"))) { return; }
 
-            if (chip == "Existing")
+            if (chip == Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Existing/Text")))
             {
                 OrdersPanel_Select(Format(((Order)orderDialog.Content).Number.Text));
                 return;

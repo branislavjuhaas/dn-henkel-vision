@@ -118,179 +118,179 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="B_Cancel.Content" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Zrušiť</value>
     <comment>Content Of The Close Button Of The Dialog</comment>
   </data>
   <data name="B_Cause.Content" xml:space="preserve">
-    <value>Cause</value>
+    <value>Počiatočník</value>
     <comment>Placeholder In The Cause Button In Editor</comment>
   </data>
   <data name="B_Create.Content" xml:space="preserve">
-    <value>Create</value>
+    <value>Vytvoriť</value>
     <comment>Content Of The Create Button Of The Dialog</comment>
   </data>
   <data name="B_DarkTheme.Content" xml:space="preserve">
-    <value>Dark</value>
+    <value>Tmavá</value>
     <comment>Dark Theme Of The Application</comment>
   </data>
   <data name="B_Duration.Content" xml:space="preserve">
-    <value>Duration</value>
+    <value>Trvanie</value>
     <comment>Duration Criterium In Exports Page</comment>
   </data>
   <data name="B_Everything.Content" xml:space="preserve">
-    <value>Everything</value>
+    <value>Všetko</value>
     <comment>Everything Criterium In Exports Page</comment>
   </data>
   <data name="B_Export.Content" xml:space="preserve">
-    <value>Export</value>
+    <value>Exportovať</value>
     <comment>Content Of The Export Button</comment>
   </data>
   <data name="B_Exports.Content" xml:space="preserve">
-    <value>Exports</value>
+    <value>Exporty</value>
     <comment>Exports Graph Option In Exports Page</comment>
   </data>
   <data name="B_Humanity.Content" xml:space="preserve">
-    <value>Humanity</value>
+    <value>Človek</value>
     <comment>Humanity Criterium In Exports Page</comment>
   </data>
   <data name="B_LightTheme.Content" xml:space="preserve">
-    <value>Light</value>
+    <value>Svetlá</value>
     <comment>Light Theme Of The Application</comment>
   </data>
   <data name="B_Machine.Content" xml:space="preserve">
-    <value>Machine</value>
+    <value>Stroj</value>
     <comment>Content Of The Machine Button In Exports Page</comment>
   </data>
   <data name="B_Report.Content" xml:space="preserve">
-    <value>Report</value>
+    <value>Hlásenie</value>
     <comment>Content Of The Report Button In Exports Page</comment>
   </data>
   <data name="B_Select.Content" xml:space="preserve">
-    <value>Select</value>
+    <value>Vybrať</value>
     <comment>Content Of The Select Button Of The Dialog</comment>
   </data>
   <data name="B_Service.Content" xml:space="preserve">
-    <value>Service</value>
+    <value>Manuálne</value>
     <comment>Service Graph Option In Exports Page</comment>
   </data>
   <data name="B_SystemTheme.Content" xml:space="preserve">
-    <value>System</value>
+    <value>Systémová</value>
     <comment>System Theme Of The Application</comment>
   </data>
   <data name="H_Category.Header" xml:space="preserve">
-    <value>Category</value>
+    <value>Kategória</value>
     <comment>Header Of The Category Combo Box In Exports Page</comment>
   </data>
   <data name="H_Criterium.Header" xml:space="preserve">
-    <value>Criterium</value>
+    <value>Kritérium</value>
     <comment>Header Of The Criterium Combo Box In Exports Page</comment>
   </data>
   <data name="H_DspTime.Header" xml:space="preserve">
-    <value>Display time</value>
+    <value>Čas zobrazenia</value>
     <comment>Header Of The Display Time Combo Box In Exports Page</comment>
   </data>
   <data name="H_RegDate.Header" xml:space="preserve">
-    <value>Registration date</value>
+    <value>Dátum registrácie</value>
     <comment>Header Of The Registration Date Combo Box In Exports Page</comment>
   </data>
   <data name="H_SctTime.Header" xml:space="preserve">
-    <value>Selected time</value>
+    <value>Vybraný čas</value>
     <comment>Header Of The Selected Time Combo Box In Exports Page</comment>
   </data>
   <data name="H_UserName.Header" xml:space="preserve">
-    <value>User name</value>
+    <value>Používateľské meno</value>
     <comment>Header Of The User Name Combo Box In Exports Page</comment>
   </data>
   <data name="S_Hours" xml:space="preserve">
-    <value>hours</value>
+    <value>hod.</value>
     <comment>Hours String In Exports Page</comment>
   </data>
   <data name="S_Results" xml:space="preserve">
-    <value>No results found</value>
+    <value>Neboli nájdené žiadne výsledky</value>
     <comment>Result Of The Order Search If No Data Found</comment>
   </data>
   <data name="T_AppTheme.Text" xml:space="preserve">
-    <value>App theme</value>
+    <value>Téma aplikácie</value>
     <comment>App Theme Setting Caption</comment>
   </data>
   <data name="T_AppThemeDsn.Text" xml:space="preserve">
-    <value>Select which app theme to display.</value>
+    <value>Vyberte, akú tému aplikácie chcete zobraziť.</value>
     <comment>App Theme Setting Description</comment>
   </data>
   <data name="T_CauseRedirect.Text" xml:space="preserve">
-    <value>Cause redirecting</value>
+    <value>Presmerovanie počiatočníka</value>
     <comment>Cause Redirecting Setting Caption</comment>
   </data>
   <data name="T_CauseRedirectDsn.Text" xml:space="preserve">
-    <value>If there is no cause selected, choose testing department.</value>
+    <value>Ak nie je vybraná žiadna príčina, bude zvolené testovací oddelenie.</value>
     <comment>Cause Redirecting Setting Description</comment>
   </data>
   <data name="T_ChiefDev.Text" xml:space="preserve">
-    <value>Chief developer</value>
+    <value>Hlavný vývojár</value>
     <comment>Caption Of The Chief Developer In Settings Page</comment>
   </data>
   <data name="T_CollectData.Text" xml:space="preserve">
-    <value>Collect data</value>
+    <value>Zbierať údaje</value>
     <comment>Collect Data Setting Caption</comment>
   </data>
   <data name="T_CollectDataDsn.Text" xml:space="preserve">
-    <value>Allow collection of the data for the development.</value>
+    <value>Povoliť zhromažďovanie údajov pre vývoj.</value>
     <comment>Collect Data Setting Description</comment>
   </data>
   <data name="T_Copyright.Text" xml:space="preserve">
-    <value>©2023 DN Foundation. All rights reserved.</value>
+    <value>©2023 DN Foundation. Všetky práva vyhradené.</value>
     <comment>Copyright Info In Settigns Page</comment>
   </data>
   <data name="T_CreateOrder" xml:space="preserve">
-    <value>Create order</value>
+    <value>Vytvoriť zákazku</value>
     <comment>Title Of The Create Order Dialog</comment>
   </data>
   <data name="T_Data.Text" xml:space="preserve">
-    <value>No data to display</value>
+    <value>Žiadne údaje na zobrazenie</value>
     <comment>Placeholder Text In Preview Frame</comment>
   </data>
   <data name="T_Delete.Text" xml:space="preserve">
-    <value>Delete</value>
+    <value>Vymazať</value>
     <comment>Text Of The Delete Button In Fault Flyout</comment>
   </data>
   <data name="T_Edit.Text" xml:space="preserve">
-    <value>Edit</value>
+    <value>Upraviť</value>
     <comment>Text Of The Edit Button In Fault Flyout</comment>
   </data>
   <data name="T_Existing.Text" xml:space="preserve">
-    <value>Existing</value>
+    <value>Existujúce</value>
     <comment>Caption Of Existance In Create Order Dialog</comment>
   </data>
   <data name="T_Export.Text" xml:space="preserve">
-    <value>Export</value>
+    <value>Exportovať</value>
     <comment>Export Button Caption</comment>
   </data>
   <data name="T_Fault.PlaceholderText" xml:space="preserve">
-    <value>Fault</value>
+    <value>Chyba</value>
     <comment>Placeholder Of The Fault Description Field In Editor</comment>
   </data>
   <data name="T_Felber.Text" xml:space="preserve">
-    <value>Felber AI classifier</value>
+    <value>Felber AI klasifikátor</value>
     <comment>Caption Of The Felber In Settings Page</comment>
   </data>
   <data name="T_Funding.Text" xml:space="preserve">
-    <value>Partially funded by KraussMaffei Corporation</value>
+    <value>Čiastočne financované spoločnosťou KraussMaffei Corporation</value>
     <comment>Funding Caption In Settings Page</comment>
   </data>
   <data name="T_Heritage.Text" xml:space="preserve">
-    <value>Part of DN Software Heritage</value>
+    <value>Súčasť DN Softvérového Dedičstva</value>
     <comment>DN Software Heritage Caption In Settings Page</comment>
   </data>
   <data name="T_Invalid.Text" xml:space="preserve">
-    <value>Invalid</value>
+    <value>Neplatné</value>
     <comment>Caption Of Invalidity In Create Order Dialog</comment>
   </data>
   <data name="T_OrderNumber.PlaceholderText" xml:space="preserve">
-    <value>Order number</value>
+    <value>Číslo zákazky</value>
     <comment>Placeholder Text Of The Create Order Dialog</comment>
   </data>
   <data name="T_RegName.Text" xml:space="preserve">
-    <value>Registrant name</value>
+    <value>Meno registranta</value>
     <comment>Registrant Name Setting Caption</comment>
   </data>
   <data name="T_RegNameDft.PlaceholderText" xml:space="preserve">
@@ -298,15 +298,15 @@
     <comment>Registrant Name Setting Default Value</comment>
   </data>
   <data name="T_RegNameDsn.Text" xml:space="preserve">
-    <value>The default name of the userdisplayed on export.</value>
+    <value>Predvolené meno používateľa zobrazené pri exporte.</value>
     <comment>Registrant Name Setting Description</comment>
   </data>
   <data name="T_Search.PlaceholderText" xml:space="preserve">
-    <value>Search</value>
+    <value>Hľadať</value>
     <comment>Placeholder Of The Application's Search Bar</comment>
   </data>
   <data name="T_Settings.Text" xml:space="preserve">
-    <value>Settings</value>
+    <value>Nastavenia</value>
     <comment>Header Of The Settings Page</comment>
   </data>
 </root>

@@ -138,7 +138,7 @@
                     VerticalAlignment="Top"
                     SelectionChanged="Type_SelectionChanged">
                     <ComboBoxItem x:Uid="B_Service"/>
-                    <ComboBoxItem x:Uid="B_Export"/>
+                    <ComboBoxItem x:Uid="B_Exports"/>
                 </ComboBox>
                 <ToggleButton
                     x:Name="Machine"
