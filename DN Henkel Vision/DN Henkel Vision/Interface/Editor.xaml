@@ -130,7 +130,7 @@
                                 Margin="-13,-10">
                                 <ListView
                                     x:Name="CauseList"
-                                    ItemsSource="{x:Bind memory:Classification.Causes}"
+                                    ItemsSource="{x:Bind memory:Classification.LocalCauses}"
                                     SelectionMode="None"
                                     IsItemClickEnabled="True"
                                     ItemClick="CauseList_ItemClick"/>

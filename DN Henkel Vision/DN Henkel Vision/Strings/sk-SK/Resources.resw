@@ -125,6 +125,10 @@
     <value>Počiatočník</value>
     <comment>Placeholder In The Cause Button In Editor</comment>
   </data>
+  <data name="B_Continue.Content" xml:space="preserve">
+    <value>Pokračovať</value>
+    <comment>Continue Button Of The Content Dialog</comment>
+  </data>
   <data name="B_Create.Content" xml:space="preserve">
     <value>Vytvoriť</value>
     <comment>Content Of The Create Button Of The Dialog</comment>
@@ -205,6 +209,10 @@
     <value>hod.</value>
     <comment>Hours String In Exports Page</comment>
   </data>
+  <data name="S_Language" xml:space="preserve">
+    <value>sk-SK</value>
+    <comment>Current Language Of The Resource</comment>
+  </data>
   <data name="S_Results" xml:space="preserve">
     <value>Neboli nájdené žiadne výsledky</value>
     <comment>Result Of The Order Search If No Data Found</comment>
@@ -241,7 +249,7 @@
     <value>©2023 DN Foundation. Všetky práva vyhradené.</value>
     <comment>Copyright Info In Settigns Page</comment>
   </data>
-  <data name="T_CreateOrder" xml:space="preserve">
+  <data name="T_CreateOrder.Text" xml:space="preserve">
     <value>Vytvoriť zákazku</value>
     <comment>Title Of The Create Order Dialog</comment>
   </data>
@@ -284,6 +292,14 @@
   <data name="T_Invalid.Text" xml:space="preserve">
     <value>Neplatné</value>
     <comment>Caption Of Invalidity In Create Order Dialog</comment>
+  </data>
+  <data name="T_MissingPlacement.Text" xml:space="preserve">
+    <value>Chýbajúce uloženie</value>
+    <comment>Header Of The Missing Placement Dialog</comment>
+  </data>
+  <data name="T_MissingPlacementDsn.Text" xml:space="preserve">
+    <value>Chcete pokračovať bez platného uloženia?</value>
+    <comment>Content Of The Missing Placement Dialog</comment>
   </data>
   <data name="T_OrderNumber.PlaceholderText" xml:space="preserve">
     <value>Číslo zákazky</value>

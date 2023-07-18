@@ -91,7 +91,7 @@ namespace DN_Henkel_Vision.Interface
                 return;
             }
             
-            if (e.Key == VirtualKey.Tab && Tact.Content.ToString() != "Cause" && !_locked)
+            if (e.Key == VirtualKey.Tab && Tact.Content.ToString() != Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Cause/Content")) && !_locked)
             {
                 Lock();
                 e.Handled = true;
@@ -180,8 +180,26 @@ namespace DN_Henkel_Vision.Interface
         {
             if (_locked) { return; }
 
-            Tact.Content = cause;
+            Tact.Content = LocalCause(cause);
             Tact.FontStyle = Windows.UI.Text.FontStyle.Italic;
+        }
+
+        private static string LocalCause(string cause)
+        {
+            int index = Array.FindIndex(Memory.Classification.Causes, c => c == cause);
+
+            if (index == -1) return cause;
+
+            return Memory.Classification.LocalCauses[index];
+        }
+
+        private static string GlobalCause(string cause)
+        {
+            int index = Array.FindIndex(Memory.Classification.LocalCauses, c => c == cause);
+
+            if (index == -1) return cause;
+
+            return Memory.Classification.Causes[index];
         }
 
         /// <summary>
@@ -243,7 +261,7 @@ namespace DN_Henkel_Vision.Interface
         {
             FaultInput.Text = string.Empty;            
 
-            Tact.Content = "Cause";
+            Tact.Content = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Cause/Content"));
             Unlock();
 
             UnassignNetstalPlacement();
@@ -267,7 +285,7 @@ namespace DN_Henkel_Vision.Interface
 
             float user = (float)(DateTime.Now - _begin).TotalMinutes + Manager.Addition;
 
-            Fault input = new(FaultInput.Text, Tact.Content.ToString()) { Placement = placement, UserTime = user };
+            Fault input = new(FaultInput.Text, GlobalCause(Tact.Content.ToString())) { Placement = placement, UserTime = user };
 
             Manager.Selected.PendingFaults.Add(input);
 

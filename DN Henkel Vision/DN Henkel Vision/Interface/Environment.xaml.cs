@@ -249,7 +249,7 @@ namespace DN_Henkel_Vision.Interface
             {
                 XamlRoot = Manager.CurrentWindow.Content.XamlRoot,
                 Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                Title = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_CreateOrder")),
+                Title = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_CreateOrder/Text")),
                 PrimaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Create/Content")),
                 CloseButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Cancel/Content")),
                 DefaultButton = ContentDialogButton.Primary,

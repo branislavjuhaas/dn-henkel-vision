@@ -47,7 +47,7 @@ namespace DN_Henkel_Vision.Interface
         {
             if (Cause.SelectedIndex >= 0)
             {
-                Classification.ItemsSource = DN_Henkel_Vision.Memory.Classification.Classifications[((ComboBox)sender).SelectedIndex].ToList();
+                Classification.ItemsSource = DN_Henkel_Vision.Memory.Classification.LocalClassifications[((ComboBox)sender).SelectedIndex].ToList();
                 if (Classification.Items.Count == 1) { Classification.SelectedIndex = 0; return; }
 
                 if (!_fromui) return;
@@ -67,7 +67,7 @@ namespace DN_Henkel_Vision.Interface
         {
             if (Classification.SelectedIndex >= 0)
             {
-                Type.ItemsSource = DN_Henkel_Vision.Memory.Classification.Types[DN_Henkel_Vision.Memory.Classification.ClassificationsPointers[Cause.SelectedIndex][Classification.SelectedIndex]];
+                Type.ItemsSource = DN_Henkel_Vision.Memory.Classification.LocalTypes[DN_Henkel_Vision.Memory.Classification.ClassificationsPointers[Cause.SelectedIndex][Classification.SelectedIndex]];
                 if (Type.Items.Count == 1) { Type.SelectedIndex = 0; return; }
 
                 if (!_fromui) return;
@@ -100,11 +100,11 @@ namespace DN_Henkel_Vision.Interface
                 ContentDialog message = new()
                 {
                     XamlRoot = Manager.CurrentWindow.Content.XamlRoot,
-                    Title = "Missing Placement",
+                    Title = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_MissingPlacement/Text")),
                     Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                    Content = "Do you want to continue without valid placement?",
-                    PrimaryButtonText = "Close",
-                    SecondaryButtonText = "Continue",
+                    Content = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_MissingPlacementDsn/Text")),
+                    PrimaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Cancel/Content")),
+                    SecondaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Continue/Content")),
                     DefaultButton = ContentDialogButton.Primary,
                     RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme
                 };
