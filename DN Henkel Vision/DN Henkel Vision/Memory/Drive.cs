@@ -15,18 +15,22 @@ namespace DN_Henkel_Vision.Memory
     internal class Drive
     {
         public static readonly string Folder = Windows.ApplicationModel.Package.Current.InstalledPath;
+        public static readonly string Data = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData) + "\\DN Henkel Vision";
+        public static readonly string Developer = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments) + "\\DN Henkel Vision\\Dev";
 
         #region File Paths
 
-        internal static readonly string s_regdir =   $"{Folder}\\Files\\Registry\\";
+        internal static readonly string s_regdir =      $"{Data}\\Files\\Registry\\";
 
-        internal static readonly string s_system =      $"{Folder}\\Files\\System.dntf";
-        internal static readonly string s_settings =    $"{Folder}\\Files\\Settings.dntf";
-        internal static readonly string s_orders =      $"{Folder}\\Files\\Orders\\";
-        internal static readonly string s_registry =    $"{Folder}\\Files\\Registry\\Registry.dntf";
-        internal static readonly string s_exports =     $"{Folder}\\Files\\Registry\\Exports.dntf";
-        internal static readonly string s_trainees =    $"{Folder}\\Files\\Trainee\\";
-        internal static readonly string s_language =    $"{Folder}\\Files\\Language.dnlf";
+        internal static readonly string s_system =      $"{Data}\\Files\\System.dntf";
+        internal static readonly string s_settings =    $"{Data}\\Files\\Settings.dntf";
+        internal static readonly string s_orders =      $"{Data}\\Files\\Orders\\";
+        internal static readonly string s_registry =    $"{Data}\\Files\\Registry\\Registry.dntf";
+        internal static readonly string s_exports =     $"{Data}\\Files\\Registry\\Exports.dntf";
+        internal static readonly string s_trainees =    $"{Data}\\Files\\Trainee\\";
+        internal static readonly string s_language =    $"{Data}\\Files\\Language.dnlf";
+
+        internal static readonly string s_devlog =   $"{Developer}\\Logs\\{DateTime.Now.ToString("ddMMyyHHmm")}.txt";
         
         #endregion
 
@@ -42,6 +46,19 @@ namespace DN_Henkel_Vision.Memory
             }
 
             Setup.CreateFileSystem();
+        }
+
+        public static void Devset()
+        {
+            if (!Manager.Developer) return;
+            
+            if (File.Exists(s_devlog)) return;
+
+            if (!Directory.Exists(Developer)) Directory.CreateDirectory(Developer);
+            if (!Directory.Exists($"{Developer}\\Logs")) Directory.CreateDirectory($"{Developer}\\Logs");
+            Write(s_devlog, "[03.04.23 16:32:21:127] DN Henkel Vision Developer Log \r\n\r\n");
+            Log("Application started successfully in developer mode.");
+            Log("Application started from location: " + Folder);
         }
         
         /// <summary>
@@ -186,6 +203,11 @@ namespace DN_Henkel_Vision.Memory
         public static void Write(string file, string value)
         {
             File.WriteAllText(file, value);
+        }
+
+        public static void Append(string file, string value)
+        {
+            File.AppendAllText(file, value);
         }
 
         /// <summary>
@@ -486,7 +508,13 @@ namespace DN_Henkel_Vision.Memory
             {
                 Write($"{s_trainees}N{today}.dntf", incorrect);
             }
+        }
 
+        public static void Log(string log)
+        {
+            if (!Manager.Developer) return;
+
+            Append(s_devlog, $"[{DateTime.Now.ToString("dd.MM.yy HH:mm:ss:fff")}] {log}\r\n");
         }
     }
 }

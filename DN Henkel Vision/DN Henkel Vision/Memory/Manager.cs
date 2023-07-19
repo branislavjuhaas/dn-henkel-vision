@@ -30,6 +30,9 @@ namespace DN_Henkel_Vision.Memory
 
         public static readonly float AverageLength = 33.09f; // 33.09144927536232 : average of 13 800 samples length
 
+        public static bool Developer = false;
+        public static string DevText = "Preview";
+
         /// <summary>
         /// This method initializes the global memory of the application.
         /// </summary>
@@ -37,12 +40,17 @@ namespace DN_Henkel_Vision.Memory
         {
             Classification.Assign(Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Language")));
             Drive.Validate();
+            Drive.Log("Drive validated successfully.");
 
             Drive.LoadSettings();
+            Drive.Log("Settings loaded successfully.");
             Drive.LoadRegistry();
+            Drive.Log("Registry loaded successfully.");
             VisualRegistry = new(OrdersRegistry);
             Drive.LoadExportHistory();
+            Drive.Log("Export history loaded successfully.");
             Export.Evaluate();
+            Drive.Log("Export history evaluated successfully.");
         }
 
         /// <summary>

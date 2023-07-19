@@ -7,6 +7,7 @@ using DN_Henkel_Vision.Memory;
 using System.ComponentModel;
 using System.Globalization;
 using Microsoft.Windows.AppLifecycle;
+using Windows.Foundation.Diagnostics;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -61,6 +62,8 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The RoutedEventArgs object that contains the event data.</param>
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
+            Drive.Log("Splash screen loaded successfully.");
+            
             BackgroundWorker worker = new()
             {
                 WorkerSupportsCancellation = true
@@ -78,12 +81,18 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">An instance of DoWorkEventArgs containing event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            Drive.Log("Loader BackgroundWorker started successfully.");
+            
             LoadApplication();
+
+            Drive.Log("Application loaded successfully.");
 
             s_loader.DispatcherQueue.TryEnqueue(() =>
             {
                 Environmentate();
             });
+
+            Drive.Log("Loader BackgroundWorker finished successfully.");
         }
 
         /// <summary>
@@ -103,7 +112,9 @@ namespace DN_Henkel_Vision.Interface
         private static void LoadApplication()
         {
             Manager.Initialize();
+            Drive.Log("Manager initialized successfully.");
             Felber.Felber.Initialize();
+            Drive.Log("Felber initialized successfully.");
         }
     }
 }
