@@ -9,10 +9,10 @@ using DN_Henkel_Vision.Memory;
 
 namespace DN_Henkel_Vision
 {
-    public partial class Cause
+    public partial class Classification
     {
         /// <summary>
-        /// model input class for Cause.
+        /// model input class for Classification.
         /// </summary>
         #region model input class
         public class ModelInput
@@ -25,12 +25,16 @@ namespace DN_Henkel_Vision
             [ColumnName(@"col1")]
             public string Col1 { get; set; }
 
+            [LoadColumn(2)]
+            [ColumnName(@"col2")]
+            public string Col2 { get; set; }
+
         }
 
         #endregion
 
         /// <summary>
-        /// model output class for Cause.
+        /// model output class for Classification.
         /// </summary>
         #region model output class
         public class ModelOutput
@@ -39,7 +43,10 @@ namespace DN_Henkel_Vision
             public float[] Col0 { get; set; }
 
             [ColumnName(@"col1")]
-            public uint Col1 { get; set; }
+            public float[] Col1 { get; set; }
+
+            [ColumnName(@"col2")]
+            public uint Col2 { get; set; }
 
             [ColumnName(@"Features")]
             public float[] Features { get; set; }
@@ -54,7 +61,7 @@ namespace DN_Henkel_Vision
 
         #endregion
 
-        private static readonly string MLNetModelPath = Drive.Folder + @"\DN Henkel Vision\Felber\Models\Analyze\Cause.zip";
+        private static readonly string MLNetModelPath = Drive.Folder + @"\..\DN Henkel Vision\Felber\Models\Classification\Classification.zip";
 
         public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
 

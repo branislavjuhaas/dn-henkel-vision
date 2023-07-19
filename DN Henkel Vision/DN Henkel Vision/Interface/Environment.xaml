@@ -72,7 +72,7 @@
                     <Image
                     Width="18"
                     Margin="0,14,0,0"
-                    Source="ms-appx:///Assets/Tiles/StoreLogo.scale-100.png"/>
+                    Source="ms-appx:///Assets/Tiles/Square44x44Logo.altform-unplated_targetsize-48.png"/>
                     <TextBlock
                         x:Name="ApplicationTitle"
                         Text="DN Henkel Vision"
@@ -81,7 +81,7 @@
                         Grid.Column="1"/>
                     <TextBlock
                         x:Name="ApplicationDevState" 
-                        Text=""
+                        Text="{x:Bind memory:Manager.DevText}"
                         Margin="3,15,0,0"
                         FontSize="12"
                         Foreground="{ThemeResource TextFillColorSecondary}"
