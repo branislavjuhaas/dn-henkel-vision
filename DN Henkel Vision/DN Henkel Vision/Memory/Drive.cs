@@ -323,6 +323,7 @@ namespace DN_Henkel_Vision.Memory
 
             savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             savePicker.FileTypeChoices.Add(filetext, new List<string>() { filetype });
+            savePicker.SuggestedFileName = $"DN Export {DateTime.Now.ToString("ddMMyyHHmm")}{filetype}";
 
             StorageFile file = await savePicker.PickSaveFileAsync();
             if (file != null)
