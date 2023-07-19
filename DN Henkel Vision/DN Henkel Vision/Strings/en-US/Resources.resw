@@ -325,4 +325,8 @@
     <value>Settings</value>
     <comment>Header Of The Settings Page</comment>
   </data>
+  <data name="T_Welcome.Text" xml:space="preserve">
+    <value>Welcome</value>
+    <comment>Header Of The Welcome Page</comment>
+  </data>
 </root>

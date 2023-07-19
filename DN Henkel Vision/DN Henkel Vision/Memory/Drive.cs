@@ -5,6 +5,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage;
 using DN_Henkel_Vision.Interface;
 using Microsoft.UI.Xaml;
+using System.Globalization;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -24,7 +25,8 @@ namespace DN_Henkel_Vision.Memory
         internal static readonly string s_orders =      $"{Folder}\\Files\\Orders\\";
         internal static readonly string s_registry =    $"{Folder}\\Files\\Registry\\Registry.dntf";
         internal static readonly string s_exports =     $"{Folder}\\Files\\Registry\\Exports.dntf";
-        internal static readonly string s_trainees =     $"{Folder}\\Files\\Trainee\\";
+        internal static readonly string s_trainees =    $"{Folder}\\Files\\Trainee\\";
+        internal static readonly string s_language =    $"{Folder}\\Files\\Language.dnlf";
         
         #endregion
 
@@ -449,6 +451,13 @@ namespace DN_Henkel_Vision.Memory
                 case '1': return ElementTheme.Dark;
                 default: return ElementTheme.Default;
             }
+        }
+
+        public static string SafeLanguage()
+        {
+            if (!File.Exists(s_language)) return CultureInfo.CurrentUICulture.Name;
+
+            return Read(s_language);
         }
 
         public static void WriteTrainees()

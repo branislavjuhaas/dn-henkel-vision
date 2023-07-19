@@ -8,12 +8,12 @@
 
   <Identity
     Name="d61de81d-cd85-4388-bdcb-72407fecb779"
-    Publisher="CN=juhas"
-    Version="1.0.0.0" />
+    Publisher="CN=DN Foundation"
+    Version="2023.2.1.1407" />
 
   <Properties>
-    <DisplayName>DN Henkel Vision (Package)</DisplayName>
-    <PublisherDisplayName>juhas</PublisherDisplayName>
+    <DisplayName>DN Henkel Vision</DisplayName>
+    <PublisherDisplayName>DN Foundation</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
@@ -23,7 +23,8 @@
   </Dependencies>
 
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="en-US"/>
+    <Resource Language="sk-SK"/>
   </Resources>
 
   <Applications>
@@ -31,8 +32,8 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="DN Henkel Vision Preview"
-        Description="DN Henkel Vision"
+        DisplayName="DN Henkel Vision"
+        Description="DN Henkel Vision is a cutting-edge application designed to simplify fault registration and accelerate classification using advanced AI technology. Streamline your workflow, save time, and boost productivity with this intuitive and efficient solution. Experience seamless fault management like never before with DN Henkel Vision."
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
         Square44x44Logo="Images\Square44x44Logo.png">

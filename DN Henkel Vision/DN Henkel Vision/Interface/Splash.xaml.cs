@@ -5,6 +5,8 @@ using Microsoft.UI;
 using WinRT.Interop;
 using DN_Henkel_Vision.Memory;
 using System.ComponentModel;
+using System.Globalization;
+using Microsoft.Windows.AppLifecycle;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -24,13 +26,13 @@ namespace DN_Henkel_Vision.Interface
         /// Initializes a new instance of the <see cref="Splash"/> class.
         /// </summary>
         public Splash()
-        {           
+        {                      
             s_loader = this;
             
             IntPtr hWnd = WindowNative.GetWindowHandle(this);
 
             DisplayArea area = DisplayArea.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(hWnd), DisplayAreaFallback.Nearest);
-
+            
             this.InitializeComponent();
             OverlappedPresenter presenter = GetAppWindowAndPresenter();
             presenter.IsMaximizable = false;
