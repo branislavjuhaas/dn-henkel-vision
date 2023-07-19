@@ -174,7 +174,7 @@
     <comment>Content Of The Select Button Of The Dialog</comment>
   </data>
   <data name="B_Service.Content" xml:space="preserve">
-    <value>Manuálne</value>
+    <value>Zápisy</value>
     <comment>Service Graph Option In Exports Page</comment>
   </data>
   <data name="B_SystemTheme.Content" xml:space="preserve">
