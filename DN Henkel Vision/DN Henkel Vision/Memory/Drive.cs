@@ -115,15 +115,16 @@ namespace DN_Henkel_Vision.Memory
                 {
                     Index = uint.Parse(parts[0]),
                     Component = parts[1],
-                    Placement = parts[2],
-                    Cause = parts[4],
-                    Classification = parts[5],
-                    Type = parts[6]
+                    Placement = parts[2]
                 };
 
-                fault.ClassIndexes[0] = int.Parse(parts[7]);
-                fault.ClassIndexes[1] = int.Parse(parts[8]);
-                fault.ClassIndexes[2] = int.Parse(parts[9]);
+                fault.ClassIndexes[0] = int.Parse(parts[4]);
+                fault.ClassIndexes[1] = int.Parse(parts[5]);
+                fault.ClassIndexes[2] = int.Parse(parts[6]);
+
+                fault.Cause = Memory.Classification.LocalCauses[fault.ClassIndexes[0]];
+                fault.Classification = Memory.Classification.LocalClassifications[fault.ClassIndexes[0]][fault.ClassIndexes[1]];
+                fault.Type = Memory.Classification.LocalTypes[Memory.Classification.ClassificationsPointers[fault.ClassIndexes[0]][fault.ClassIndexes[1]]][fault.ClassIndexes[2]];
 
                 if (header == "Normal") { faults.Add(fault); continue; }
                 if (header == "Preview") { previews.Add(fault); continue; }
