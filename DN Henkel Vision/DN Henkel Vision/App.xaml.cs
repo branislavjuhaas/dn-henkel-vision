@@ -1,7 +1,10 @@
 ﻿using DN_Henkel_Vision.Memory;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using System;
 using System.Threading;
+using Windows.System;
+using Windows.UI.Core;
 
 namespace DN_Henkel_Vision
 {
@@ -32,8 +35,25 @@ namespace DN_Henkel_Vision
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            if (IsShift())
+            {
+                Manager.Developer = true;
+                Manager.DevText += " Dev";
+                Drive.Devset();
+            }
             splash = new Interface.Splash();
             splash.Activate();
+        }
+
+        /// <summary>
+        /// Returns a boolean indicating whether the Shift key is currently pressed.
+        /// </summary>
+        /// <returns>A boolean value indicating whether the Shift key is currently pressed.</returns>
+        private static bool IsShift()
+        {
+            CoreVirtualKeyStates states = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
+
+            return (states & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         }
 
         /// <summary>

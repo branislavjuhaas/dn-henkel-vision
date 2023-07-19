@@ -26,6 +26,9 @@ namespace DN_Henkel_Vision.Interface
             this.InitializeComponent();
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(ApplicationTitleBar);
+
+            Drive.Log("---------------------------------------------------------");
+            Drive.Log("Environment window initialized successfully.");
         }
 
         /// <summary>
@@ -320,6 +323,7 @@ namespace DN_Henkel_Vision.Interface
             AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
             OverlappedPresenter presenter = (OverlappedPresenter)appWindow.Presenter;
             presenter.Maximize();
+            Drive.Log("Environment loaded successfully.");
         }
     }
 }
