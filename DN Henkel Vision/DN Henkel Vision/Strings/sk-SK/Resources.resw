@@ -122,7 +122,7 @@
     <comment>Content Of The Close Button Of The Dialog</comment>
   </data>
   <data name="B_Cause.Content" xml:space="preserve">
-    <value>Počiatočník</value>
+    <value>Pôvodca</value>
     <comment>Placeholder In The Cause Button In Editor</comment>
   </data>
   <data name="B_Continue.Content" xml:space="preserve">
@@ -226,7 +226,7 @@
     <comment>App Theme Setting Description</comment>
   </data>
   <data name="T_CauseRedirect.Text" xml:space="preserve">
-    <value>Presmerovanie počiatočníka</value>
+    <value>Presmerovanie pôvodcu</value>
     <comment>Cause Redirecting Setting Caption</comment>
   </data>
   <data name="T_CauseRedirectDsn.Text" xml:space="preserve">
