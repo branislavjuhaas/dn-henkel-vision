@@ -1,4 +1,5 @@
 using DN_Henkel_Vision.Memory;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -9,6 +10,7 @@ using System.Linq;
 using Windows.ApplicationModel.Calls;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -85,12 +87,26 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">Arguments of the event.</param>
         private void FaultInput_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (e.Key == Windows.System.VirtualKey.Enter)
+            if (e.Key == VirtualKey.Enter)
             {               
                 FaultPush();
                 return;
             }
-            
+
+            // Check if there is no slash in the fault input and if yes, add one
+            if ((((int)e.Key) == 191 || ((int)e.Key) == 111) && !FaultInput.Text.Contains("/"))
+            {
+                int index = FaultInput.SelectionStart; 
+                FaultInput.Text = FaultInput.Text.Insert(index, "/");
+                FaultInput.SelectionStart = index;
+            }
+
+            // Check if the character right after the cursor is slash and if yes, move the cursor one character to the right
+            if (e.Key == VirtualKey.Space && FaultInput.SelectionStart < FaultInput.Text.Length && FaultInput.Text[FaultInput.SelectionStart] == '/' && !IsShift())
+            {
+                FaultInput.SelectionStart++;
+            }
+
             if (e.Key == VirtualKey.Tab && Tact.Content.ToString() != Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Cause/Content")) && !_locked)
             {
                 Lock();
@@ -102,6 +118,17 @@ namespace DN_Henkel_Vision.Interface
             _begin = DateTime.Now;
 
             _counting = true;
+        }
+
+        /// <summary>
+        /// Returns a boolean indicating whether the Shift key is currently pressed.
+        /// </summary>
+        /// <returns>A boolean value indicating whether the Shift key is currently pressed.</returns>
+        private static bool IsShift()
+        {
+            CoreVirtualKeyStates states = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
+
+            return (states & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         }
 
         /// <summary>

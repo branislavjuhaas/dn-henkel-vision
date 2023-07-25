@@ -40,15 +40,48 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <Button
+                x:Name="Duplicate"
+                CornerRadius="4,0,0,4"
+                Height="32"
+                Width="32"
+                HorizontalAlignment="Left"
+                Padding="0,1,0,0"
+                Visibility="Collapsed"
+                Click="Duplicate_Click"
+                BorderThickness="1,1,0,1">
+                <Button.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="L"/>
+                </Button.KeyboardAccelerators>
+                <FontIcon
+                    FontFamily="Segoe Fluent Icons"
+                    Glyph="&#xE71B;"
+                    FontSize="16"
+                    Margin="-10"/>
+            </Button>
+            <Rectangle
+                x:Name="Separator"
+                Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}"
+                HorizontalAlignment="Left"
+                Visibility="Collapsed"
+                Margin="32,1,0,0"
+                Opacity="0.41"
+                Width="1"/>
             <TextBox
                 x:Name="Component"
                 Text="{x:Bind Current.Component}"
-                Height="32"
-                TextWrapping="Wrap"
                 HorizontalAlignment="Left"
-                MinWidth="25"
+                TextWrapping="Wrap"
                 Padding="12,5"
-                TextChanged="Component_TextChanged"/>
+                MinWidth="25"
+                Height="32"
+                TextChanged="Component_TextChanged">
+                <TextBox.Transitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition/>
+                    </TransitionCollection>
+                </TextBox.Transitions>
+            </TextBox>
             <TextBox
                 x:Name="Placement"
                 Text="{x:Bind Current.Placement}"
@@ -129,8 +162,8 @@
                 IsRightTapEnabled="True"
                 Click="Approve_Click" RightTapped="Approve_RightTapped">
                 <Button.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="Menu" Key="Enter"/>
-                    <KeyboardAccelerator Modifiers="Menu" Key="E"/>
+                    <KeyboardAccelerator Modifiers="Control" Key="Enter"/>
+                    <KeyboardAccelerator Modifiers="Control" Key="E"/>
                 </Button.KeyboardAccelerators>
                 <FontIcon
                     FontFamily="Segoe Fluent Icons"
