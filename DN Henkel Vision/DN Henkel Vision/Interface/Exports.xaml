@@ -129,8 +129,8 @@
                 x:Name="ControlPanel"
                 Orientation="Horizontal"
                 Spacing="20"
-                Margin="20,20,20,0"
-                VerticalAlignment="Top">
+                Margin="20,20,20,20"
+                VerticalAlignment="Center">
                 <ComboBox
                     x:Name="Type"
                     Width="150"

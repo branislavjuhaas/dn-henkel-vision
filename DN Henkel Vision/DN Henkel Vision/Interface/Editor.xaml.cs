@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.Calls;
 using Windows.System;
@@ -62,7 +63,8 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         private void CauseList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Tact.Content = e.ClickedItem.ToString();
+            //Tact.Content = e.ClickedItem.ToString();
+            Tact.Content = ((e.ClickedItem as Grid).Children[0] as TextBlock).Text;
             Tact.Flyout.Hide();
 
             if (_locked) { return; }
@@ -94,15 +96,15 @@ namespace DN_Henkel_Vision.Interface
             }
 
             // Check if there is no slash in the fault input and if yes, add one
-            if ((((int)e.Key) == 191 || ((int)e.Key) == 111) && !FaultInput.Text.Contains("/"))
+            if (((int)e.Key) == 220 && !FaultInput.Text.Contains("\\"))
             {
                 int index = FaultInput.SelectionStart; 
-                FaultInput.Text = FaultInput.Text.Insert(index, "/");
+                FaultInput.Text = FaultInput.Text.Insert(index, "\\");
                 FaultInput.SelectionStart = index;
             }
 
             // Check if the character right after the cursor is slash and if yes, move the cursor one character to the right
-            if (e.Key == VirtualKey.Space && FaultInput.SelectionStart < FaultInput.Text.Length && FaultInput.Text[FaultInput.SelectionStart] == '/' && !IsShift())
+            if (e.Key == VirtualKey.Space && FaultInput.SelectionStart < FaultInput.Text.Length && FaultInput.Text[FaultInput.SelectionStart] == '\\' && !IsShift())
             {
                 FaultInput.SelectionStart++;
             }
@@ -386,6 +388,109 @@ namespace DN_Henkel_Vision.Interface
         {
             // Set the last-tapped element to the tapped grid element.
             LastTapped = sender as Grid;
+        }
+
+        private void CauseList_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            int index = 0;
+
+            switch (e.Key)
+            {
+                case VirtualKey.Number0:
+                    index = 0; break;
+                case VirtualKey.NumberPad0:
+                    index = 0; break;
+                case VirtualKey.Number1:
+                    index = 1; break;
+                case VirtualKey.NumberPad1:
+                    index = 1; break;
+                case VirtualKey.Number2:
+                    index = 2; break;
+                case VirtualKey.NumberPad2:
+                    index = 2; break;
+                case VirtualKey.Number3:
+                    index = 3; break;
+                case VirtualKey.NumberPad3:
+                    index = 3; break;
+                case VirtualKey.Number4:
+                    index = 4; break;
+                case VirtualKey.NumberPad4:
+                    index = 4; break;
+                case VirtualKey.Number5:
+                    index = 5; break;
+                case VirtualKey.NumberPad5:
+                    index = 5; break;
+                case VirtualKey.A:
+                    index = 6; break;
+                case VirtualKey.E:
+                    index = 7; break;
+                case VirtualKey.B:
+                    index = 8; break;
+                case VirtualKey.S:
+                    index = 9; break;
+                case VirtualKey.T:
+                    index = 10; break;
+                case VirtualKey.L:
+                    index = 11; break;
+                case VirtualKey.R:
+                    index = 12; break;
+                case VirtualKey.C:
+                    index = 13; break;
+                case VirtualKey.W:
+                    index = 14; break;
+                case VirtualKey.P:
+                    index = 15; break;
+                case VirtualKey.O:
+                    index = 16; break;
+                default: return;
+            }
+
+            e.Handled = true;
+
+            Tact.Content = Memory.Classification.LocalCauses[index];
+            Tact.Flyout.Hide();
+
+            if (_locked) { return; }
+            Lock();
+        }
+
+        public List<ListViewItem> Causes()
+        {
+            string[] shortcuts = new string[] { "0", "1", "2", "3", "4", "5", "A", "E", "B", "S", "T", "L", "R", "C", "W", "P", "O" };
+
+            List<ListViewItem> causes = new();
+
+            for (int i = 0; i < Memory.Classification.LocalCauses.Length; i++)
+            {
+                Grid grid = new();
+
+                TextBlock text = new()
+                {
+                    Text = Memory.Classification.LocalCauses[i],
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Left
+                };
+
+                TextBlock shortcut = new()
+                {
+                    Text = shortcuts[i],
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Foreground = new SolidColorBrush((Color)Application.Current.Resources["TextFillColorSecondary"])
+            };
+
+                grid.Children.Add(text);
+                grid.Children.Add(shortcut);
+
+                ListViewItem item = new()
+                {
+                    Content = grid
+                };
+
+                causes.Add(item);
+            }
+
+            return causes;
         }
     }
 }

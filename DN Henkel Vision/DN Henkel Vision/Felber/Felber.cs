@@ -274,13 +274,13 @@ namespace DN_Henkel_Vision.Felber
         private static string PredictComponent(ref string description)
         {
             // Checks if the description contains two slashes
-            if (description.Count(x => x == '/') == 2)
+            if (description.Count(x => x == '\\') == 2)
             {
-                string[] slashes = description.Split('/');
+                string[] slashes = description.Split('\\');
 
                 if (slashes.Length == 3)
                 {
-                    description = description.Replace("/", string.Empty);
+                    description = description.Replace("\\", string.Empty);
                     return slashes[1];
                 }
             }

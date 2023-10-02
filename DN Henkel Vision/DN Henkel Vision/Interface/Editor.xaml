@@ -127,14 +127,15 @@
                         <Flyout>
                             <ScrollViewer
                                 Height="200"
-                                Width="150"
+                                Width="170"
                                 Margin="-13,-10">
                                 <ListView
                                     x:Name="CauseList"
-                                    ItemsSource="{x:Bind memory:Classification.LocalCauses}"
+                                    ItemsSource="{x:Bind Causes()}"
                                     SelectionMode="None"
                                     IsItemClickEnabled="True"
-                                    ItemClick="CauseList_ItemClick"/>
+                                    ItemClick="CauseList_ItemClick"
+                                    KeyDown="CauseList_KeyDown"/>
                             </ScrollViewer>
                         </Flyout>
                     </Button.Flyout>

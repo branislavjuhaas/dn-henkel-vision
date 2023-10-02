@@ -84,7 +84,7 @@ namespace DN_Henkel_Vision.Memory
             for (int i = 0; i < GraphicalCount; i++) 
             {
                 UserServiceGraph.Add((int)(UserService[i] * serviceMultiplier));
-                MachServiceGraph.Add((int)(MachService[i] * exportsMultiplier) + UserServiceGraph[i]);
+                MachServiceGraph.Add((int)(MachService[i] * serviceMultiplier) + UserServiceGraph[i]);
 
                 UserExportsGraph.Add((int)(UserExports[i] * exportsMultiplier));
                 MachExportsGraph.Add((int)(MachExports[i] * exportsMultiplier) + UserExportsGraph[i]);

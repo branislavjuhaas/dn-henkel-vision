@@ -22,153 +22,153 @@
         RequestedTheme="{x:Bind interface:Settings.Theme}"
         Loaded="Environment_Loaded">
 
-            <Grid.Resources>
-                <DataTemplate
-                x:Key="OrderChip"
-                x:DataType="x:String">
+        <Grid.Resources>
+            <DataTemplate
+            x:Key="OrderChip"
+            x:DataType="x:String">
 
-                    <ToggleButton
-                    x:Name="OrderToggle"
-                    Width="92" Height="32"
-                    Content="{x:Bind}"
-                    BorderBrush="Transparent"
-                    Background="Transparent"
-                    Click="OrderToggle_Click">
-                        <ToggleButton.Transitions>
-                            <TransitionCollection>
-                                <EntranceThemeTransition/>
-                            </TransitionCollection>
-                        </ToggleButton.Transitions>
-                    </ToggleButton>
-                </DataTemplate>
-                <UniformGridLayout
-                x:Key="OrdersLayout"
-                MinColumnSpacing="5"
-                MinRowSpacing="9"
-                MaximumRowsOrColumns="3"/>
-            </Grid.Resources>
+                <ToggleButton
+                x:Name="OrderToggle"
+                Width="92" Height="32"
+                Content="{x:Bind}"
+                BorderBrush="Transparent"
+                Background="Transparent"
+                Click="OrderToggle_Click">
+                    <ToggleButton.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition/>
+                        </TransitionCollection>
+                    </ToggleButton.Transitions>
+                </ToggleButton>
+            </DataTemplate>
+            <UniformGridLayout
+            x:Key="OrdersLayout"
+            MinColumnSpacing="5"
+            MinRowSpacing="9"
+            MaximumRowsOrColumns="3"/>
+        </Grid.Resources>
 
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="320"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <!--Navigation panel and the titlebar grid-->
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="32"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid
-                    x:Name="ApplicationTitleBar"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!--Navigation panel and the titlebar grid-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid
+                x:Name="ApplicationTitleBar"
+                VerticalAlignment="Top"
+                Height="32">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="44"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image
+                Width="18"
+                Margin="0,14,0,0"
+                Source="ms-appx:///Assets/Tiles/Square44x44Logo.altform-unplated_targetsize-48.png"/>
+                <TextBlock
+                    x:Name="ApplicationTitle"
+                    Text="DN Henkel Vision"
+                    Margin="0,15,0,0"
+                    FontSize="12"
+                    Grid.Column="1"/>
+                <TextBlock
+                    x:Name="ApplicationDevState" 
+                    Text="{x:Bind memory:Manager.DevText}"
+                    Margin="3,15,0,0"
+                    FontSize="12"
+                    Foreground="{ThemeResource TextFillColorSecondary}"
+                    Grid.Column="2"/>
+            </Grid>
+            <!--Navigation panel-->
+            <Grid
+                Grid.Row="1"
+                Margin="0,48,0,0">
+                <AutoSuggestBox
+                    x:Name="NavigationSearch"
+                    x:Uid="T_Search"
+                    QueryIcon="Find"
+                    Width="288"
                     VerticalAlignment="Top"
-                    Height="32">
+                    TextChanged="NavigationSearch_TextChanged"
+                    QuerySubmitted="NavigationSearch_QuerySubmitted"/>
+                <ScrollViewer
+                    Margin="16,60,16,100"
+                    VerticalScrollBarVisibility="Hidden"
+                    CornerRadius="4">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="44"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Image
-                    Width="18"
-                    Margin="0,14,0,0"
-                    Source="ms-appx:///Assets/Tiles/Square44x44Logo.altform-unplated_targetsize-48.png"/>
-                    <TextBlock
-                        x:Name="ApplicationTitle"
-                        Text="DN Henkel Vision"
-                        Margin="0,15,0,0"
-                        FontSize="12"
-                        Grid.Column="1"/>
-                    <TextBlock
-                        x:Name="ApplicationDevState" 
-                        Text="{x:Bind memory:Manager.DevText}"
-                        Margin="3,15,0,0"
-                        FontSize="12"
-                        Foreground="{ThemeResource TextFillColorSecondary}"
-                        Grid.Column="2"/>
-                </Grid>
-                <!--Navigation panel-->
+                    <ItemsRepeater
+                        x:Name="OrdersPanel"
+                        ItemsSource="{x:Bind memory:Manager.VisualRegistry}"
+                        ItemTemplate="{StaticResource OrderChip}"
+                        Layout="{StaticResource OrdersLayout}"
+                        Loaded="OrdersPanel_Loaded"/>
+                </ScrollViewer>
                 <Grid
-                    Grid.Row="1"
-                    Margin="0,48,0,0">
-                    <AutoSuggestBox
-                        x:Name="NavigationSearch"
-                        x:Uid="T_Search"
-                        QueryIcon="Find"
-                        Width="288"
-                        VerticalAlignment="Top"
-                        TextChanged="NavigationSearch_TextChanged"
-                        QuerySubmitted="NavigationSearch_QuerySubmitted"/>
-                    <ScrollViewer
-                        Margin="16,60,16,100"
-                        VerticalScrollBarVisibility="Hidden"
-                        CornerRadius="4">
+                    VerticalAlignment="Bottom"
+                    Height="44"
+                    Margin="16,0,16,0"
+                    ColumnSpacing="4">
 
-                        <ItemsRepeater
-                            x:Name="OrdersPanel"
-                            ItemsSource="{x:Bind memory:Manager.VisualRegistry}"
-                            ItemTemplate="{StaticResource OrderChip}"
-                            Layout="{StaticResource OrdersLayout}"
-                            Loaded="OrdersPanel_Loaded"/>
-                    </ScrollViewer>
-                    <Grid
-                        VerticalAlignment="Bottom"
-                        Height="44"
-                        Margin="16,0,16,0"
-                        ColumnSpacing="4">
+                    <Button
+                        x:Name="Export"
+                        Height="32"
+                        Width="216"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        HorizontalAlignment="Left"
+                        HorizontalContentAlignment="Left"
+                        Click="Export_Click">
 
-                        <Button
-                            x:Name="Export"
-                            Height="32"
-                            Width="216"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            HorizontalAlignment="Left"
-                            HorizontalContentAlignment="Left"
-                            Click="Export_Click">
+                        <Grid>
+                            <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xE74E;" Margin="-2" FontSize="16" />
+                            <TextBlock x:Uid="T_Export" Margin="24,0"/>
+                        </Grid>
 
-                            <Grid>
-                                <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xE74E;" Margin="-2" FontSize="16" />
-                                <TextBlock x:Uid="T_Export" Margin="24,0"/>
-                            </Grid>
+                    </Button>
+                    <Button
+                        x:Name="Settings"
+                        Height="32"
+                        Width="32"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        Margin="220,0,0,0"
+                        Click="Settings_Click">
 
-                        </Button>
-                        <Button
-                            x:Name="Settings"
-                            Height="32"
-                            Width="32"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            Margin="220,0,0,0"
-                            Click="Settings_Click">
+                        <FontIcon
+                            FontFamily="Segoe Fluent Icons"
+                            Glyph="&#xE713;"
+                            Margin="-10"
+                            FontSize="16"/>
+                    </Button>
+                    <Button
+                        x:Name="Create"
+                        Grid.Column="4"
+                        Height="32"
+                        Width="32"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        Margin="256,0,0,0"
+                        Click="Create_Click">
 
-                            <FontIcon
-                                FontFamily="Segoe Fluent Icons"
-                                Glyph="&#xE713;"
-                                Margin="-10"
-                                FontSize="16"/>
-                        </Button>
-                        <Button
-                            x:Name="Create"
-                            Grid.Column="4"
-                            Height="32"
-                            Width="32"
-                            Background="Transparent"
-                            BorderBrush="Transparent"
-                            Margin="256,0,0,0"
-                            Click="Create_Click">
-
-                            <FontIcon
-                                FontFamily="Segoe Fluent Icons"
-                                Glyph="&#xED0E;"
-                                Margin="-10"
-                                FontSize="16"/>
-                        </Button>
-                    </Grid>
+                        <FontIcon
+                            FontFamily="Segoe Fluent Icons"
+                            Glyph="&#xED0E;"
+                            Margin="-10"
+                            FontSize="16"/>
+                    </Button>
                 </Grid>
             </Grid>
-            <!--Content panel-->
-            <Frame
+        </Grid>
+        <!--Content panel-->
+        <Frame
         x:Name="Workspace"
         Grid.Column="1"/>
     </Grid>
