@@ -315,16 +315,21 @@ namespace DN_Henkel_Vision.Interface
                 Component.SelectionLength = length;
             }
 
-            if (!IsShift()) return;
-            
-            if (Component.Text == Manager.Selected.ReviewFaults[Cache.CurrentReview].Component) { return; }
-            if (string.IsNullOrEmpty(Manager.Selected.ReviewFaults[Cache.CurrentReview].Component)) {
-                Manager.Selected.ReviewFaults[Cache.CurrentReview].Component = Component.Text;
-                return; }
+            if (Component.Text == Manager.Selected.ReviewFaults[Cache.CurrentReview].Component)
+            {
+                if (Duplicate.Visibility == Visibility.Collapsed) return;
+                Component.Margin = new Thickness(0);
+                Component.CornerRadius = new CornerRadius(4);
+                Duplicate.Visibility = Visibility.Collapsed;
+                Separator.Visibility = Visibility.Collapsed;
 
-            Description.Text = Description.Text.Replace(Manager.Selected.ReviewFaults[Cache.CurrentReview].Component, Component.Text);
+                return;
+            }
 
-            Manager.Selected.ReviewFaults[Cache.CurrentReview].Component = Component.Text;
+            Component.Margin = new Thickness(33, 0, 0, 0);
+            Component.CornerRadius = new CornerRadius(0, 4, 4, 0);
+            Duplicate.Visibility = Visibility.Visible;
+            Separator.Visibility = Visibility.Visible;
         }
 
 
@@ -363,6 +368,25 @@ namespace DN_Henkel_Vision.Interface
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             _fromui = true;
+        }
+
+        private void Duplicate_Click(object sender, RoutedEventArgs e)
+        {
+            Component.Margin = new Thickness(0);
+            Component.CornerRadius = new CornerRadius(4);
+            Duplicate.Visibility = Visibility.Collapsed;
+            Separator.Visibility = Visibility.Collapsed;
+
+            if (Component.Text == Manager.Selected.ReviewFaults[Cache.CurrentReview].Component) { return; }
+            if (string.IsNullOrEmpty(Manager.Selected.ReviewFaults[Cache.CurrentReview].Component))
+            {
+                Manager.Selected.ReviewFaults[Cache.CurrentReview].Component = Component.Text;
+                return;
+            }
+
+            Description.Text = Description.Text.Replace(Manager.Selected.ReviewFaults[Cache.CurrentReview].Component, Component.Text);
+
+            Manager.Selected.ReviewFaults[Cache.CurrentReview].Component = Component.Text;
         }
     }
 }
