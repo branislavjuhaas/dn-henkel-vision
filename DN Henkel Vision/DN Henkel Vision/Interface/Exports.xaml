@@ -296,6 +296,7 @@
                 <NumberBox
                     x:Name="Selected"
                     x:Uid="H_SctTime"
+                    x:FieldModifier="public"
                     Height="59"
                     PlaceholderText="0"
                     VerticalAlignment="Top"
@@ -330,7 +331,8 @@
                 CornerRadius="4"
                 Height="36"
                 VerticalAlignment="Bottom"
-                Margin="20,20,190,20">
+                Margin="20,20,190,20"
+                Visibility="Collapsed">
                 <StackPanel
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
@@ -362,6 +364,7 @@
                 Margin="20"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
+                Visibility="Collapsed"
                 Width="150"
                 Height="36"
                 Click="Exporter_Click"

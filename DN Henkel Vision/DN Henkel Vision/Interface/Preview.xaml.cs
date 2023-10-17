@@ -121,6 +121,8 @@ namespace DN_Henkel_Vision.Interface
             if (Manager.CurrentEditor.FaultInput.FocusState != FocusState.Unfocused) { return; }
 
             Manager.CurrentEditor.FaultInput.Focus(FocusState.Programmatic);
+
+            (Manager.CurrentWindow as Environment).UpdateTimebar();
         }
 
         /// <summary>
