@@ -117,6 +117,7 @@ namespace DN_Henkel_Vision.Interface
             Display.Minimum = Selected.Value;
 
             Exporter.IsEnabled = Selected.Value > 0f;
+            (Manager.CurrentWindow as Environment).Exporter.IsEnabled = Selected.Value > 0f;
         }
 
         /// <summary>
@@ -188,7 +189,7 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">The event data.</param>
-        private void Exporter_Click(object sender, RoutedEventArgs e)
+        public void Exporter_Click(object sender, RoutedEventArgs e)
         {
             Drive.ExportsSave((float)Selected.Value, UserName.Text, ((DateTimeOffset)RegistryDate.Date).DateTime, Convert.ToBoolean(Category.SelectedIndex), IsShift());
         }

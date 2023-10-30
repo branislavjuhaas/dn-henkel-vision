@@ -9,7 +9,7 @@
   <Identity
     Name="d61de81d-cd85-4388-bdcb-72407fecb779"
     Publisher="CN=DN Foundation"
-    Version="2023.2.1.1407" />
+    Version="2023.3.0.1507" />
 
   <Properties>
     <DisplayName>DN Henkel Vision</DisplayName>

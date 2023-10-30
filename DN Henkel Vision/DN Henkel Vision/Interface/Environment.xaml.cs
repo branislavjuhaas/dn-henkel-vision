@@ -8,6 +8,8 @@ using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
+using System.Numerics;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -18,14 +20,23 @@ namespace DN_Henkel_Vision.Interface
     {
         private static string _selectedOrder = "";
 
+        private static string s_hours = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Hours"));
+
+        private string _userTime = $"{Math.Round((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), false) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), false, true)) / 60f, 2)} {s_hours}";
+        private string _totalTime = $"{Math.Round(((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray()) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), true, true)) / 60f), 2)} {s_hours}";
+        private string _revenue;
+      
         /// <summary>
         /// Constructor of the main application's window.
         /// </summary>
         public Environment()
         {
+            _revenue = (Math.Round(((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray()) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), true, true)) / 60f), 2) * 4.2).ToString("0.00") + "€";
             this.InitializeComponent();
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(ApplicationTitleBar);
+
+            Timegrid.Translation += new Vector3(0, 0, 32);
 
             Drive.Log("---------------------------------------------------------");
             Drive.Log("Environment window initialized successfully.");
@@ -71,6 +82,8 @@ namespace DN_Henkel_Vision.Interface
         private void OrderToggle_Click(object sender, RoutedEventArgs e)
         {
             ToggleButton senderButton = sender as ToggleButton;
+
+            UpdateTimebar();
 
             OrdersPanel_Select(senderButton.Content.ToString());
         }
@@ -171,6 +184,7 @@ namespace DN_Henkel_Vision.Interface
 
             Manager.SelectOrder(orderNumber);
             Workspace.Navigate(typeof(Editor));
+            Exporter.Visibility = Visibility.Collapsed;
         }
         
         /// <summary>
@@ -221,6 +235,7 @@ namespace DN_Henkel_Vision.Interface
 
             OrdersPanel_Select(string.Empty);
             Workspace.Navigate(typeof(Exports));
+            Exporter.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -314,6 +329,7 @@ namespace DN_Henkel_Vision.Interface
 
             OrdersPanel_Select(string.Empty);
             Workspace.Navigate(typeof(Settings));
+            Exporter.Visibility = Visibility.Collapsed;
         }
 
         private void Environment_Loaded(object sender, RoutedEventArgs e)
@@ -324,6 +340,25 @@ namespace DN_Henkel_Vision.Interface
             OverlappedPresenter presenter = (OverlappedPresenter)appWindow.Presenter;
             presenter.Maximize();
             Drive.Log("Environment loaded successfully.");
+        }
+
+        public void UpdateTimebar()
+        {
+            Manager.UpdateRegistry();
+
+            _userTime = $"{Math.Round((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), false) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), false, true)) / 60f, 2)} {s_hours}";
+            _totalTime = $"{Math.Round(((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray()) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), true, true)) / 60f), 2)} {s_hours}";
+
+            _revenue = (Math.Round(((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray()) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), true, true)) / 60f), 2) * 4.2).ToString("0.00") + "€";
+
+            (Timepanel.Children[1] as TextBlock).Text = _totalTime;
+            (Timepanel.Children[3] as TextBlock).Text = _userTime;
+            (Timepanel.Children[5] as TextBlock).Text = _revenue;
+        }
+
+        private void Exporter_Click(object sender, RoutedEventArgs e)
+        {
+            (Workspace.Content as Exports).Exporter_Click(sender, e);
         }
     }
 }

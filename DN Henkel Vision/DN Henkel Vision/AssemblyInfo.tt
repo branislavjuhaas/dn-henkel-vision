@@ -28,5 +28,5 @@ using System.Reflection;
     int Patch = 0;
 
     int Major = (int)DateTime.Now.Year;
-    int Minor = 2;
+    int Minor = 3;
 #>
