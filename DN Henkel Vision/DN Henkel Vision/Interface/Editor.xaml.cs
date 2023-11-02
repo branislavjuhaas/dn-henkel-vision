@@ -376,6 +376,7 @@ namespace DN_Henkel_Vision.Interface
 
             int index = FaultsList.GetElementIndex(LastTapped);
 
+            Lavender.DeleteFault(Manager.Selected.Faults[index].Index);
             Manager.Selected.Faults.RemoveAt(index);
         }
 

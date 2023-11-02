@@ -314,7 +314,7 @@
     <comment>Registrant Name Setting Default Value</comment>
   </data>
   <data name="T_RegNameDsn.Text" xml:space="preserve">
-    <value>The default name of the userdisplayed on export.</value>
+    <value>The default name of the user displayed on export.</value>
     <comment>Registrant Name Setting Description</comment>
   </data>
   <data name="T_Search.PlaceholderText" xml:space="preserve">

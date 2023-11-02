@@ -185,6 +185,7 @@ namespace DN_Henkel_Vision.Interface
         {
             Fault preparate = PrepareFault();
 
+            preparate.Index = ((uint)Lavender.AppendFault(preparate, Manager.Selected.OrderNumber));
             Manager.Selected.Faults.Insert(0, preparate);
 
             if (Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime <= 0f)
@@ -294,7 +295,8 @@ namespace DN_Henkel_Vision.Interface
             output.ClassIndexes[1] = Classification.SelectedIndex;
             output.ClassIndexes[2] = Type.SelectedIndex;
 
-            output.Index = Manager.CreateIndex();
+            output.MachineTime = Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime;
+            output.UserTime = Manager.Selected.ReviewFaults[Cache.CurrentReview].UserTime;
 
             return output;
         }

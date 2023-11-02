@@ -40,17 +40,14 @@ namespace DN_Henkel_Vision.Memory
         {
             Classification.Assign(Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Language")));
             Drive.Validate();
-            Drive.Log("Drive validated successfully.");
+            Lavender.Validate();
 
             Drive.LoadSettings();
-            Drive.Log("Settings loaded successfully.");
             Drive.LoadRegistry();
-            Drive.Log("Registry loaded successfully.");
+            OrdersRegistry = Lavender.LoadRegistry();
             VisualRegistry = new(OrdersRegistry);
             Drive.LoadExportHistory();
-            Drive.Log("Export history loaded successfully.");
             Export.Evaluate();
-            Drive.Log("Export history evaluated successfully.");
         }
 
         /// <summary>
@@ -65,16 +62,12 @@ namespace DN_Henkel_Vision.Memory
 
                 Drive.SaveFaults(Selected.OrderNumber, Selected.Faults.ToList(), Selected.ReviewFaults, Selected.PendingFaults);
             }
-
-            List<Fault>[] faults = Drive.LoadFaults(orderNumber);
             
             int index = OrdersRegistry.IndexOf(orderNumber);
 
             Selected = new() {
                 OrderNumber = orderNumber,
-                Faults = new(faults[0]),
-                ReviewFaults = faults[1],
-                PendingFaults = faults[2],
+                Faults = new(Lavender.LoadFaults(orderNumber)),
                 User = Users[index],
                 Machine = Machines[index],
                 Exports = Exports[index]
@@ -141,21 +134,6 @@ namespace DN_Henkel_Vision.Memory
             Export.MachService[Export.GraphicalCount - 1] += (float)(Machines[index] - oldmachs) / 60f;
 
             if (oldusers != Users[index] || oldmachs != Machines[index]) { Export.ChangedData = true; }
-        }
-
-        /// <summary>
-        /// This method creates and returns an unique index using the current time and date.
-        /// NOTE: Working just up to year 2159
-        /// </summary>
-        /// <returns>An unsigned integer representing the unique index.</returns>
-        public static uint CreateIndex()
-        {
-            uint index = (uint)(DateTime.Now - new DateTime(2023, 4, 3)).TotalSeconds;
-
-            if (index > Cache.LastIndex) { Cache.LastIndex = index; return index; }
-                
-            Cache.LastIndex++;
-            return Cache.LastIndex;
         }
 
         /// <summary>
