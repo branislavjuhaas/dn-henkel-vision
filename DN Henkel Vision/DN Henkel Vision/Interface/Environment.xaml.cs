@@ -275,7 +275,6 @@ namespace DN_Henkel_Vision.Interface
                 RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme,
                 Content = new Order()
             };
-            orderDialog.Loaded += OrderDialog_Loaded;
 
             ContentDialogResult result = await orderDialog.ShowAsync();
 
@@ -292,26 +291,6 @@ namespace DN_Henkel_Vision.Interface
             }
 
             Manager.CreateOrder(Format(((Order)orderDialog.Content).Number.Text));
-        }
-
-        /// <summary>
-        /// Event handler for the OrderDialog's Loaded event.
-        /// </summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">The RoutedEventArgs object containing information about the event.</param>
-        private void OrderDialog_Loaded(object sender, RoutedEventArgs e)
-        {
-            var parent = VisualTreeHelper.GetParent((DependencyObject)sender);
-            var child = VisualTreeHelper.GetChild(parent, 0);
-            var frame = (Microsoft.UI.Xaml.Shapes.Rectangle)child;
-            frame.Margin = new Thickness(0);
-            frame.RegisterPropertyChangedCallback(
-                FrameworkElement.MarginProperty,
-                (DependencyObject sender, DependencyProperty dp) =>
-                {
-                    if (dp == FrameworkElement.MarginProperty)
-                        sender.ClearValue(dp);
-                });
         }
 
         /// <summary>

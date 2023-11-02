@@ -109,8 +109,6 @@ namespace DN_Henkel_Vision.Interface
                     RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme
                 };
 
-                message.Loaded += Message_Loaded;
-
                 ContentDialogResult result = await message.ShowAsync();
 
                 if (result == ContentDialogResult.Primary) { return; }
@@ -146,35 +144,12 @@ namespace DN_Henkel_Vision.Interface
                     DefaultButton = ContentDialogButton.Primary
                 };
 
-                message.Loaded += Message_Loaded;
-
                 ContentDialogResult result = await message.ShowAsync();
 
                 if (result == ContentDialogResult.Primary) { return; }
             }
 
             ApproveFault(true);
-        }
-
-        /// <summary>
-        /// Handles the loaded event of the Message control.
-        /// Removes the margin of the control's Frame.
-        /// </summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">The event data.</param>
-        private void Message_Loaded(object sender, RoutedEventArgs e)
-        {
-            var parent = VisualTreeHelper.GetParent((DependencyObject)sender);
-            var child = VisualTreeHelper.GetChild(parent, 0);
-            var frame = (Microsoft.UI.Xaml.Shapes.Rectangle)child;
-            frame.Margin = new Thickness(0);
-            frame.RegisterPropertyChangedCallback(
-                FrameworkElement.MarginProperty,
-                (DependencyObject sender, DependencyProperty dp) =>
-                {
-                    if (dp == FrameworkElement.MarginProperty)
-                        sender.ClearValue(dp);
-                });
         }
 
         /// <summary>
