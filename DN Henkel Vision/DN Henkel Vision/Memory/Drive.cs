@@ -105,58 +105,6 @@ namespace DN_Henkel_Vision.Memory
         }
 
         /// <summary>
-        /// Loads faults for a given order number from file.
-        /// </summary>
-        /// <param name="orderNumber">The order number.</param>
-        /// <returns>An array of lists of faults. Index 0 contains normal faults, index 1 contains preview faults, index 2 contains pending faults.</returns>
-        public static List<Fault>[] LoadFaults(string orderNumber)
-        {
-            List<Fault>[] output = new List<Fault>[3];
-            
-            List<Fault> faults = new();
-            List<Fault> previews = new();
-            List<Fault> pending = new();
-
-            string source = Read(CreateFaultsPath(orderNumber));
-
-            string header = "Normal";
-
-            foreach (string line in source.Split('\n'))
-            {
-                if (line == "Preview:") { header = "Preview"; continue; }
-                if (line == "Pending:") { header = "Pending"; continue; }
-                if (string.IsNullOrEmpty(line)) { continue; }
-                string[] parts = line.Split('\t');
-
-                Fault fault = new(parts[3])
-                {
-                    Index = uint.Parse(parts[0]),
-                    Component = parts[1],
-                    Placement = parts[2]
-                };
-
-                fault.ClassIndexes[0] = int.Parse(parts[4]);
-                fault.ClassIndexes[1] = int.Parse(parts[5]);
-                fault.ClassIndexes[2] = int.Parse(parts[6]);
-
-                fault.Cause = Memory.Classification.LocalCauses[fault.ClassIndexes[0]];
-                fault.Classification = Memory.Classification.LocalClassifications[fault.ClassIndexes[0]][fault.ClassIndexes[1]];
-                fault.Type = Memory.Classification.LocalTypes[Memory.Classification.ClassificationsPointers[fault.ClassIndexes[0]][fault.ClassIndexes[1]]][fault.ClassIndexes[2]];
-
-                if (header == "Normal") { faults.Add(fault); continue; }
-                if (header == "Preview") { previews.Add(fault); continue; }
-                
-                pending.Add(fault);
-            }
-
-            output[0] = faults;
-            output[1] = previews;
-            output[2] = pending;
-
-            return output;
-        }
-
-        /// <summary>
         /// Saves the list of faults, previews, and pending with given orderNumber to file system.
         /// </summary>
         /// <param name="orderNumber">The unique identifier of the order.</param>
@@ -321,7 +269,7 @@ namespace DN_Henkel_Vision.Memory
         /// <param name="date">Date of the export</param>
         /// <param name="netstal">Whether Netstal comapny data is being exported or not</param>
         /// <param name="inkognito">Whether the export is anonymous</param>
-        public static async void ExportsSave(float time, string username, DateTime date, bool netstal = false, bool inkognito = false)
+        public static async void ExportsSave(string username, DateTime date, bool netstal = false, bool inkognito = false)
         {
             string filetype = ".dnfa";
             string filetext = "DN Auftrag Export File (*.dnfa)";
@@ -352,19 +300,12 @@ namespace DN_Henkel_Vision.Memory
             {
                 if (!inkognito)
                 {
-                    float user = time;
-
-                    if (user > (Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f)
-                    {
-                        user = (Export.OrdersTime(Export.Unexported.ToArray(), false) + Export.OrdersTime(Export.Unexported.ToArray(), false, true)) / 60f;
-                    }
-
-                    float mach = time - user;
-
-                    Export.UpdateExportValues(user, mach);
+                    //Export.UpdateExportValues(user, mach);
                 }
 
-                string content = await Export.ExportFaults(time, username, date, netstal, inkognito);
+                //string content = await Export.ExportFaults(time, username, date, netstal, inkognito);
+
+                string content = Lavender.LoadExports(username, date.ToString("yyyy-MM-dd"), netstal, inkognito);
 
                 CachedFileManager.DeferUpdates(file);
 

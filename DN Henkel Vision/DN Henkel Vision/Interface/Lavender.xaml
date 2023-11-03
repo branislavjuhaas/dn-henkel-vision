@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="DN_Henkel_Vision.Interface.Exports"
+    x:Class="DN_Henkel_Vision.Interface.Lavender"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:DN_Henkel_Vision.Interface"
@@ -11,36 +11,7 @@
     mc:Ignorable="d">
 
     <Grid RowSpacing="2">
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1300"/>
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="ControlPanel.Orientation" Value="Vertical"/>
-                        <Setter Target="Machine.Width" Value="150"/>
-                        <Setter Target="Report.Width" Value="150"/>
-                        <Setter Target="GraphPanel.Margin" Value="170,20,20,20"/>
-                        <Setter Target="ControlPanel.VerticalAlignment" Value="Center"/>
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="0"/>
-                    </VisualState.StateTriggers>
-
-                    <VisualState.Setters>
-                        <Setter Target="ControlPanel.Orientation" Value="Horizontal"/>
-                        <Setter Target="Machine.Width" Value="Auto"/>
-                        <Setter Target="Report.Width" Value="Auto"/>
-                        <Setter Target="GraphPanel.Margin" Value="20,72,20,20"/>
-                        <Setter Target="ControlPanel.VerticalAlignment" Value="Top"/>
-                    </VisualState.Setters>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+        
         <Grid.Resources>
             <DataTemplate
                 x:Key="FrontGraph"
@@ -99,6 +70,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="154"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="73"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!--The title of the page-->
@@ -110,7 +82,7 @@
             CornerRadius="0,0,0,4">
 
             <TextBlock
-                x:Uid="T_Export"
+                x:Uid="T_Lavender"
                 FontSize="{ThemeResource TitleTextBlockFontSize}"
                 FontWeight="{ThemeResource InfoBarTitleFontWeight}"
                 Margin="32,82,0,0"/>
@@ -125,41 +97,13 @@
             CornerRadius="4,0,0,4"
             SizeChanged="GraphGrid_SizeChanged">
 
-            <StackPanel
-                x:Name="ControlPanel"
-                Orientation="Horizontal"
-                Spacing="20"
-                Margin="20,20,20,20"
-                VerticalAlignment="Center">
-                <ComboBox
-                    x:Name="Type"
-                    Width="150"
-                    SelectedIndex="0"
-                    VerticalAlignment="Top"
-                    SelectionChanged="Type_SelectionChanged">
-                    <ComboBoxItem x:Uid="B_Service"/>
-                    <ComboBoxItem x:Uid="B_Exports"/>
-                </ComboBox>
-                <ToggleButton
-                    x:Name="Machine"
-                    x:Uid="B_Machine"
-                    Grid.Row="1"
-                    VerticalAlignment="Top"
-                    IsChecked="True"
-                    Click="Machine_Click"/>
-                <Button
-                    x:Name="Report"
-                    x:Uid="B_Report"
-                    VerticalAlignment="Center"/>
-            </StackPanel>
-
             <Grid
                 x:Name="GraphPanel"
                 Width="778"
-                Margin="20,72,20,20">
+                Margin="20,20,20,20">
                 <TextBlock
                     x:Name="FullTime"
-                    Text="{x:Bind memory:Export.GraphTime(0)}"
+                    Text="{x:Bind GraphTime(1)}"
                     FontSize="11"
                     Margin="20,12"
                     Opacity="0.7"
@@ -168,7 +112,7 @@
                     TextAlignment="Right"/>
                 <TextBlock
                     x:Name="HalfTime"
-                    Text="{x:Bind memory:Export.GraphTime(1)}"
+                    Text="{x:Bind GraphTime(0)}"
                     FontSize="11"
                     Margin="20,91"
                     Opacity="0.7"
@@ -180,16 +124,9 @@
                     CornerRadius="0,0,4,4"
                     HorizontalAlignment="Left">
                     <ItemsRepeater
-                        x:Name="BackGraph"
-                        ItemTemplate="{StaticResource BackGraph}"
-                        ItemsSource="{x:Bind memory:Export.MachServiceGraph}"
-                        Layout="{StaticResource GraphLayout}"
-                        Width="Auto"
-                        HorizontalAlignment="Right"/>
-                    <ItemsRepeater
-                        x:Name="FrontGraph"
+                        x:Name="Graph"
                         ItemTemplate="{StaticResource FrontGraph}"
-                        ItemsSource="{x:Bind memory:Export.UserServiceGraph}"
+                        ItemsSource="{x:Bind _graphings}"
                         Layout="{StaticResource GraphLayout}"
                         Width="Auto"
                         HorizontalAlignment="Right"/>
@@ -258,117 +195,38 @@
             Background="{ThemeResource CardBackgroundFillColorDefault}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultSolid}" 
             Grid.Row="2"
-            BorderThickness="1,1,0,0"
-            CornerRadius="4,0,0,0">
+            BorderThickness="1,1,0,1"
+            CornerRadius="4,0,0,4">
             <Grid
-                Margin="20,20,20,76"
+                Margin="20"
                 ColumnSpacing="20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
 
                 <ComboBox
                     Name="Category"
-                    x:Uid="H_Category"
-                    HorizontalAlignment="Stretch"
                     SelectedIndex="0"
                     Grid.Column="0"
-                    SelectionChanged="Category_SelectionChanged">
+                    Width="120">
                     <x:String>Auftrag</x:String>
                     <x:String>Netstal</x:String>
                 </ComboBox>
-                <ComboBox
-                    Name="Criterium"
-                    x:Uid="H_Criterium"
-                    HorizontalAlignment="Stretch"
-                    SelectedIndex="0"
-                    Grid.Column="1"
-                    SelectionChanged="Criterium_SelectionChanged">
-                    <ComboBoxItem x:Uid="B_Everything"/>
-                    <ComboBoxItem x:Uid="B_Humanity"/>
-                    <ComboBoxItem x:Uid="B_Duration"/>
-                </ComboBox>
-                <NumberBox
-                    x:Name="Selected"
-                    x:Uid="H_SctTime"
-                    x:FieldModifier="public"
-                    Height="59"
-                    PlaceholderText="0"
-                    VerticalAlignment="Top"
-                    IsEnabled="False"
-                    Grid.Column="2"
-                    ValueChanged="Selected_ValueChanged"/>
-                <NumberBox
-                    x:Name="Display"
-                    x:Uid="H_DspTime"
-                    Height="59"
-                    VerticalAlignment="Top"
-                    Grid.Column="3"/>
-                <TextBox
-                    x:Name="UserName"
-                    x:Uid="H_UserName"
-                    Height="59"
-                    VerticalAlignment="Top"
-                    Grid.Column="4"
-                    Text="{x:Bind interface:Settings.UserName}"/>
                 <CalendarDatePicker
                     x:Name="RegistryDate"
-                    x:Uid="H_RegDate"
-                    HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
-                    Grid.Column="5"
+                    Grid.Column="1"
+                    Margin="140,0"
                     Date="{x:Bind _today}"/>
-
+                <Button
+                    Click="Exporter_Click"
+                    HorizontalAlignment="Right"
+                    Grid.Column="3">
+                    
+                    <Grid>
+                        <TextBlock x:Uid="T_Export" Margin="0,0,24,0"/>
+                        <FontIcon HorizontalAlignment="Right" FontFamily="Segoe Fluent Icons" Glyph="&#xE74E;" Margin="-2" FontSize="16" />
+                    </Grid>
+                    
+                </Button>
             </Grid>
-
-            <Grid  
-                Background="{ThemeResource CardBackgroundFillColorDefault}"
-                CornerRadius="4"
-                Height="36"
-                VerticalAlignment="Bottom"
-                Margin="20,20,190,20"
-                Visibility="Collapsed">
-                <StackPanel
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    Padding="35,0">
-                    <FontIcon
-                        FontFamily="Segoe Fluent Icons"
-                        Glyph="&#xED5A;"
-                        FontSize="16"
-                        HorizontalAlignment="Left"
-                        Margin="9,0"/>
-                    <TextBlock
-                        Text="{x:Bind _totalTime}"
-                        VerticalAlignment="Center"/>
-                    <FontIcon
-                        FontFamily="Segoe Fluent Icons"
-                        Glyph="&#xE77B;"
-                        FontSize="16"
-                        HorizontalAlignment="Left"
-                        Margin="9,0"/>
-                    <TextBlock
-                        Text="{x:Bind _userTime}"
-                        VerticalAlignment="Center"
-                        Margin="0,0,8,0"/>
-                </StackPanel>
-            </Grid>
-            <Button
-                x:Name="Exporter"
-                x:Uid="B_Export"
-                Margin="20"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                Visibility="Collapsed"
-                Width="150"
-                Height="36"
-                Click="Exporter_Click"
-                IsEnabled="{x:Bind CanExport()}"/>
         </Grid>
     </Grid>
 </Page>

@@ -21,17 +21,15 @@ namespace DN_Henkel_Vision.Interface
         private static string _selectedOrder = "";
 
         private static string s_hours = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Hours"));
-
-        private string _userTime = $"{Math.Round((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), false) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), false, true)) / 60f, 2)} {s_hours}";
-        private string _totalTime = $"{Math.Round(((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray()) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), true, true)) / 60f), 2)} {s_hours}";
-        private string _revenue;
+        private string _time = $"0.00 {s_hours}";
+        private string _revenue = "0€";
       
         /// <summary>
         /// Constructor of the main application's window.
         /// </summary>
         public Environment()
         {
-            _revenue = (Math.Round(((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray()) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), true, true)) / 60f), 2) * 4.2).ToString("0.00") + "€";
+            UpdateTimebar(true);
             this.InitializeComponent();
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(ApplicationTitleBar);
@@ -234,7 +232,7 @@ namespace DN_Henkel_Vision.Interface
             }
 
             OrdersPanel_Select(string.Empty);
-            Workspace.Navigate(typeof(Exports));
+            Workspace.Navigate(typeof(Lavender));
             Exporter.Visibility = Visibility.Visible;
         }
 
@@ -321,23 +319,20 @@ namespace DN_Henkel_Vision.Interface
             Drive.Log("Environment loaded successfully.");
         }
 
-        public void UpdateTimebar()
+        public void UpdateTimebar(bool evaluateOnly = false)
         {
-            Manager.UpdateRegistry();
+            _time = $"{MathF.Round(Memory.Lavender.Time / 60f, 2)} {s_hours}";
+            _revenue = (MathF.Round(Memory.Lavender.Time / 60f, 2) * 4.2f).ToString("0.00") + "€";
 
-            _userTime = $"{Math.Round((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), false) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), false, true)) / 60f, 2)} {s_hours}";
-            _totalTime = $"{Math.Round(((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray()) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), true, true)) / 60f), 2)} {s_hours}";
+            if (evaluateOnly) { return; }
 
-            _revenue = (Math.Round(((Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray()) + Memory.Export.OrdersTime(Memory.Export.Unexported.ToArray(), true, true)) / 60f), 2) * 4.2).ToString("0.00") + "€";
-
-            (Timepanel.Children[1] as TextBlock).Text = _totalTime;
-            (Timepanel.Children[3] as TextBlock).Text = _userTime;
-            (Timepanel.Children[5] as TextBlock).Text = _revenue;
+            (Timepanel.Children[1] as TextBlock).Text = _time;
+            (Timepanel.Children[3] as TextBlock).Text = _revenue;
         }
 
         private void Exporter_Click(object sender, RoutedEventArgs e)
         {
-            (Workspace.Content as Exports).Exporter_Click(sender, e);
+            (Workspace.Content as Lavender).Exporter_Click(sender, e);
         }
     }
 }

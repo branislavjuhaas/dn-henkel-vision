@@ -128,8 +128,8 @@
                         Click="Export_Click">
 
                             <Grid>
-                                <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xE74E;" Margin="-2" FontSize="16" />
-                                <TextBlock x:Uid="T_Export" Margin="24,0"/>
+                                <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xE968;" Margin="-2" FontSize="16" />
+                                <TextBlock x:Uid="T_Lavender" Margin="24,0"/>
                             </Grid>
 
                         </Button>
@@ -178,7 +178,7 @@
             VerticalAlignment="Bottom"
             Margin="20">
 
-            <Grid x:Name="Timegrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="40" Width="500" CornerRadius="8" >
+            <Grid x:Name="Timegrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="50" Width="400" CornerRadius="8" >
                 <Grid.Shadow>
                     <ThemeShadow />
                 </Grid.Shadow>
@@ -195,17 +195,7 @@
                             HorizontalAlignment="Left"
                             Margin="9,0"/>
                     <TextBlock
-                            Text="{x:Bind _totalTime}"
-                            VerticalAlignment="Center"
-                            Margin="0,0,0,2"/>
-                    <FontIcon
-                            FontFamily="Segoe Fluent Icons"
-                            Glyph="&#xE77B;"
-                            FontSize="16"
-                            HorizontalAlignment="Left"
-                            Margin="20,0,8,0"/>
-                    <TextBlock
-                            Text="{x:Bind _userTime}"
+                            Text="{x:Bind _time}"
                             VerticalAlignment="Center"
                             Margin="0,0,0,2"/>
                     <FontIcon

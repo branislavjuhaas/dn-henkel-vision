@@ -160,7 +160,7 @@ namespace DN_Henkel_Vision.Interface
         {
             Fault preparate = PrepareFault();
 
-            preparate.Index = ((uint)Lavender.AppendFault(preparate, Manager.Selected.OrderNumber));
+            preparate.Index = ((uint)Memory.Lavender.AppendFault(preparate, Manager.Selected.OrderNumber));
             Manager.Selected.Faults.Insert(0, preparate);
 
             if (Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime <= 0f)
@@ -168,8 +168,7 @@ namespace DN_Henkel_Vision.Interface
                 Manager.Selected.ReviewFaults[Cache.CurrentReview].UserTime = Manager.AverageTime;
             }
 
-            Manager.Selected.User += Manager.Selected.ReviewFaults[Cache.CurrentReview].UserTime;
-            Manager.Selected.Machine += Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime;
+            Memory.Lavender.Time += Manager.Selected.ReviewFaults[Cache.CurrentReview].UserTime + Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime;
 
             //If it is not set to remove, function can return, because following code is just for removing the fault
             if (keep) { return; }

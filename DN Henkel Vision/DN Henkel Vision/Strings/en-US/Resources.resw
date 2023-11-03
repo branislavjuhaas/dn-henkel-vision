@@ -157,6 +157,10 @@
     <value>Humanity</value>
     <comment>Humanity Criterium In Exports Page</comment>
   </data>
+  <data name="B_Lavender.Content" xml:space="preserve">
+    <value>Lavender</value>
+    <comment>Content Of The Lavender Button</comment>
+  </data>
   <data name="B_LightTheme.Content" xml:space="preserve">
     <value>Light</value>
     <comment>Light Theme Of The Application</comment>
@@ -269,9 +273,9 @@
     <value>Existing</value>
     <comment>Caption Of Existance In Create Order Dialog</comment>
   </data>
-  <data name="T_Export.Text" xml:space="preserve">
-    <value>Export</value>
-    <comment>Export Button Caption</comment>
+  <data name="T_Lavender.Text" xml:space="preserve">
+    <value>Lavender</value>
+    <comment>Lavender Button Caption</comment>
   </data>
   <data name="T_Fault.PlaceholderText" xml:space="preserve">
     <value>Fault</value>
@@ -328,5 +332,9 @@
   <data name="T_Welcome.Text" xml:space="preserve">
     <value>Welcome</value>
     <comment>Header Of The Welcome Page</comment>
+  </data>
+  <data name="T_Export.Text" xml:space="preserve">
+    <value>Export</value>
+    <comment>Content Of The Export Button</comment>
   </data>
 </root>

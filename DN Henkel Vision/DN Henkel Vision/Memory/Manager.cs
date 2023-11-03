@@ -48,6 +48,7 @@ namespace DN_Henkel_Vision.Memory
             VisualRegistry = new(OrdersRegistry);
             Drive.LoadExportHistory();
             Export.Evaluate();
+            Lavender.EvaluateTime();
         }
 
         /// <summary>

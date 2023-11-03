@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace DN_Henkel_Vision.Memory
     {
         private static string s_local = "";
         private static SqliteConnection Lavenderbase;
+
+        public static float Time = 0;
 
         public static void Invalidate()
         {
@@ -31,7 +34,7 @@ namespace DN_Henkel_Vision.Memory
 
                 string[] tables = new string[] {
                     "CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY, number INTEGER)",
-                    "CREATE TABLE IF NOT EXISTS faults (id INTEGER PRIMARY KEY, number INTEGER, component TEXT, placement TEXT, description TEXT, cause TEXT, classification TEXT, type TEXT, user TEXT, machine TEXT, status TEXT)",
+                    "CREATE TABLE IF NOT EXISTS faults (id INTEGER PRIMARY KEY, number INTEGER, component TEXT, placement TEXT, description TEXT, cause TEXT, classification TEXT, type TEXT, user FLOAT, machine FLOAT, status TEXT)",
                     "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, fullname TEXT, password TEXT, role TEXT)",
                     "CREATE TABLE IF NOT EXISTS graph (id INTEGER PRIMARY KEY, datafrom DATE, userservice TIME, machineservice TIME, userexports TIME, machineexports TIME)",
                     "CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY, name TEXT, value TEXT)"
@@ -83,18 +86,20 @@ namespace DN_Henkel_Vision.Memory
                 SqliteCommand selectCommand = new SqliteCommand($"SELECT * from faults WHERE number='{orderNumber.Replace(" ", "")}'", Lavenderbase);
                 SqliteDataReader query = selectCommand.ExecuteReader();
 
+                bool btet = query.HasRows;
+
                 while (query.Read())
                 {
-                    Fault fault = new(query.GetString(4))
+                    Fault fault = new(query.GetString(5))
                     {
                         Index = uint.Parse(query.GetString(0)),
-                        Component = query.GetString(2),
-                        Placement = query.GetString(3)
+                        Component = query.GetString(3),
+                        Placement = query.GetString(4)
                     };
 
-                    fault.ClassIndexes[0] = query.GetInt32(5);
-                    fault.ClassIndexes[1] = query.GetInt32(6);
-                    fault.ClassIndexes[2] = query.GetInt32(7);
+                    fault.ClassIndexes[0] = query.GetInt32(6);
+                    fault.ClassIndexes[1] = query.GetInt32(7);
+                    fault.ClassIndexes[2] = query.GetInt32(8);
 
                     fault.Cause = Memory.Classification.LocalCauses[fault.ClassIndexes[0]];
                     fault.Classification = Memory.Classification.LocalClassifications[fault.ClassIndexes[0]][fault.ClassIndexes[1]];
@@ -117,7 +122,7 @@ namespace DN_Henkel_Vision.Memory
             {
                 Lavenderbase.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO faults (number, component, placement, description, cause, classification, type, user, machine, status) VALUES ('{orderNumber.Replace(" ", "")}', '{fault.Component}', '{fault.Placement}', '{fault.Description}', '{fault.ClassIndexes[0]}', '{fault.ClassIndexes[1]}', '{fault.ClassIndexes[2]}', '{fault.UserTime}', '{fault.MachineTime}', 'complete')", Lavenderbase);
+                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO faults (number, component, placement, description, cause, classification, type, time, status, registrant) VALUES ('{orderNumber.Replace(" ", "")}', '{fault.Component}', '{fault.Placement}', '{fault.Description}', '{fault.ClassIndexes[0]}', '{fault.ClassIndexes[1]}', '{fault.ClassIndexes[2]}', '{fault.UserTime + fault.MachineTime}', 'complete', 'Branislav Juhás')", Lavenderbase);
                 insertCommand.ExecuteNonQuery();
 
                 SqliteCommand selectCommand = new SqliteCommand("SELECT * FROM faults WHERE id = (SELECT MAX(id) FROM faults)", Lavenderbase);
@@ -140,6 +145,100 @@ namespace DN_Henkel_Vision.Memory
                 deleteCommand.ExecuteReader();
                 Lavenderbase.Close();
             }
+        }
+
+        public static string LoadExports(string user, string date, bool netstal, bool inkognito, int count = -1)
+        {
+            // Declare a lists used to store the exports and the times.
+            List<string> exports = new List<string>();
+            List<float> times = new List<float>();
+
+            // Open the database connection.
+            using (SqliteConnection Lavenderbase = GetConnection())
+            {
+                Lavenderbase.Open();
+
+                // Create a command to select all the exports from the database and execute it.
+                SqliteCommand selectCommand = new SqliteCommand("SELECT * from faults WHERE status='complete'", Lavenderbase);
+                SqliteDataReader query = selectCommand.ExecuteReader();
+
+                // Read all the exports and add them to the list with the times.
+                while (query.Read())
+                {
+                    // Get the order number and remove the spaces if Auftrag.
+                    string ordernumber = query.GetString(2).Replace(" ", "");
+                    if (ordernumber.StartsWith("38")) { ordernumber = ordernumber.Remove(0, 2); }
+
+                    // Add to the lists.
+                    exports.Add($"{ordernumber}\t{query.GetString(4)}\t{query.GetString(5)}\t{query.GetString(4)}\t{Memory.Classification.OriginalCauses[query.GetInt32(6)]}\t{Memory.Classification.OriginalClassifications[query.GetInt32(6)][query.GetInt32(7)]}\t{Memory.Classification.OriginalTypes[Memory.Classification.ClassificationsPointers[query.GetInt32(6)][query.GetInt32(7)]][query.GetInt32(8)]}\t{user}\t{date}");
+                    times.Add(query.GetFloat(9));
+                }
+            }
+
+            // If the count is -1, return all the exports.
+            if (count == -1) { return Export.Header(netstal, inkognito) + "\r\n" + string.Join("\n", exports); }
+
+            // Make a sum of all the times
+            float sum = times.Sum();
+
+            // Now chose the count exports which's sum of times is closest to the sum of all the times divided by the count.
+            float averageTime = sum / count;
+            exports = exports.OrderBy(s => Math.Abs(times[exports.IndexOf(s)] - averageTime)).Take(count).ToList();
+
+            return Export.Header(netstal, inkognito) + "\r\n" + string.Join("\n", exports);
+        }
+
+        public static void EvaluateTime()
+        {
+            // Open the database connection.
+            using (SqliteConnection Lavenderbase = GetConnection())
+            {
+                Lavenderbase.Open();
+
+                // Create a command to select all the exports from the database and execute it.
+                SqliteCommand selectCommand = new SqliteCommand("SELECT SUM(time) from faults WHERE status='complete'", Lavenderbase);
+                SqliteDataReader query = selectCommand.ExecuteReader();
+
+                // Read all the exports and update the time.
+                query.Read();
+                Time = query.GetFloat(0);
+            }   
+        }
+
+        public static List<float> EvaluateGraph()
+        {
+            List<float> output = new List<float>();
+
+            List<string> dates = new List<string>();
+
+            // Generate the list of the last 35 days. as strings.
+            for (int i = 0; i < 35; i++)
+            {
+                dates.Add(DateTime.Now.AddDays(-i).ToString("yyyy-MM-dd"));
+            }
+
+            // Open the database connection.
+            using (SqliteConnection Lavenderbase = GetConnection())
+            {
+                Lavenderbase.Open();
+
+                // Iterate through the dates and get the sum of times for each day.
+                foreach (string date in dates)
+                {
+                    // Create a command to select all the exports from the database and execute it.
+                    SqliteCommand selectCommand = new SqliteCommand($"SELECT SUM(time) from faults WHERE DATE(written)='{date}'", Lavenderbase);
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+
+                    // Read all the exports and update the time.
+                    query.Read();
+                    if (query.IsDBNull(0)) { output.Add(0); }
+                    else { output.Add(query.GetFloat(0)); }
+                }
+
+                Lavenderbase.Close();
+            }
+
+            return output;
         }
     }
 }
