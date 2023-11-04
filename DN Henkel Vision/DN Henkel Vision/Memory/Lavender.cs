@@ -5,9 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DN_Henkel_Vision.Interface;
 using Microsoft.Data.Sqlite;
 using Microsoft.Win32;
 using Windows.Storage;
+using Microsoft.UI.Xaml;
+using System.Globalization;
+using Microsoft.UI.Xaml.Controls.Primitives;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -211,8 +215,8 @@ namespace DN_Henkel_Vision.Memory
 
             List<string> dates = new List<string>();
 
-            // Generate the list of the last 35 days. as strings.
-            for (int i = 0; i < 35; i++)
+            // Generate the list of the last 36 days. as strings.
+            for (int i = 0; i < 36; i++)
             {
                 dates.Add(DateTime.Now.AddDays(-i).ToString("yyyy-MM-dd"));
             }
@@ -238,7 +242,76 @@ namespace DN_Henkel_Vision.Memory
                 Lavenderbase.Close();
             }
 
+            output.Reverse();
+
             return output;
+        }
+
+        public static void CreateOrder(string order)
+        {
+            // Open the database connection.
+            using (SqliteConnection Lavenderbase = GetConnection())
+            {
+                Lavenderbase.Open();
+
+                // Create a command to select all the exports from the database and execute it.
+                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO orders (number) VALUES ('{order.Replace(" ", "")}')", Lavenderbase);
+                insertCommand.ExecuteNonQuery();
+
+                Lavenderbase.Close();
+            }
+        }
+
+        public static void LoadSettings()
+        {
+            // Load the local settings of the application.
+            ApplicationDataContainer settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            Settings.ThemeIndex = settings.Values["theme"] == null ? 2 : (int)settings.Values["theme"];
+            Settings.SetAutoTesting = settings.Values["testing"] == null ? false : (bool)settings.Values["testing"];
+            Settings.DataCollection = settings.Values["collection"] == null ? false : (bool)settings.Values["collection"];
+
+            switch (Settings.ThemeIndex)
+            {
+                case 0: Settings.Theme = ElementTheme.Light; break;
+                case 1: Settings.Theme = ElementTheme.Dark; break;
+                default: Settings.Theme = ElementTheme.Default; break;
+            }
+        }
+
+        public static void SaveSettings()
+        {
+            // Load the local settings of the application.
+            ApplicationDataContainer settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            settings.Values["theme"] = Settings.ThemeIndex;
+            settings.Values["testing"] = Settings.SetAutoTesting;
+            settings.Values["collection"] = Settings.DataCollection;
+        }
+
+        public static string LoadLanguage()
+        {
+            // Load the local settings of the application.
+            ApplicationDataContainer settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            // Return the language if it is set, otherwise return the current language.
+            return settings.Values["language"] == null ? CultureInfo.CurrentUICulture.Name : (string)settings.Values["language"];
+        }
+
+        public static ElementTheme LoadTheme()
+        {
+            // Load the local settings of the application.
+            ApplicationDataContainer settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+            // Return the theme if it is set, otherwise return the default theme.
+            int theme = settings.Values["theme"] == null ? 2 : (int)settings.Values["theme"];
+
+            switch (theme)
+            {
+                case 0: return ElementTheme.Light;
+                case 1: return ElementTheme.Dark;
+                default: return ElementTheme.Default;
+            }
         }
     }
 }

@@ -35,9 +35,6 @@ namespace DN_Henkel_Vision.Interface
             SetTitleBar(ApplicationTitleBar);
 
             Timegrid.Translation += new Vector3(0, 0, 32);
-
-            Drive.Log("---------------------------------------------------------");
-            Drive.Log("Environment window initialized successfully.");
         }
 
         /// <summary>
@@ -219,18 +216,6 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event args.</param>
         private void Export_Click(object sender, RoutedEventArgs e)
         {
-            if (Workspace.Content.GetType() == typeof(Editor))
-            {
-                Manager.UpdateRegistry();
-                Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
-            }
-
-            if (Memory.Export.ChangedData)
-            {
-                Memory.Export.ChangedData = false;
-                Memory.Export.Evaluate();
-            }
-
             OrdersPanel_Select(string.Empty);
             Workspace.Navigate(typeof(Lavender));
             Exporter.Visibility = Visibility.Visible;
@@ -242,16 +227,7 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         private void Environment_Closed(object sender, WindowEventArgs args)
         {
-            if (!string.IsNullOrEmpty(Manager.Selected.OrderNumber))
-            {
-                Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
-            }
-            Drive.SaveRegistry();
-            Drive.SaveExportHistory();
-            if (Interface.Settings.DataCollection)
-            {
-                Drive.WriteTrainees();
-            }
+
         }
 
         /// <summary>
@@ -298,12 +274,6 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event data.</param>
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            if (Workspace.Content.GetType() == typeof(Editor))
-            {
-                Manager.UpdateRegistry();
-                Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
-            }
-
             OrdersPanel_Select(string.Empty);
             Workspace.Navigate(typeof(Settings));
             Exporter.Visibility = Visibility.Collapsed;
@@ -316,7 +286,6 @@ namespace DN_Henkel_Vision.Interface
             AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
             OverlappedPresenter presenter = (OverlappedPresenter)appWindow.Presenter;
             presenter.Maximize();
-            Drive.Log("Environment loaded successfully.");
         }
 
         public void UpdateTimebar(bool evaluateOnly = false)

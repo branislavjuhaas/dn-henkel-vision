@@ -20,7 +20,7 @@ namespace DN_Henkel_Vision
         /// </summary>
         public App()
         {
-            Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = Drive.SafeLanguage();
+            Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = Memory.Lavender.LoadLanguage();
 
             this.InitializeComponent();
             if (!mutex.WaitOne(TimeSpan.Zero, true))
@@ -35,12 +35,6 @@ namespace DN_Henkel_Vision
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            if (IsShift())
-            {
-                Manager.Developer = true;
-                Manager.DevText += " Dev";
-                Drive.Devset();
-            }
             splash = new Interface.Splash();
             splash.Activate();
         }
