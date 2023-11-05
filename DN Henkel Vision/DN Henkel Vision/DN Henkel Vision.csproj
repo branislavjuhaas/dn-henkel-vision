@@ -55,6 +55,7 @@
     <None Remove="Interface\Editor.xaml" />
     <None Remove="Interface\Environment.xaml" />
     <None Remove="Interface\Lavender.xaml" />
+    <None Remove="Interface\Login.xaml" />
     <None Remove="Interface\Order.xaml" />
     <None Remove="Interface\Preview.xaml" />
     <None Remove="Interface\Settings.xaml" />
@@ -91,6 +92,9 @@
       <DependentUpon>Cause.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Interface\Login.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Interface\Welcome.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

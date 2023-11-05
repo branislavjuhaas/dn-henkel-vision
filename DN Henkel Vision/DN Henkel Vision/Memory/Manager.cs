@@ -26,7 +26,6 @@ namespace DN_Henkel_Vision.Memory
 
         public static readonly float AverageLength = 33.09f; // 33.09144927536232 : average of 13 800 samples length
 
-        public static bool Developer = false;
         public static string DevText = "Preview";
 
         /// <summary>

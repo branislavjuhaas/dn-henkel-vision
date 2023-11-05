@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DN_Henkel_Vision.Interface;
 using Microsoft.Data.Sqlite;
-using Microsoft.Win32;
 using Windows.Storage;
 using Microsoft.UI.Xaml;
 using System.Globalization;
-using Microsoft.UI.Xaml.Controls.Primitives;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace DN_Henkel_Vision.Memory
 {
-    public static class Lavender
+    internal class Lavender
     {
         private static string s_local = "";
         private static SqliteConnection Lavenderbase;
@@ -38,10 +35,8 @@ namespace DN_Henkel_Vision.Memory
 
                 string[] tables = new string[] {
                     "CREATE TABLE IF NOT EXISTS orders (id INTEGER PRIMARY KEY, number INTEGER)",
-                    "CREATE TABLE IF NOT EXISTS faults (id INTEGER PRIMARY KEY, number INTEGER, component TEXT, placement TEXT, description TEXT, cause TEXT, classification TEXT, type TEXT, user FLOAT, machine FLOAT, status TEXT)",
-                    "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, fullname TEXT, password TEXT, role TEXT)",
-                    "CREATE TABLE IF NOT EXISTS graph (id INTEGER PRIMARY KEY, datafrom DATE, userservice TIME, machineservice TIME, userexports TIME, machineexports TIME)",
-                    "CREATE TABLE IF NOT EXISTS settings (id INTEGER PRIMARY KEY, name TEXT, value TEXT)"
+                    "CREATE TABLE IF NOT EXISTS faults (id INTEGER PRIMARY KEY, written TIMESTAMP, number INTEGER, component TEXT, placement TEXT, description TEXT, cause TEXT, classification TEXT, type TEXT, time FLOAT, status TEXT, registrant TEXT)",
+                    "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, username TEXT, fullname TEXT, password TEXT, role TEXT)"
                 };
 
                 for (int i = 0; i < tables.Length; i++)
@@ -255,7 +250,7 @@ namespace DN_Henkel_Vision.Memory
                 Lavenderbase.Open();
 
                 // Create a command to select all the exports from the database and execute it.
-                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO orders (number) VALUES ('{order.Replace(" ", "")}')", Lavenderbase);
+                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO orders (number) VALUES ('{order}')", Lavenderbase);
                 insertCommand.ExecuteNonQuery();
 
                 Lavenderbase.Close();
