@@ -81,11 +81,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DN Henkel Vision %28Package%29_TemporaryKey.pfx" />
+    <Content Include="Images\Signature-Felber.png" />
+    <Content Include="Images\Icon256x256-Document.Auftrag.png" />
+    <Content Include="Images\Icon256x256-Document.Netstal.png" />
     <Content Include="Images\LargeTile.scale-100.png" />
     <Content Include="Images\LargeTile.scale-125.png" />
     <Content Include="Images\LargeTile.scale-150.png" />
     <Content Include="Images\LargeTile.scale-200.png" />
     <Content Include="Images\LargeTile.scale-400.png" />
+    <Content Include="Images\Logo-DN-Foundation.png" />
     <Content Include="Images\SmallTile.scale-100.png" />
     <Content Include="Images\SmallTile.scale-125.png" />
     <Content Include="Images\SmallTile.scale-150.png" />

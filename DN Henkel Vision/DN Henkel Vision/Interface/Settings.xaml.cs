@@ -2,6 +2,7 @@ using DN_Henkel_Vision.Memory;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Reflection;
+using Windows.ApplicationModel.Activation;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -16,11 +17,13 @@ namespace DN_Henkel_Vision.Interface
         public static int ThemeIndex = 2;
         public static bool SetAutoTesting = true;
         public static bool DataCollection = true;
+        public static string UserName = string.Empty;
 
         private ElementTheme _theme = Theme;
         private int _themeIndex = ThemeIndex;
         private bool _setAutoTesting = SetAutoTesting;
         private bool _dataCollection = DataCollection;
+        private string _userName = UserName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Settings"/> class.
@@ -69,6 +72,24 @@ namespace DN_Henkel_Vision.Interface
             DataCollection = _dataCollection;
 
             Memory.Lavender.SaveSettings();
+        }
+
+        private void UserText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _userName = UserText.Text;
+            UserName = _userName;
+
+            Memory.Lavender.SaveSettings();
+        }
+
+        private bool UserEnabled()
+        {
+            if (Authentification.User == string.Empty || Authentification.User == "Guest")
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

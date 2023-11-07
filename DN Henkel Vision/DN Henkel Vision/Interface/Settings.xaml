@@ -455,6 +455,31 @@
                 <Grid
                     Style="{StaticResource SettingsCard}">
                     <FontIcon
+                        Glyph="&#xE77B;"
+                        HorizontalAlignment="Left"/>
+                    <TextBlock
+                        x:Uid="T_RegName"
+                        Margin="40,0"/>
+                    <TextBlock
+                        x:Uid="T_RegNameDsn"
+                        Margin="40,0"
+                        VerticalAlignment="Bottom"
+                        FontSize="{ThemeResource CaptionTextBlockFontSize}"
+                        Foreground="{ThemeResource TextFillColorPrimary}"/>
+                    <TextBox
+                        x:Name="UserText"
+                        x:Uid="T_RegNameDft"
+                        HorizontalAlignment="Right"
+                        Width="150"
+                        Height="30"
+                        TextWrapping="Wrap"
+                        Text="{x:Bind _userName}"
+                        IsEnabled="{x:Bind UserEnabled()}"
+                        TextChanged="UserText_TextChanged"/>
+                </Grid>
+                <Grid
+                    Style="{StaticResource SettingsCard}">
+                    <FontIcon
                         Glyph="&#xF71A;"
                         HorizontalAlignment="Left"/>
                     <TextBlock

@@ -28,6 +28,8 @@ namespace DN_Henkel_Vision.Memory
 
         public static string DevText = "Preview";
 
+        public static string LaunchingFile = string.Empty;
+
         /// <summary>
         /// This method initializes the global memory of the application.
         /// </summary>

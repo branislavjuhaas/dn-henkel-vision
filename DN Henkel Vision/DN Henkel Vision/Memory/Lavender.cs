@@ -14,7 +14,7 @@ namespace DN_Henkel_Vision.Memory
 {
     internal class Lavender
     {
-        private static string s_local = "";
+        private static string s_local = string.Empty;
         private static SqliteConnection Lavenderbase;
 
         public static float Time = 0;
@@ -82,7 +82,8 @@ namespace DN_Henkel_Vision.Memory
             using (SqliteConnection Lavenderbase = GetConnection())
             {
                 Lavenderbase.Open();
-                SqliteCommand selectCommand = new SqliteCommand($"SELECT * from faults WHERE number='{orderNumber.Replace(" ", "")}'", Lavenderbase);
+                // Create a command to select all the faults from the database for the order number which do not have the status deleted and execute it.
+                SqliteCommand selectCommand = new SqliteCommand($"SELECT * from faults WHERE number='{orderNumber.Replace(" ", string.Empty)}' AND status!='deleted'", Lavenderbase);
                 SqliteDataReader query = selectCommand.ExecuteReader();
 
                 bool btet = query.HasRows;
@@ -121,7 +122,7 @@ namespace DN_Henkel_Vision.Memory
             {
                 Lavenderbase.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO faults (number, component, placement, description, cause, classification, type, time, status, registrant) VALUES ('{orderNumber.Replace(" ", "")}', '{fault.Component}', '{fault.Placement}', '{fault.Description}', '{fault.ClassIndexes[0]}', '{fault.ClassIndexes[1]}', '{fault.ClassIndexes[2]}', '{fault.UserTime + fault.MachineTime}', 'complete', 'Branislav Juhás')", Lavenderbase);
+                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO faults (number, component, placement, description, cause, classification, type, time, status, registrant) VALUES ('{orderNumber.Replace(" ", string.Empty)}', '{fault.Component}', '{fault.Placement}', '{fault.Description}', '{fault.ClassIndexes[0]}', '{fault.ClassIndexes[1]}', '{fault.ClassIndexes[2]}', '{fault.UserTime + fault.MachineTime}', 'complete', '{Settings.UserName}')", Lavenderbase);
                 insertCommand.ExecuteNonQuery();
 
                 SqliteCommand selectCommand = new SqliteCommand("SELECT * FROM faults WHERE id = (SELECT MAX(id) FROM faults)", Lavenderbase);
@@ -140,13 +141,13 @@ namespace DN_Henkel_Vision.Memory
             using (SqliteConnection Lavenderbase = GetConnection())
             {
                 Lavenderbase.Open();
-                SqliteCommand deleteCommand = new SqliteCommand($"DELETE FROM faults WHERE id='{index}'", Lavenderbase);
-                deleteCommand.ExecuteReader();
+                // Change the status of the fault to deleted.
+                SqliteCommand updateCommand = new SqliteCommand($"UPDATE faults SET status='deleted' WHERE id='{index}'", Lavenderbase);
                 Lavenderbase.Close();
             }
         }
 
-        public static string LoadExports(string user, string date, bool netstal, bool inkognito, int count = -1)
+        public static string LoadExports(string user, string date, bool netstal, bool inkognito)
         {
             // Declare a lists used to store the exports and the times.
             List<string> exports = new List<string>();
@@ -165,25 +166,23 @@ namespace DN_Henkel_Vision.Memory
                 while (query.Read())
                 {
                     // Get the order number and remove the spaces if Auftrag.
-                    string ordernumber = query.GetString(2).Replace(" ", "");
+                    string ordernumber = query.GetString(2).Replace(" ", string.Empty);
                     if (ordernumber.StartsWith("38")) { ordernumber = ordernumber.Remove(0, 2); }
 
                     // Add to the lists.
                     exports.Add($"{ordernumber}\t{query.GetString(4)}\t{query.GetString(5)}\t{query.GetString(4)}\t{Memory.Classification.OriginalCauses[query.GetInt32(6)]}\t{Memory.Classification.OriginalClassifications[query.GetInt32(6)][query.GetInt32(7)]}\t{Memory.Classification.OriginalTypes[Memory.Classification.ClassificationsPointers[query.GetInt32(6)][query.GetInt32(7)]][query.GetInt32(8)]}\t{user}\t{date}");
                     times.Add(query.GetFloat(9));
                 }
+
+                // Replace the status of the exports to exported.
+                SqliteCommand updateCommand = new SqliteCommand("UPDATE faults SET status='exported' WHERE status='complete'", Lavenderbase);
+                updateCommand.ExecuteNonQuery();
+
+                // Close the database connection.
+                Lavenderbase.Close();
             }
 
-            // If the count is -1, return all the exports.
-            if (count == -1) { return Export.Header(netstal, inkognito) + "\r\n" + string.Join("\n", exports); }
-
-            // Make a sum of all the times
-            float sum = times.Sum();
-
-            // Now chose the count exports which's sum of times is closest to the sum of all the times divided by the count.
-            float averageTime = sum / count;
-            exports = exports.OrderBy(s => Math.Abs(times[exports.IndexOf(s)] - averageTime)).Take(count).ToList();
-
+            // Return the exports.
             return Export.Header(netstal, inkognito) + "\r\n" + string.Join("\n", exports);
         }
 
@@ -265,6 +264,7 @@ namespace DN_Henkel_Vision.Memory
             Settings.ThemeIndex = settings.Values["theme"] == null ? 2 : (int)settings.Values["theme"];
             Settings.SetAutoTesting = settings.Values["testing"] == null ? false : (bool)settings.Values["testing"];
             Settings.DataCollection = settings.Values["collection"] == null ? false : (bool)settings.Values["collection"];
+            Settings.UserName = settings.Values["user"] == null ? string.Empty : (string)settings.Values["user"];
 
             switch (Settings.ThemeIndex)
             {
@@ -282,6 +282,7 @@ namespace DN_Henkel_Vision.Memory
             settings.Values["theme"] = Settings.ThemeIndex;
             settings.Values["testing"] = Settings.SetAutoTesting;
             settings.Values["collection"] = Settings.DataCollection;
+            settings.Values["user"] = Settings.UserName;
         }
 
         public static string LoadLanguage()

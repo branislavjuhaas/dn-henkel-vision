@@ -18,7 +18,7 @@ namespace DN_Henkel_Vision.Interface
     /// </summary>
     public sealed partial class Environment : Window
     {
-        private static string _selectedOrder = "";
+        private static string _selectedOrder = string.Empty;
 
         private static string s_hours = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Hours"));
         private string _time = $"0.00 {s_hours}";
@@ -35,6 +35,10 @@ namespace DN_Henkel_Vision.Interface
             SetTitleBar(ApplicationTitleBar);
 
             Timegrid.Translation += new Vector3(0, 0, 32);
+
+            if (Manager.LaunchingFile == string.Empty) { return; }
+
+            Workspace.Navigate(typeof(Explorer));
         }
 
         /// <summary>
@@ -113,7 +117,7 @@ namespace DN_Henkel_Vision.Interface
             }
             
             OrdersPanel_Select(selection);
-            sender.Text = "";
+            sender.Text = string.Empty;
         }
 
         /// <summary>
@@ -121,6 +125,8 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         private void OrdersPanel_Loaded(object sender, RoutedEventArgs e)
         {
+            if (Manager.LaunchingFile != string.Empty) { return; }
+            
             if (Manager.OrdersRegistry.Count == 0)
             {
                 Workspace.Navigate(typeof(Welcome));
@@ -148,7 +154,7 @@ namespace DN_Henkel_Vision.Interface
             // order index to -1 (no order selected) and return.
             if (!Manager.OrdersRegistry.Contains(selection))
             {
-                _selectedOrder = "";
+                _selectedOrder = string.Empty;
                 return;
             }
 

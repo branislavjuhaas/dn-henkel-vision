@@ -19,15 +19,14 @@ namespace DN_Henkel_Vision.Memory
 {
     internal class Authentification : Lavender
     {
-        public static string User = "";
-        public static string Name = "";
-        public static string Abriviation = "";
-        public static string Role = "";
+        public static string User = string.Empty;
+        public static string Name = string.Empty;
+        public static string Role = string.Empty;
 
         public static async Task<bool> Auth(bool cantoken = true, bool canclose = false)
         {
             // If there is no user, set the user to guest.
-            if (!AnyUser()) { User = "Guest"; Name = "Guest"; Abriviation = "Guest"; Role = "Guest"; return true; }
+            if (!AnyUser()) { User = "Guest"; Name = "Guest"; Role = "Guest"; return true; }
             
             // If there is a token, check if it is valid. If it is, return true.
             if (cantoken && ValidToken()) { return true; }
@@ -50,12 +49,6 @@ namespace DN_Henkel_Vision.Memory
             loginDialog.Closing += (ContentDialog sender, ContentDialogClosingEventArgs args) =>
             {
                 if (args.Result == ContentDialogResult.None && !canclose) { args.Cancel = true; }
-            };
-
-            // Change the dialogs overlay background.
-            loginDialog.Loaded += (object sender, RoutedEventArgs e) =>
-            {
-                //SetContentDialogOverlay(loginDialog);
             };
 
             // Create a custom handler for the login button.
@@ -146,16 +139,16 @@ namespace DN_Henkel_Vision.Memory
             if (expiration < DateTime.Now) { return false; }
 
             // Get the username.
-            string username = savedauth["username"] as string ?? "";
+            string username = savedauth["username"] as string ?? string.Empty;
             
             // Set the username for the case of the auth token being invalid.
             User = username;
 
             // Get the password.
-            string token = savedauth["token"] as string ?? "";
+            string token = savedauth["token"] as string ?? string.Empty;
 
             // If the username or the password is empty, return from the if statement.
-            if (username == "" || token == "") { return false; }
+            if (username == string.Empty || token == string.Empty) { return false; }
 
             // Get the user information from the database.
             using (SqliteConnection Lavenderbase = GetConnection())
@@ -185,7 +178,7 @@ namespace DN_Henkel_Vision.Memory
 
                 User = user;
                 Name = fullname;
-                Abriviation = Abreviate(fullname);
+                Settings.UserName = Abreviate(fullname);
                 Role = role;
 
                 Lavenderbase.Close();
@@ -299,7 +292,7 @@ namespace DN_Henkel_Vision.Memory
                     
                 User = user;
                 Name = fullname;
-                Abriviation = Abreviate(fullname);
+                Settings.UserName = Abreviate(fullname);
                 Role = role;
 
                 Lavenderbase.Close();

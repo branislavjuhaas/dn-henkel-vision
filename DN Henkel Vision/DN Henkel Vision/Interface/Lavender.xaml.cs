@@ -71,7 +71,7 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event data.</param>
         public void Exporter_Click(object sender, RoutedEventArgs e)
         {
-            Export.Save("JuhasB", ((DateTimeOffset)RegistryDate.Date).DateTime, Convert.ToBoolean(Category.SelectedIndex), IsShift());
+            Export.Save(Settings.UserName, ((DateTimeOffset)RegistryDate.Date).DateTime, Convert.ToBoolean(Category.SelectedIndex), IsShift());
         }
 
         /// <summary>
