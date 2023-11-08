@@ -10,7 +10,7 @@
 
     <Grid RowSpacing="2">
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="154"/>
             <RowDefinition Height="73"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -22,21 +22,11 @@
             BorderThickness="1,0,0,1"
             CornerRadius="0,0,0,4">
 
-            <Image
-                Source="ms-appx:///Assets/Tiles/Logo-DN-Foundation.png"
-                HorizontalAlignment="Left"/>
-
             <TextBlock
-                Text="Export"
-                Visibility="Collapsed"
+                Text="DN Export 0711231831"
                 FontSize="{ThemeResource TitleTextBlockFontSize}"
                 FontWeight="{ThemeResource InfoBarTitleFontWeight}"
-                Margin="75,128,0,0"/>
-
-            <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,20" Visibility="Collapsed">
-                <FontIcon Glyph="&#xE7BA;" FontSize="16" HorizontalAlignment="Left" Foreground="PaleVioletRed"/>
-                <TextBlock Text="Modified File" Margin="20,0" Foreground="PaleVioletRed"/>
-            </Grid>
+                Margin="32,82,0,0"/>
         </Grid>
         <Grid
             Background="{ThemeResource CardBackgroundFillColorDefault}"
@@ -65,9 +55,14 @@
                 Source="ms-appx:///Assets/Tiles/Signature-Felber.png"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Visibility="Visible"
+                Visibility="Collapsed"
                 Height="20"
                 Margin="20,0"/>
+
+            <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,20" Visibility="Visible">
+                <FontIcon Glyph="&#xE7BA;" FontSize="16" HorizontalAlignment="Left" Foreground="PaleVioletRed" />
+                <TextBlock Text="Modified File" Margin="20,0" Foreground="PaleVioletRed"/>
+            </Grid>
         </Grid>
         <Grid
             Background="{ThemeResource CardBackgroundFillColorDefault}"
