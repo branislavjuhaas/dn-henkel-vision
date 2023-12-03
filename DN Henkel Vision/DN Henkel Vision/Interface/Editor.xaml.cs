@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.Calls;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -350,16 +352,22 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event arguments.</param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            // If no fault is selected, return.
             if (LastTapped == null) return;
 
+            // Get the index of the fault in the list of faults.
             int index = FaultsList.GetElementIndex(LastTapped);
             Fault fault = Manager.Selected.Faults[index].Clone();
 
+            // Remove the fault from the list of faults and add it to the review list.
+            Memory.Lavender.DeleteFault(Manager.Selected.Faults[index].Index);
             Manager.Selected.Faults.RemoveAt(index);
             Manager.Selected.ReviewFaults.Insert(0, fault);
 
+            // Set the current review to the first fault in the review list.
             Cache.CurrentReview = 0;
-
+            
+            // Navigate to the preview page of the edited fault.
             DataRing.Visibility = Visibility.Collapsed;
             NoDataText.Visibility = Visibility.Collapsed;
             FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
@@ -372,11 +380,19 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event arguments.</param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
+            // If no fault is selected, return
             if (LastTapped == null) return;
-
+            
+            // Get the index of the fault in the list of faults
             int index = FaultsList.GetElementIndex(LastTapped);
 
+            // Remove the fault from the list of faults
+            Memory.Lavender.DeleteFault(Manager.Selected.Faults[index].Index);
             Manager.Selected.Faults.RemoveAt(index);
+
+            // Reevaluate the time of the orders
+            Memory.Lavender.EvaluateTime();
+            (Manager.CurrentWindow as Environment).UpdateTimebar();
         }
 
         /// <summary>
@@ -390,10 +406,17 @@ namespace DN_Henkel_Vision.Interface
             LastTapped = sender as Grid;
         }
 
+        /// <summary>
+        /// Provides the handle for the quicker fault selection from the faults list.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Key event arguments.</param>
         private void CauseList_KeyDown(object sender, KeyRoutedEventArgs e)
         {
+            // Initialize the index of the selection.
             int index = 0;
 
+            // Switch the index based on the key pressed.
             switch (e.Key)
             {
                 case VirtualKey.Number0:
@@ -445,11 +468,14 @@ namespace DN_Henkel_Vision.Interface
                 default: return;
             }
 
+            // Handle the event.
             e.Handled = true;
 
+            // Set the fault and hide the flyout.
             Tact.Content = Memory.Classification.LocalCauses[index];
             Tact.Flyout.Hide();
 
+            // Lock the editor.
             if (_locked) { return; }
             Lock();
         }
@@ -477,7 +503,7 @@ namespace DN_Henkel_Vision.Interface
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     Foreground = new SolidColorBrush((Color)Application.Current.Resources["TextFillColorSecondary"])
-            };
+                };
 
                 grid.Children.Add(text);
                 grid.Children.Add(shortcut);

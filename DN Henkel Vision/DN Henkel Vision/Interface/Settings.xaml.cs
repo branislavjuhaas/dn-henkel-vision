@@ -2,6 +2,7 @@ using DN_Henkel_Vision.Memory;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Reflection;
+using Windows.ApplicationModel.Activation;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -14,15 +15,15 @@ namespace DN_Henkel_Vision.Interface
 
         public static ElementTheme Theme = ElementTheme.Default;
         public static int ThemeIndex = 2;
-        public static string UserName = "JuhasB";
         public static bool SetAutoTesting = true;
         public static bool DataCollection = true;
+        public static string UserName = string.Empty;
 
         private ElementTheme _theme = Theme;
         private int _themeIndex = ThemeIndex;
-        private string _userName = UserName;
         private bool _setAutoTesting = SetAutoTesting;
         private bool _dataCollection = DataCollection;
+        private string _userName = UserName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Settings"/> class.
@@ -54,15 +55,7 @@ namespace DN_Henkel_Vision.Interface
 
             (Manager.CurrentWindow as Environment).EnvironmentalGrid.RequestedTheme = Theme;
 
-            Drive.SaveSettings();
-        }
-
-        private void UserText_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            _userName = UserText.Text;
-            UserName = _userName;
-
-            Drive.SaveSettings();
+            Memory.Lavender.SaveSettings();
         }
 
         private void TestingSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -70,7 +63,7 @@ namespace DN_Henkel_Vision.Interface
             _setAutoTesting = TestingSwitch.IsOn;
             SetAutoTesting = _setAutoTesting;
 
-            Drive.SaveSettings();
+            Memory.Lavender.SaveSettings();
         }
 
         private void CollectionSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -78,7 +71,25 @@ namespace DN_Henkel_Vision.Interface
             _dataCollection = CollectionSwitch.IsOn;
             DataCollection = _dataCollection;
 
-            Drive.SaveSettings();
+            Memory.Lavender.SaveSettings();
+        }
+
+        private void UserText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _userName = UserText.Text;
+            UserName = _userName;
+
+            Memory.Lavender.SaveSettings();
+        }
+
+        private bool UserEnabled()
+        {
+            if (Authentification.User == string.Empty || Authentification.User == "Guest")
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

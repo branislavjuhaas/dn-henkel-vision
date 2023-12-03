@@ -81,11 +81,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DN Henkel Vision %28Package%29_TemporaryKey.pfx" />
+    <Content Include="Images\Signature-Felber.png" />
+    <Content Include="Images\Icon256x256-Document.Auftrag.png" />
+    <Content Include="Images\Icon256x256-Document.Netstal.png" />
     <Content Include="Images\LargeTile.scale-100.png" />
     <Content Include="Images\LargeTile.scale-125.png" />
     <Content Include="Images\LargeTile.scale-150.png" />
     <Content Include="Images\LargeTile.scale-200.png" />
     <Content Include="Images\LargeTile.scale-400.png" />
+    <Content Include="Images\Logo-DN-Foundation.png" />
     <Content Include="Images\SmallTile.scale-100.png" />
     <Content Include="Images\SmallTile.scale-125.png" />
     <Content Include="Images\SmallTile.scale-150.png" />
@@ -164,10 +168,10 @@
     <PackageReference Include="Microsoft.ML" Version="2.0.1" />
     <PackageReference Include="Microsoft.ML.FastTree" Version="2.0.1" />
     <PackageReference Include="Microsoft.ML.LightGbm" Version="2.0.1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230602002">
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000">
       <IncludeAssets>build</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756">
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428">
       <IncludeAssets>build</IncludeAssets>
     </PackageReference>
   </ItemGroup>

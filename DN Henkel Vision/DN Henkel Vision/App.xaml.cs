@@ -3,8 +3,11 @@ using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using System;
 using System.Threading;
+using Windows.ApplicationModel.Activation;
 using Windows.System;
 using Windows.UI.Core;
+using Windows.Foundation;
+using Microsoft.Windows.AppLifecycle;
 
 namespace DN_Henkel_Vision
 {
@@ -20,7 +23,7 @@ namespace DN_Henkel_Vision
         /// </summary>
         public App()
         {
-            Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = Drive.SafeLanguage();
+            Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = Memory.Lavender.LoadLanguage();
 
             this.InitializeComponent();
             if (!mutex.WaitOne(TimeSpan.Zero, true))
@@ -35,12 +38,12 @@ namespace DN_Henkel_Vision
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            if (IsShift())
+            AppActivationArguments activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+            if (activatedEventArgs.Kind == Microsoft.Windows.AppLifecycle.ExtendedActivationKind.File)
             {
-                Manager.Developer = true;
-                Manager.DevText += " Dev";
-                Drive.Devset();
+                Manager.LaunchingFile = (activatedEventArgs.Data as Windows.ApplicationModel.Activation.IFileActivatedEventArgs).Files[0].Path;
             }
+            
             splash = new Interface.Splash();
             splash.Activate();
         }
@@ -54,7 +57,7 @@ namespace DN_Henkel_Vision
             CoreVirtualKeyStates states = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
 
             return (states & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
-        }
+        }   
 
         /// <summary>
         /// Initializes the splash screen of the application. This variable stores the main application's splash screen window.

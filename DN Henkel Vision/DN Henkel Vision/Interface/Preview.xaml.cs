@@ -109,8 +109,6 @@ namespace DN_Henkel_Vision.Interface
                     RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme
                 };
 
-                message.Loaded += Message_Loaded;
-
                 ContentDialogResult result = await message.ShowAsync();
 
                 if (result == ContentDialogResult.Primary) { return; }
@@ -146,35 +144,12 @@ namespace DN_Henkel_Vision.Interface
                     DefaultButton = ContentDialogButton.Primary
                 };
 
-                message.Loaded += Message_Loaded;
-
                 ContentDialogResult result = await message.ShowAsync();
 
                 if (result == ContentDialogResult.Primary) { return; }
             }
 
             ApproveFault(true);
-        }
-
-        /// <summary>
-        /// Handles the loaded event of the Message control.
-        /// Removes the margin of the control's Frame.
-        /// </summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">The event data.</param>
-        private void Message_Loaded(object sender, RoutedEventArgs e)
-        {
-            var parent = VisualTreeHelper.GetParent((DependencyObject)sender);
-            var child = VisualTreeHelper.GetChild(parent, 0);
-            var frame = (Microsoft.UI.Xaml.Shapes.Rectangle)child;
-            frame.Margin = new Thickness(0);
-            frame.RegisterPropertyChangedCallback(
-                FrameworkElement.MarginProperty,
-                (DependencyObject sender, DependencyProperty dp) =>
-                {
-                    if (dp == FrameworkElement.MarginProperty)
-                        sender.ClearValue(dp);
-                });
         }
 
         /// <summary>
@@ -185,6 +160,7 @@ namespace DN_Henkel_Vision.Interface
         {
             Fault preparate = PrepareFault();
 
+            preparate.Index = ((uint)Memory.Lavender.AppendFault(preparate, Manager.Selected.OrderNumber));
             Manager.Selected.Faults.Insert(0, preparate);
 
             if (Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime <= 0f)
@@ -192,8 +168,7 @@ namespace DN_Henkel_Vision.Interface
                 Manager.Selected.ReviewFaults[Cache.CurrentReview].UserTime = Manager.AverageTime;
             }
 
-            Manager.Selected.User += Manager.Selected.ReviewFaults[Cache.CurrentReview].UserTime;
-            Manager.Selected.Machine += Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime;
+            Memory.Lavender.Time += Manager.Selected.ReviewFaults[Cache.CurrentReview].UserTime + Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime;
 
             //If it is not set to remove, function can return, because following code is just for removing the fault
             if (keep) { return; }
@@ -294,7 +269,8 @@ namespace DN_Henkel_Vision.Interface
             output.ClassIndexes[1] = Classification.SelectedIndex;
             output.ClassIndexes[2] = Type.SelectedIndex;
 
-            output.Index = Manager.CreateIndex();
+            output.MachineTime = Manager.Selected.ReviewFaults[Cache.CurrentReview].MachineTime;
+            output.UserTime = Manager.Selected.ReviewFaults[Cache.CurrentReview].UserTime;
 
             return output;
         }

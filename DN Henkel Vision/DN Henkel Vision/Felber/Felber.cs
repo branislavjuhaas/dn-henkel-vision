@@ -367,7 +367,7 @@ namespace DN_Henkel_Vision.Felber
 
             float time = (Manager.AverageTime - ( user / factor ));
 
-            if (time < 0) { return 0f; }
+            if (time <= 0) { return 0f; }
 
             time *= ((float)Random.Shared.Next(100, 120) / 100f);
 

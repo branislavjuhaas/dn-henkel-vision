@@ -14,12 +14,6 @@ namespace DN_Henkel_Vision.Memory
 
         public string OrderNumber;
 
-        public float User;
-        public float Machine;
-
-        public float OrderTotalTime;
-        public float ExportModifiedTime;
-
         public ObservableCollection<Fault> Faults = new();
         public List<Fault> Loader = new();
         public List<Fault> PendingFaults = new();

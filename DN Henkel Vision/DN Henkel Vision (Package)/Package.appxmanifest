@@ -40,6 +40,28 @@
         <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="auftrag">
+            <uap:SupportedFileTypes>
+              <uap:FileType ContentType="file/dnfa">.dnfa</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:DisplayName>DN Auftrag Export File</uap:DisplayName>
+            <uap:InfoTip>File of exported by the DN Henkel Vision for the Autrag series.</uap:InfoTip>
+            <uap:Logo>Images\Icon256x256-Document.Auftrag.png</uap:Logo>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="netstal">
+            <uap:SupportedFileTypes>
+              <uap:FileType ContentType="file/dnfa">.dnfn</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:DisplayName>DN Netstal Export File</uap:DisplayName>
+            <uap:InfoTip>File of exported by the DN Henkel Vision for the Netstal series.</uap:InfoTip>
+            <uap:Logo>Images\Icon256x256-Document.Netstal.png</uap:Logo>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 
