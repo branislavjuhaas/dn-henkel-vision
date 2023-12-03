@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using Windows.Storage.Pickers;
 using Windows.Storage;
+using DN_Henkel_Vision.Interface;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -187,6 +188,39 @@ namespace DN_Henkel_Vision.Memory
                 using var tw = new StreamWriter(stream);
                 tw.Write(content);
             }
+        }
+
+        public static List<Exportite> GetExport(string file)
+        {
+            // Create a list of faults
+            List<Exportite> faults = new List<Exportite>();
+
+            // Load file from disk
+            string[] lines = File.ReadAllLines(file);
+
+            // Remove the first 7 lines
+            lines = lines.Skip(7).ToArray();
+
+            // Loop through each line
+            foreach (string line in lines)
+            {
+                string[] splits = line.Split('\t');
+
+                // If the line is not empty
+                if (splits.Length == 0) { continue; }
+
+                string order = Interface.Environment.Format("38" + splits[0]);
+
+                // Split the order number into its parts usin
+
+                string[] appendand = { order, splits[1], splits[2], splits[7] };
+
+                Exportite exportite = new Exportite(appendand);
+
+                faults.Add(exportite);
+            }
+
+            return faults;
         }
     }
 }

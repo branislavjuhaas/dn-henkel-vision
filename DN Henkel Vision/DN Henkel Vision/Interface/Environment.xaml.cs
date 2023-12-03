@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using System.Numerics;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -71,7 +73,6 @@ namespace DN_Henkel_Vision.Interface
                 }
                 sender.ItemsSource = suitableItems;
             }
-
         }
 
         /// <summary>
@@ -309,6 +310,42 @@ namespace DN_Henkel_Vision.Interface
         private void Exporter_Click(object sender, RoutedEventArgs e)
         {
             (Workspace.Content as Lavender).Exporter_Click(sender, e);
+        }
+
+        private async void Workspace_Drop(object sender, DragEventArgs e)
+        {
+            Movementer.Margin = new Thickness(0, 0, 0, 0);
+
+            string file = string.Empty;
+
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                var items = await e.DataView.GetStorageItemsAsync();
+                if (items.Count > 0 && items[0] is StorageFile ffile)
+                {
+                    file = ffile.Path;
+                    // Use the filePath variable as needed
+                }
+            }
+
+            if (file == string.Empty || (!file.EndsWith(".dnfa") && !file.EndsWith(".dnfn"))) { return; }
+
+            Manager.LaunchingFile = file;
+
+            (Manager.CurrentWindow as Environment).Workspace.Navigate(typeof(Explorer));
+        }
+
+        private void Workspace_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = DataPackageOperation.Copy;
+
+            (Statustext.Child as TextBlock).Text = "Explore The Exported File";
+            Movementer.Margin = new Thickness(0, -50, 0, 0);
+        }
+
+        private void Workspace_DragLeave(object sender, DragEventArgs e)
+        {
+            Movementer.Margin = new Thickness(0, 0, 0, 0);
         }
     }
 }

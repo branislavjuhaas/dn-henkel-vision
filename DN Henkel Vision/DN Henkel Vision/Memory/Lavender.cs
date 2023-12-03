@@ -143,6 +143,7 @@ namespace DN_Henkel_Vision.Memory
                 Lavenderbase.Open();
                 // Change the status of the fault to deleted.
                 SqliteCommand updateCommand = new SqliteCommand($"UPDATE faults SET status='deleted' WHERE id='{index}'", Lavenderbase);
+                updateCommand.ExecuteNonQuery();
                 Lavenderbase.Close();
             }
         }
@@ -199,6 +200,10 @@ namespace DN_Henkel_Vision.Memory
 
                 // Read all the exports and update the time.
                 query.Read();
+
+                if (!query.HasRows) { return; }
+                if (query.IsDBNull(0)) { return; }
+
                 Time = query.GetFloat(0);
             }   
         }

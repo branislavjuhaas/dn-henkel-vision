@@ -1,3 +1,4 @@
+using DN_Henkel_Vision.Memory;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,6 +27,27 @@ namespace DN_Henkel_Vision.Interface
         public Explorer()
         {
             this.InitializeComponent();
+        }
+
+        public List<Exportite> Exports()
+        {
+            return Export.GetExport(Manager.LaunchingFile);
+        }
+    }
+
+    public class Exportite
+    {
+        public string Order;
+        public string Placement;
+        public string Description;
+        public string Registrant;
+
+        public Exportite(string[] raw)
+        {
+            Order = raw[0];
+            Placement = raw[1];
+            Description = raw[2];
+            Registrant = raw[3];
         }
     }
 }

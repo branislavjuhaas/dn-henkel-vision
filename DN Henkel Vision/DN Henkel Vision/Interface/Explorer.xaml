@@ -9,9 +9,33 @@
     mc:Ignorable="d">
 
     <Grid RowSpacing="2">
+        <Grid.Resources>
+            <DataTemplate x:Key="ExportTemplate" x:DataType="local:Exportite">
+                <Grid
+                    Background="{ThemeResource CardBackgroundFillColorDefault}"
+                    CornerRadius="2"
+                    Height="53">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="{x:Bind Order}" Grid.Column="0" VerticalAlignment="Center" Margin="10,0"/>
+                    <TextBlock Text="{x:Bind Placement}" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0"/>
+                    <Rectangle Width="1" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Right" Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}" Opacity="0.32" Grid.Column="1"/>
+                    <TextBlock Text="{x:Bind Description}" Grid.Column="2" VerticalAlignment="Center" Margin="10,0"/>
+                    <Rectangle Width="1" Height="25" VerticalAlignment="Stretch" HorizontalAlignment="Right" Fill="{ThemeResource AppBarSeparatorForegroundThemeBrush}" Opacity="0.32" Grid.Column="3"/>
+                    <TextBlock Text="{x:Bind Registrant}" Grid.Column="4" VerticalAlignment="Center" Margin="15,0"/>
+                </Grid>
+            </DataTemplate>
+
+            <StackLayout x:Key="ExportsLayout" Orientation="Vertical" Spacing="4"/>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="154"/>
-            <RowDefinition Height="73"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -23,7 +47,7 @@
             CornerRadius="0,0,0,4">
 
             <TextBlock
-                Text="DN Export 0711231831"
+                Text="DN Export 1011232349"
                 FontSize="{ThemeResource TitleTextBlockFontSize}"
                 FontWeight="{ThemeResource InfoBarTitleFontWeight}"
                 Margin="32,82,0,0"/>
@@ -32,44 +56,18 @@
             Background="{ThemeResource CardBackgroundFillColorDefault}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultSolid}" 
             Grid.Row="1"
-            BorderThickness="1,1,0,1"
-            CornerRadius="4,0,0,4">
-            <StackPanel Orientation="Horizontal" Padding="20">
-                <Grid Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" >
-                    <FontIcon Glyph="&#xE787;" FontSize="16" HorizontalAlignment="Left"/>
-                    <TextBlock Text="2023-11-23" Margin="30,0"/>
-                </Grid>
-
-                <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xE77B;" FontSize="16" HorizontalAlignment="Left" />
-                    <TextBlock Text="Branislav Juhás" Margin="30,0"/>
-                </Grid>
-
-                <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
-                    <FontIcon Glyph="&#xED5A;" FontSize="16" HorizontalAlignment="Left" />
-                    <TextBlock Text="10 hours" Margin="30,0"/>
-                </Grid>
-            </StackPanel>
-
-            <Image
-                Source="ms-appx:///Assets/Tiles/Signature-Felber.png"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Visibility="Collapsed"
-                Height="20"
-                Margin="20,0"/>
-
-            <Grid HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,20" Visibility="Visible">
-                <FontIcon Glyph="&#xE7BA;" FontSize="16" HorizontalAlignment="Left" Foreground="PaleVioletRed" />
-                <TextBlock Text="Modified File" Margin="20,0" Foreground="PaleVioletRed"/>
-            </Grid>
-        </Grid>
-        <Grid
-            Background="{ThemeResource CardBackgroundFillColorDefault}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultSolid}" 
-            Grid.Row="2"
             BorderThickness="1,1,0,0"
             CornerRadius="4,0,0,0">
+            <ScrollViewer
+                Margin="20"
+                CornerRadius="2">
+                <ItemsRepeater
+                    x:Name="ExportsList"
+                    x:FieldModifier="public"
+                    Layout="{StaticResource ExportsLayout}"
+                    ItemsSource="{x:Bind Exports()}"
+                    ItemTemplate="{StaticResource ExportTemplate}"/>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Page>

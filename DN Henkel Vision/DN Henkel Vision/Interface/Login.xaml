@@ -7,8 +7,7 @@
     <StackPanel
         VerticalAlignment="Stretch"
         Width="350"
-        Spacing="20"
-        Loaded="StackPanel_Loaded">
+        Spacing="20">
         <Grid Margin="0,50,0,0">
             <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xE77B;" Margin="-2" FontSize="16" />
             <TextBox x:Name="Username" x:FieldModifier="public" VerticalAlignment="Top" Margin="36,0,0,0" TextWrapping="Wrap"/>

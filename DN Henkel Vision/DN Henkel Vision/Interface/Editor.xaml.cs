@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.Calls;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
@@ -378,15 +380,19 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event arguments.</param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            // If no fault is selected, return.
+            // If no fault is selected, return
             if (LastTapped == null) return;
             
-            // Get the index of the fault in the list of faults.
+            // Get the index of the fault in the list of faults
             int index = FaultsList.GetElementIndex(LastTapped);
 
-            // Remove the fault from the list of faults.
+            // Remove the fault from the list of faults
             Memory.Lavender.DeleteFault(Manager.Selected.Faults[index].Index);
             Manager.Selected.Faults.RemoveAt(index);
+
+            // Reevaluate the time of the orders
+            Memory.Lavender.EvaluateTime();
+            (Manager.CurrentWindow as Environment).UpdateTimebar();
         }
 
         /// <summary>
