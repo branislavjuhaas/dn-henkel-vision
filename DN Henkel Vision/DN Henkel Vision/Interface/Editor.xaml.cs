@@ -105,6 +105,14 @@ namespace DN_Henkel_Vision.Interface
                 FaultInput.SelectionStart = index;
             }
 
+            // check if there is less ')' characters than '(' characters and if yes, add one
+            if (e.Key == VirtualKey.Number9 && IsShift())
+            {
+                int index = FaultInput.SelectionStart;
+                FaultInput.Text = FaultInput.Text.Insert(index, ")");
+                FaultInput.SelectionStart = index;
+            }
+
             // Check if the character right after the cursor is slash and if yes, move the cursor one character to the right
             if (e.Key == VirtualKey.Space && FaultInput.SelectionStart < FaultInput.Text.Length && FaultInput.Text[FaultInput.SelectionStart] == '\\' && !IsShift())
             {

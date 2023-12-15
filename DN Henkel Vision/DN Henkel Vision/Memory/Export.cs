@@ -173,13 +173,6 @@ namespace DN_Henkel_Vision.Memory
             StorageFile file = await savePicker.PickSaveFileAsync();
             if (file != null)
             {
-                if (!inkognito)
-                {
-                    //Export.UpdateExportValues(user, mach);
-                }
-
-                //string content = await Export.ExportFaults(time, username, date, netstal, inkognito);
-
                 string content = Lavender.LoadExports(username, date.ToString("yyyy-MM-dd"), netstal, inkognito);
 
                 CachedFileManager.DeferUpdates(file);

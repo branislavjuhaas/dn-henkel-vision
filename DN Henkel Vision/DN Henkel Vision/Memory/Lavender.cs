@@ -122,7 +122,7 @@ namespace DN_Henkel_Vision.Memory
             {
                 Lavenderbase.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO faults (number, component, placement, description, cause, classification, type, time, status, registrant) VALUES ('{orderNumber.Replace(" ", string.Empty)}', '{fault.Component}', '{fault.Placement}', '{fault.Description}', '{fault.ClassIndexes[0]}', '{fault.ClassIndexes[1]}', '{fault.ClassIndexes[2]}', '{fault.UserTime + fault.MachineTime}', 'complete', '{Settings.UserName}')", Lavenderbase);
+                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO faults (written, number, component, placement, description, cause, classification, type, time, status, registrant) VALUES ('{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")}', '{orderNumber.Replace(" ", string.Empty)}', '{fault.Component}', '{fault.Placement}', '{fault.Description}', '{fault.ClassIndexes[0]}', '{fault.ClassIndexes[1]}', '{fault.ClassIndexes[2]}', '{fault.UserTime + fault.MachineTime}', 'complete', '{Settings.UserName}')", Lavenderbase);
                 insertCommand.ExecuteNonQuery();
 
                 SqliteCommand selectCommand = new SqliteCommand("SELECT * FROM faults WHERE id = (SELECT MAX(id) FROM faults)", Lavenderbase);
@@ -176,8 +176,11 @@ namespace DN_Henkel_Vision.Memory
                 }
 
                 // Replace the status of the exports to exported.
-                SqliteCommand updateCommand = new SqliteCommand("UPDATE faults SET status='exported' WHERE status='complete'", Lavenderbase);
-                updateCommand.ExecuteNonQuery();
+                if (!inkognito)
+                {
+                    SqliteCommand updateCommand = new SqliteCommand("UPDATE faults SET status='exported' WHERE status='complete'", Lavenderbase);
+                    updateCommand.ExecuteNonQuery();
+                }
 
                 // Close the database connection.
                 Lavenderbase.Close();
