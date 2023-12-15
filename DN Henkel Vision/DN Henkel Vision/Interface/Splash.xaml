@@ -9,7 +9,7 @@
     xmlns:memory="using:DN_Henkel_Vision.Memory"
     mc:Ignorable="d">
     <Grid
-        RequestedTheme="{x:Bind memory:Drive.SafeTheme()}"
+        RequestedTheme="{x:Bind memory:Lavender.LoadTheme()}"
         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
         Loaded="Grid_Loaded">
         <Grid 

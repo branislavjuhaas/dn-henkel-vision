@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="DN_Henkel_Vision.Interface.Login"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StackPanel
+        VerticalAlignment="Stretch"
+        Width="350"
+        Spacing="20">
+        <Grid Margin="0,50,0,0">
+            <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xE77B;" Margin="-2" FontSize="16" />
+            <TextBox x:Name="Username" x:FieldModifier="public" VerticalAlignment="Top" Margin="36,0,0,0" TextWrapping="Wrap"/>
+        </Grid>
+        <Grid>
+            <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xEA18;" Margin="-2" FontSize="16" />
+            <PasswordBox x:Name="Password" x:FieldModifier="public" VerticalAlignment="Top" Margin="36,0,0,0"/>
+        </Grid>
+        <Grid x:Name="Error" x:FieldModifier="public" Visibility="Collapsed">
+            <TextBlock Text="Invalid username or password." Foreground="PaleVioletRed" Margin="20,0,0,0"/>
+            <FontIcon HorizontalAlignment="Left" FontFamily="Segoe Fluent Icons" Glyph="&#xE7BA;" Margin="-2" FontSize="16" Foreground="PaleVioletRed" />
+        </Grid>
+        <CheckBox x:Name="Remember" x:FieldModifier="public" IsChecked="True" Content="Remember" HorizontalAlignment="Right" FlowDirection="RightToLeft" VerticalAlignment="Top"/>
+    </StackPanel>
+</Page>

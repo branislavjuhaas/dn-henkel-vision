@@ -89,7 +89,7 @@ namespace DN_Henkel_Vision.Felber
 
             output.Classification = PredictClassification(output.Description, output.Cause);
             output.Type = PredictType(output.Description, output.Cause, output.Classification);
-            output.Component = PredictComponent(output.Description);
+            output.Component = PredictComponent(ref output.Description);
 
             if (s_orderNumber.StartsWith("20") && input.Placement != string.Empty)
             {
@@ -118,7 +118,7 @@ namespace DN_Henkel_Vision.Felber
         {
             Fault output = new(input.Description);
 
-            output.Component = PredictComponent(output.Description);
+            output.Component = PredictComponent(ref output.Description);
 
             if (input.Placement != string.Empty)
             {
@@ -271,8 +271,20 @@ namespace DN_Henkel_Vision.Felber
         /// </summary>
         /// <param name="description">Description of the fault.</param>
         /// <returns>Predicted component of the fault.</returns>
-        private static string PredictComponent(string description)
+        private static string PredictComponent(ref string description)
         {
+            // Checks if the description contains two slashes
+            if (description.Count(x => x == '\\') == 2)
+            {
+                string[] slashes = description.Split('\\');
+
+                if (slashes.Length == 3)
+                {
+                    description = description.Replace("\\", string.Empty);
+                    return slashes[1];
+                }
+            }
+            
             char[] separators = new char[] { '/', '-', ':', ',', '.', ' ' };
             string[] words = description.Split(separators);
             List<string> potentionals = new();
@@ -355,7 +367,7 @@ namespace DN_Henkel_Vision.Felber
 
             float time = (Manager.AverageTime - ( user / factor ));
 
-            if (time < 0) { return 0f; }
+            if (time <= 0) { return 0f; }
 
             time *= ((float)Random.Shared.Next(100, 120) / 100f);
 

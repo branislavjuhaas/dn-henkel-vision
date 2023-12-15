@@ -474,6 +474,7 @@
                         Height="30"
                         TextWrapping="Wrap"
                         Text="{x:Bind _userName}"
+                        IsEnabled="{x:Bind UserEnabled()}"
                         TextChanged="UserText_TextChanged"/>
                 </Grid>
                 <Grid

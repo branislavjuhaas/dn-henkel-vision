@@ -8,6 +8,10 @@ using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
+using System.Numerics;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -16,19 +20,27 @@ namespace DN_Henkel_Vision.Interface
     /// </summary>
     public sealed partial class Environment : Window
     {
-        private static string _selectedOrder = "";
+        private static string _selectedOrder = string.Empty;
 
+        private static string s_hours = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Hours"));
+        private string _time = $"0.00 {s_hours}";
+        private string _revenue = "0€";
+      
         /// <summary>
         /// Constructor of the main application's window.
         /// </summary>
         public Environment()
         {
+            UpdateTimebar(true);
             this.InitializeComponent();
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(ApplicationTitleBar);
 
-            Drive.Log("---------------------------------------------------------");
-            Drive.Log("Environment window initialized successfully.");
+            Timegrid.Translation += new Vector3(0, 0, 32);
+
+            if (Manager.LaunchingFile == string.Empty) { return; }
+
+            Workspace.Navigate(typeof(Explorer));
         }
 
         /// <summary>
@@ -61,7 +73,6 @@ namespace DN_Henkel_Vision.Interface
                 }
                 sender.ItemsSource = suitableItems;
             }
-
         }
 
         /// <summary>
@@ -71,6 +82,8 @@ namespace DN_Henkel_Vision.Interface
         private void OrderToggle_Click(object sender, RoutedEventArgs e)
         {
             ToggleButton senderButton = sender as ToggleButton;
+
+            UpdateTimebar();
 
             OrdersPanel_Select(senderButton.Content.ToString());
         }
@@ -105,7 +118,7 @@ namespace DN_Henkel_Vision.Interface
             }
             
             OrdersPanel_Select(selection);
-            sender.Text = "";
+            sender.Text = string.Empty;
         }
 
         /// <summary>
@@ -113,6 +126,8 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         private void OrdersPanel_Loaded(object sender, RoutedEventArgs e)
         {
+            if (Manager.LaunchingFile != string.Empty) { return; }
+            
             if (Manager.OrdersRegistry.Count == 0)
             {
                 Workspace.Navigate(typeof(Welcome));
@@ -140,7 +155,7 @@ namespace DN_Henkel_Vision.Interface
             // order index to -1 (no order selected) and return.
             if (!Manager.OrdersRegistry.Contains(selection))
             {
-                _selectedOrder = "";
+                _selectedOrder = string.Empty;
                 return;
             }
 
@@ -171,6 +186,7 @@ namespace DN_Henkel_Vision.Interface
 
             Manager.SelectOrder(orderNumber);
             Workspace.Navigate(typeof(Editor));
+            Exporter.Visibility = Visibility.Collapsed;
         }
         
         /// <summary>
@@ -207,20 +223,9 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event args.</param>
         private void Export_Click(object sender, RoutedEventArgs e)
         {
-            if (Workspace.Content.GetType() == typeof(Editor))
-            {
-                Manager.UpdateRegistry();
-                Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
-            }
-
-            if (Memory.Export.ChangedData)
-            {
-                Memory.Export.ChangedData = false;
-                Memory.Export.Evaluate();
-            }
-
             OrdersPanel_Select(string.Empty);
-            Workspace.Navigate(typeof(Exports));
+            Workspace.Navigate(typeof(Lavender));
+            Exporter.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -229,16 +234,7 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         private void Environment_Closed(object sender, WindowEventArgs args)
         {
-            if (!string.IsNullOrEmpty(Manager.Selected.OrderNumber))
-            {
-                Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
-            }
-            Drive.SaveRegistry();
-            Drive.SaveExportHistory();
-            if (Interface.Settings.DataCollection)
-            {
-                Drive.WriteTrainees();
-            }
+
         }
 
         /// <summary>
@@ -260,7 +256,6 @@ namespace DN_Henkel_Vision.Interface
                 RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme,
                 Content = new Order()
             };
-            orderDialog.Loaded += OrderDialog_Loaded;
 
             ContentDialogResult result = await orderDialog.ShowAsync();
 
@@ -280,40 +275,15 @@ namespace DN_Henkel_Vision.Interface
         }
 
         /// <summary>
-        /// Event handler for the OrderDialog's Loaded event.
-        /// </summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">The RoutedEventArgs object containing information about the event.</param>
-        private void OrderDialog_Loaded(object sender, RoutedEventArgs e)
-        {
-            var parent = VisualTreeHelper.GetParent((DependencyObject)sender);
-            var child = VisualTreeHelper.GetChild(parent, 0);
-            var frame = (Microsoft.UI.Xaml.Shapes.Rectangle)child;
-            frame.Margin = new Thickness(0);
-            frame.RegisterPropertyChangedCallback(
-                FrameworkElement.MarginProperty,
-                (DependencyObject sender, DependencyProperty dp) =>
-                {
-                    if (dp == FrameworkElement.MarginProperty)
-                        sender.ClearValue(dp);
-                });
-        }
-
-        /// <summary>
         /// Handles the click event of the settings button and navigates to the settings page.
         /// </summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">The event data.</param>
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
-            if (Workspace.Content.GetType() == typeof(Editor))
-            {
-                Manager.UpdateRegistry();
-                Drive.SaveFaults(Manager.Selected.OrderNumber, Manager.Selected.Faults.ToList(), Manager.Selected.ReviewFaults, Manager.Selected.PendingFaults);
-            }
-
             OrdersPanel_Select(string.Empty);
             Workspace.Navigate(typeof(Settings));
+            Exporter.Visibility = Visibility.Collapsed;
         }
 
         private void Environment_Loaded(object sender, RoutedEventArgs e)
@@ -323,7 +293,59 @@ namespace DN_Henkel_Vision.Interface
             AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
             OverlappedPresenter presenter = (OverlappedPresenter)appWindow.Presenter;
             presenter.Maximize();
-            Drive.Log("Environment loaded successfully.");
+            Authentification.Auth();
+        }
+
+        public void UpdateTimebar(bool evaluateOnly = false)
+        {
+            _time = $"{MathF.Round(Memory.Lavender.Time / 60f, 2)} {s_hours}";
+            _revenue = (MathF.Round(Memory.Lavender.Time / 60f, 2) * 4.2f).ToString("0.00") + "€";
+
+            if (evaluateOnly) { return; }
+
+            (Timepanel.Children[1] as TextBlock).Text = _time;
+            (Timepanel.Children[3] as TextBlock).Text = _revenue;
+        }
+
+        private void Exporter_Click(object sender, RoutedEventArgs e)
+        {
+            (Workspace.Content as Lavender).Exporter_Click(sender, e);
+        }
+
+        private async void Workspace_Drop(object sender, DragEventArgs e)
+        {
+            Movementer.Margin = new Thickness(0, 0, 0, 0);
+
+            string file = string.Empty;
+
+            if (e.DataView.Contains(StandardDataFormats.StorageItems))
+            {
+                var items = await e.DataView.GetStorageItemsAsync();
+                if (items.Count > 0 && items[0] is StorageFile ffile)
+                {
+                    file = ffile.Path;
+                    // Use the filePath variable as needed
+                }
+            }
+
+            if (file == string.Empty || (!file.EndsWith(".dnfa") && !file.EndsWith(".dnfn"))) { return; }
+
+            Manager.LaunchingFile = file;
+
+            (Manager.CurrentWindow as Environment).Workspace.Navigate(typeof(Explorer));
+        }
+
+        private void Workspace_DragOver(object sender, DragEventArgs e)
+        {
+            e.AcceptedOperation = DataPackageOperation.Copy;
+
+            (Statustext.Child as TextBlock).Text = "Explore The Exported File";
+            Movementer.Margin = new Thickness(0, -50, 0, 0);
+        }
+
+        private void Workspace_DragLeave(object sender, DragEventArgs e)
+        {
+            Movementer.Margin = new Thickness(0, 0, 0, 0);
         }
     }
 }

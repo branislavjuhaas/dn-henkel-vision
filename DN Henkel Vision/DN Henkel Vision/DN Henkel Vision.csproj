@@ -54,7 +54,9 @@
   <ItemGroup>
     <None Remove="Interface\Editor.xaml" />
     <None Remove="Interface\Environment.xaml" />
-    <None Remove="Interface\Exports.xaml" />
+    <None Remove="Interface\Explorer.xaml" />
+    <None Remove="Interface\Lavender.xaml" />
+    <None Remove="Interface\Login.xaml" />
     <None Remove="Interface\Order.xaml" />
     <None Remove="Interface\Preview.xaml" />
     <None Remove="Interface\Settings.xaml" />
@@ -62,11 +64,13 @@
     <None Remove="Interface\Welcome.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.13" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.13" />
     <PackageReference Include="Microsoft.ML" Version="2.0.1" />
     <PackageReference Include="Microsoft.ML.FastTree" Version="2.0.1" />
     <PackageReference Include="Microsoft.ML.LightGbm" Version="2.0.1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230602002" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -89,6 +93,12 @@
       <DependentUpon>Cause.mbconfig</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Interface\Explorer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Interface\Login.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Interface\Welcome.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -101,7 +111,7 @@
     <Page Update="Interface\Order.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Interface\Exports.xaml">
+    <Page Update="Interface\Lavender.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Interface\Preview.xaml">

@@ -1,14 +1,19 @@
 using DN_Henkel_Vision.Memory;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.Calls;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -60,7 +65,8 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         private void CauseList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Tact.Content = e.ClickedItem.ToString();
+            //Tact.Content = e.ClickedItem.ToString();
+            Tact.Content = ((e.ClickedItem as Grid).Children[0] as TextBlock).Text;
             Tact.Flyout.Hide();
 
             if (_locked) { return; }
@@ -85,12 +91,26 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">Arguments of the event.</param>
         private void FaultInput_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (e.Key == Windows.System.VirtualKey.Enter)
+            if (e.Key == VirtualKey.Enter)
             {               
                 FaultPush();
                 return;
             }
-            
+
+            // Check if there is no slash in the fault input and if yes, add one
+            if (((int)e.Key) == 220 && !FaultInput.Text.Contains("\\"))
+            {
+                int index = FaultInput.SelectionStart; 
+                FaultInput.Text = FaultInput.Text.Insert(index, "\\");
+                FaultInput.SelectionStart = index;
+            }
+
+            // Check if the character right after the cursor is slash and if yes, move the cursor one character to the right
+            if (e.Key == VirtualKey.Space && FaultInput.SelectionStart < FaultInput.Text.Length && FaultInput.Text[FaultInput.SelectionStart] == '\\' && !IsShift())
+            {
+                FaultInput.SelectionStart++;
+            }
+
             if (e.Key == VirtualKey.Tab && Tact.Content.ToString() != Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Cause/Content")) && !_locked)
             {
                 Lock();
@@ -102,6 +122,17 @@ namespace DN_Henkel_Vision.Interface
             _begin = DateTime.Now;
 
             _counting = true;
+        }
+
+        /// <summary>
+        /// Returns a boolean indicating whether the Shift key is currently pressed.
+        /// </summary>
+        /// <returns>A boolean value indicating whether the Shift key is currently pressed.</returns>
+        private static bool IsShift()
+        {
+            CoreVirtualKeyStates states = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
+
+            return (states & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         }
 
         /// <summary>
@@ -321,16 +352,22 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event arguments.</param>
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
+            // If no fault is selected, return.
             if (LastTapped == null) return;
 
+            // Get the index of the fault in the list of faults.
             int index = FaultsList.GetElementIndex(LastTapped);
             Fault fault = Manager.Selected.Faults[index].Clone();
 
+            // Remove the fault from the list of faults and add it to the review list.
+            Memory.Lavender.DeleteFault(Manager.Selected.Faults[index].Index);
             Manager.Selected.Faults.RemoveAt(index);
             Manager.Selected.ReviewFaults.Insert(0, fault);
 
+            // Set the current review to the first fault in the review list.
             Cache.CurrentReview = 0;
-
+            
+            // Navigate to the preview page of the edited fault.
             DataRing.Visibility = Visibility.Collapsed;
             NoDataText.Visibility = Visibility.Collapsed;
             FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
@@ -343,11 +380,19 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event arguments.</param>
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
+            // If no fault is selected, return
             if (LastTapped == null) return;
-
+            
+            // Get the index of the fault in the list of faults
             int index = FaultsList.GetElementIndex(LastTapped);
 
+            // Remove the fault from the list of faults
+            Memory.Lavender.DeleteFault(Manager.Selected.Faults[index].Index);
             Manager.Selected.Faults.RemoveAt(index);
+
+            // Reevaluate the time of the orders
+            Memory.Lavender.EvaluateTime();
+            (Manager.CurrentWindow as Environment).UpdateTimebar();
         }
 
         /// <summary>
@@ -359,6 +404,119 @@ namespace DN_Henkel_Vision.Interface
         {
             // Set the last-tapped element to the tapped grid element.
             LastTapped = sender as Grid;
+        }
+
+        /// <summary>
+        /// Provides the handle for the quicker fault selection from the faults list.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Key event arguments.</param>
+        private void CauseList_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            // Initialize the index of the selection.
+            int index = 0;
+
+            // Switch the index based on the key pressed.
+            switch (e.Key)
+            {
+                case VirtualKey.Number0:
+                    index = 0; break;
+                case VirtualKey.NumberPad0:
+                    index = 0; break;
+                case VirtualKey.Number1:
+                    index = 1; break;
+                case VirtualKey.NumberPad1:
+                    index = 1; break;
+                case VirtualKey.Number2:
+                    index = 2; break;
+                case VirtualKey.NumberPad2:
+                    index = 2; break;
+                case VirtualKey.Number3:
+                    index = 3; break;
+                case VirtualKey.NumberPad3:
+                    index = 3; break;
+                case VirtualKey.Number4:
+                    index = 4; break;
+                case VirtualKey.NumberPad4:
+                    index = 4; break;
+                case VirtualKey.Number5:
+                    index = 5; break;
+                case VirtualKey.NumberPad5:
+                    index = 5; break;
+                case VirtualKey.A:
+                    index = 6; break;
+                case VirtualKey.E:
+                    index = 7; break;
+                case VirtualKey.B:
+                    index = 8; break;
+                case VirtualKey.S:
+                    index = 9; break;
+                case VirtualKey.T:
+                    index = 10; break;
+                case VirtualKey.L:
+                    index = 11; break;
+                case VirtualKey.R:
+                    index = 12; break;
+                case VirtualKey.C:
+                    index = 13; break;
+                case VirtualKey.W:
+                    index = 14; break;
+                case VirtualKey.P:
+                    index = 15; break;
+                case VirtualKey.O:
+                    index = 16; break;
+                default: return;
+            }
+
+            // Handle the event.
+            e.Handled = true;
+
+            // Set the fault and hide the flyout.
+            Tact.Content = Memory.Classification.LocalCauses[index];
+            Tact.Flyout.Hide();
+
+            // Lock the editor.
+            if (_locked) { return; }
+            Lock();
+        }
+
+        public List<ListViewItem> Causes()
+        {
+            string[] shortcuts = new string[] { "0", "1", "2", "3", "4", "5", "A", "E", "B", "S", "T", "L", "R", "C", "W", "P", "O" };
+
+            List<ListViewItem> causes = new();
+
+            for (int i = 0; i < Memory.Classification.LocalCauses.Length; i++)
+            {
+                Grid grid = new();
+
+                TextBlock text = new()
+                {
+                    Text = Memory.Classification.LocalCauses[i],
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Left
+                };
+
+                TextBlock shortcut = new()
+                {
+                    Text = shortcuts[i],
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Foreground = new SolidColorBrush((Color)Application.Current.Resources["TextFillColorSecondary"])
+                };
+
+                grid.Children.Add(text);
+                grid.Children.Add(shortcut);
+
+                ListViewItem item = new()
+                {
+                    Content = grid
+                };
+
+                causes.Add(item);
+            }
+
+            return causes;
         }
     }
 }
