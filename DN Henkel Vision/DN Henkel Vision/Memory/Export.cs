@@ -190,6 +190,11 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        /// <summary>
+        /// Returns a list of faults for given time, username and date.
+        /// </summary>
+        /// <param name="file">The file to load the faults from.</param>
+        /// <returns>A list of faults for given time, username and date.</returns>
         public static List<Exportite> GetExport(string file)
         {
             // Create a list of faults

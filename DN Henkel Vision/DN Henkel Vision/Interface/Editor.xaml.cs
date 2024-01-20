@@ -480,6 +480,10 @@ namespace DN_Henkel_Vision.Interface
             Lock();
         }
 
+        /// <summary>
+        /// Provides the handle for the quicker fault selection from the faults list.
+        /// </summary>
+        /// <returns>A list of ListViewItem objects.</returns>
         public List<ListViewItem> Causes()
         {
             string[] shortcuts = new string[] { "0", "1", "2", "3", "4", "5", "A", "E", "B", "S", "T", "L", "R", "C", "W", "P", "O" };

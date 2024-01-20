@@ -17,12 +17,21 @@ using Windows.Storage;
 
 namespace DN_Henkel_Vision.Memory
 {
+    /// <summary>
+    /// Class for the authentification of the user.
+    /// </summary>
     internal class Authentification : Lavender
     {
         public static string User = string.Empty;
         public static string Name = string.Empty;
         public static string Role = string.Empty;
 
+        /// <summary>
+        /// Authenticate the user using a dialog if needed.
+        /// </summary>
+        /// <param name="cantoken">If the user can be authenticated using a token.</param>
+        /// <param name="canclose">If the user can close the dialog.</param>
+        /// <returns>True if the user is authenticated, false otherwise.</returns>
         public static async Task<bool> Auth(bool cantoken = true, bool canclose = false)
         {
             // If there is no user, set the user to guest.
@@ -120,6 +129,10 @@ namespace DN_Henkel_Vision.Memory
             return null;
         }
 
+        /// <summary>
+        /// Check if the token is valid.
+        /// </summary>
+        /// <returns>True if the token is valid, false otherwise.</returns>
         private static bool ValidToken()
         {
             // Load the local settings of the application.
@@ -187,6 +200,10 @@ namespace DN_Henkel_Vision.Memory
             return true;
         }
 
+        /// <summary>
+        /// Create a token for the user.
+        /// </summary>
+        /// <param name="username">The username of the user.</param>
         private static void CreateToken(string username)
         {
             // Load the local settings of the application.
@@ -232,6 +249,15 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        /// <summary>
+        /// Generate a token for the user.
+        /// </summary>
+        /// <param name="id">The id of the user.</param>
+        /// <param name="username">The username of the user.</param>
+        /// <param name="password">The password of the user.</param>
+        /// <param name="role">The role of the user.</param>
+        /// <param name="expiration">The expiration date of the token.</param>
+        /// <returns>The generated token.</returns>
         private static string GenerateToken(string id, string username, string password, string role, DateTime expiration)
         {
             // Generate the token.
@@ -244,6 +270,11 @@ namespace DN_Henkel_Vision.Memory
             return Convert.ToBase64String(hash);
         }
 
+        /// <summary>
+        /// Abreviate the name of the user.
+        /// </summary>
+        /// <param name="text">The name of the user.</param>
+        /// <returns>The abreviated name of the user.</returns>
         private static string Abreviate(string text)
         {
             var normalizedString = text.Normalize(NormalizationForm.FormD);
@@ -264,6 +295,12 @@ namespace DN_Henkel_Vision.Memory
             return international.Split(' ').Last() + international.Split(' ').First().First().ToString();
         }
 
+        /// <summary>
+        /// Validate the username and password.
+        /// </summary>
+        /// <param name="username">The username to validate.</param>
+        /// <param name="password">The password to validate.</param>
+        /// <returns>True if the username and password are valid, false otherwise.</returns>
         private static bool Validate(string username, string password)
         {
             // Open the database connection.
@@ -301,6 +338,10 @@ namespace DN_Henkel_Vision.Memory
             return true;
         }
 
+        /// <summary>
+        /// Check if there is any user in the database.
+        /// </summary>
+        /// <returns>True if there is any user, false otherwise.</returns>
         private static bool AnyUser()
         {
             // Open the database connection.
