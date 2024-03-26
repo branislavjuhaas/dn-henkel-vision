@@ -250,7 +250,7 @@
     <comment>Collect Data Setting Description</comment>
   </data>
   <data name="T_Copyright.Text" xml:space="preserve">
-    <value>© 2023 DN Foundation. Alle Rechte vorbehalten.</value>
+    <value>© 2023-2024 Branislav Juhás. Alle Rechte vorbehalten.</value>
     <comment>Copyright Info In Settigns Page</comment>
   </data>
   <data name="T_CreateOrder.Text" xml:space="preserve">

@@ -24,7 +24,7 @@ namespace DN_Henkel_Vision.Interface
 
         private static string s_hours = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Hours"));
         private string _time = $"0.00 {s_hours}";
-        private string _revenue = "0€";
+        private string _revenue = "0ï¿½";
       
         /// <summary>
         /// Constructor of the main application's window.
@@ -286,6 +286,12 @@ namespace DN_Henkel_Vision.Interface
             Exporter.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Handles the event when the Environment window is loaded.
+        /// Maximizes the window and authenticates the user.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
         private void Environment_Loaded(object sender, RoutedEventArgs e)
         {
             var windowHandle = WinRT.Interop.WindowNative.GetWindowHandle(this);
@@ -296,10 +302,14 @@ namespace DN_Henkel_Vision.Interface
             _ = Authentification.Auth();
         }
 
+        /// <summary>
+        /// Updates the timebar with the current time and revenue.
+        /// </summary>
+        /// <param name="evaluateOnly">If true, only the values are updated, otherwise the UI is updated as well.</param>
         public void UpdateTimebar(bool evaluateOnly = false)
         {
             _time = $"{MathF.Round(Memory.Lavender.Time / 60f, 2)} {s_hours}";
-            _revenue = (MathF.Round(Memory.Lavender.Time / 60f, 2) * 4.2f).ToString("0.00") + "€";
+            _revenue = (MathF.Round(Memory.Lavender.Time / 60f, 2) * 4.2f).ToString("0.00") + "ï¿½";
 
             if (evaluateOnly) { return; }
 
@@ -307,11 +317,22 @@ namespace DN_Henkel_Vision.Interface
             (Timepanel.Children[3] as TextBlock).Text = _revenue;
         }
 
+        /// <summary>
+        /// Handles the click event of the Exporter button.
+        /// Saves the faults and initiates the data evaluation.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
         private void Exporter_Click(object sender, RoutedEventArgs e)
         {
             (Workspace.Content as Lavender).Exporter_Click(sender, e);
         }
 
+        /// <summary>
+        /// Provides the functionality for the drag and drop of the exported file.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
         private async void Workspace_Drop(object sender, DragEventArgs e)
         {
             Movementer.Margin = new Thickness(0, 0, 0, 0);
@@ -335,6 +356,11 @@ namespace DN_Henkel_Vision.Interface
             (Manager.CurrentWindow as Environment).Workspace.Navigate(typeof(Explorer));
         }
 
+        /// <summary>
+        /// Provides the functionality for the drag and drop of the exported file.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
         private void Workspace_DragOver(object sender, DragEventArgs e)
         {
             e.AcceptedOperation = DataPackageOperation.Copy;
@@ -343,6 +369,11 @@ namespace DN_Henkel_Vision.Interface
             Movementer.Margin = new Thickness(0, -50, 0, 0);
         }
 
+        /// <summary>
+        /// Provides the functionality for the drag and drop of the exported file.
+        /// </summary>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The event data.</param>
         private void Workspace_DragLeave(object sender, DragEventArgs e)
         {
             Movementer.Margin = new Thickness(0, 0, 0, 0);

@@ -85,6 +85,9 @@ namespace DN_Henkel_Vision.Interface
             return (states & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         }
 
+        /// <summary>
+        /// Evaluates the graph by calculating the maximum and half values.
+        /// </summary>
         public void EvaluateGraph()
         {
             List<float> services = Memory.Lavender.EvaluateGraph();
@@ -113,6 +116,11 @@ namespace DN_Henkel_Vision.Interface
             }
         }
 
+        /// <summary>
+        /// Returns the graphing value for the given scenario.
+        /// </summary>
+        /// <param name="scenario">The scenario to return the graphing value for.</param>
+        /// <returns>The graphing value for the given scenario.</returns>
         public string GraphTime(int scenario)
         {
             return scenario switch

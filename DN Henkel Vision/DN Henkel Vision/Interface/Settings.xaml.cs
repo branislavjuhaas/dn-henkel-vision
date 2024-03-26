@@ -33,6 +33,11 @@ namespace DN_Henkel_Vision.Interface
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Handles the event when the user clicks the dropdown for the theme.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void ThemeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _themeIndex = ThemeCombo.SelectedIndex;
@@ -58,6 +63,11 @@ namespace DN_Henkel_Vision.Interface
             Memory.Lavender.SaveSettings();
         }
 
+        /// <summary>
+        /// Handles the event when the user clicks the toggle for the testing redirection.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void TestingSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             _setAutoTesting = TestingSwitch.IsOn;
@@ -66,6 +76,11 @@ namespace DN_Henkel_Vision.Interface
             Memory.Lavender.SaveSettings();
         }
 
+        /// <summary>
+        /// Handles the event when the user clicks the toggle for the data collection.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void CollectionSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             _dataCollection = CollectionSwitch.IsOn;
@@ -74,6 +89,11 @@ namespace DN_Henkel_Vision.Interface
             Memory.Lavender.SaveSettings();
         }
 
+        /// <summary>
+        /// Handles the event when the user edits the registrant text box.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void UserText_TextChanged(object sender, TextChangedEventArgs e)
         {
             _userName = UserText.Text;
@@ -82,6 +102,10 @@ namespace DN_Henkel_Vision.Interface
             Memory.Lavender.SaveSettings();
         }
 
+        /// <summary>
+        /// Checks if the registrant text can be edited.
+        /// </summary>
+        /// <returns>A boolean value indicating whether the registrant text can be edited.</returns>
         private bool UserEnabled()
         {
             if (Authentification.User == string.Empty || Authentification.User == "Guest")

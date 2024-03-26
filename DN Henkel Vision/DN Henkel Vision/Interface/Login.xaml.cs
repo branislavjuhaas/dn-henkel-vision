@@ -20,15 +20,23 @@ using Windows.Foundation.Collections;
 namespace DN_Henkel_Vision.Interface
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Content of the login dialog.
     /// </summary>
     public sealed partial class Login : Page
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Login"/> class.
+        /// </summary>
         public Login()
         {
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Handles the event when the dialog is loaded.
+        /// </summary>
+        /// <param name="sender">The object that fired the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void StackPanel_Loaded(object sender, RoutedEventArgs e)
         {
             if (Authentification.User != string.Empty)
