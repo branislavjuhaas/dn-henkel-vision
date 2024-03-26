@@ -93,27 +93,8 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Arguments of the event</param>
-        private async void Approve_Click(object sender, RoutedEventArgs e)
+        private void Approve_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(Placement.Text))
-            {
-                ContentDialog message = new()
-                {
-                    XamlRoot = Manager.CurrentWindow.Content.XamlRoot,
-                    Title = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_MissingPlacement/Text")),
-                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                    Content = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_MissingPlacementDsn/Text")),
-                    PrimaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Cancel/Content")),
-                    SecondaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Continue/Content")),
-                    DefaultButton = ContentDialogButton.Primary,
-                    RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme
-                };
-
-                ContentDialogResult result = await message.ShowAsync();
-
-                if (result == ContentDialogResult.Primary) { return; }
-            }
-            
             ApproveFault();
 
             if (Manager.CurrentEditor.FaultInput.FocusState != FocusState.Unfocused) { return; }
@@ -129,35 +110,87 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="sender">Sender of the event</param>
         /// <param name="e">Arguments of the event</param>
-        private async void Approve_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        private void Approve_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(Placement.Text))
+            ApproveFault(true);
+        }
+
+        /// <summary>
+        /// This void clears the current fault from the review list and moves to the next one.
+        /// </summary>
+        private void CleanFault()
+        {
+            // Remove the fault from the review list
+            Manager.Selected.ReviewFaults.RemoveAt(Cache.CurrentReview);
+
+            // If there are no more faults to review, return
+            if (Manager.Selected.ReviewFaults.Count > 0)
             {
-                ContentDialog message = new()
+                if (Cache.CurrentReview >= Manager.Selected.ReviewFaults.Count)
                 {
-                    XamlRoot = Manager.CurrentWindow.Content.XamlRoot,
-                    Title = "Missing Placement",
-                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
-                    Content = "Do you want to continue without valid placement?",
-                    PrimaryButtonText = "Close",
-                    SecondaryButtonText = "Continue",
-                    DefaultButton = ContentDialogButton.Primary
-                };
+                    Cache.CurrentReview = Manager.Selected.ReviewFaults.Count - 1;
+                }
 
-                ContentDialogResult result = await message.ShowAsync();
+                Manager.CurrentEditor.FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
 
-                if (result == ContentDialogResult.Primary) { return; }
+                return;
             }
 
-            ApproveFault(true);
+            // If there are no more faults to review, return
+            Manager.CurrentEditor.Unreview();
         }
 
         /// <summary>
         /// Approves the current fault and logs the user and machine time to Manager.Selected
         /// </summary>
         /// <param name="keep">If true, does not remove the fault from Manager.Selected</param>
-        public void ApproveFault(bool keep = false)
+        public async void ApproveFault(bool keep = false)
         {
+            // If the component is empty, show a message box
+            if (string.IsNullOrEmpty(Placement.Text))
+            {
+                // Show a message box
+                ContentDialog message = new()
+                {
+                    XamlRoot = Manager.CurrentWindow.Content.XamlRoot,
+                    Title = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_MissingPlacement/Text")),
+                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                    Content = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_MissingPlacementDsn/Text")),
+                    PrimaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Cancel/Content")),
+                    SecondaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Continue/Content")),
+                    DefaultButton = ContentDialogButton.Primary,
+                    RequestedTheme = (Manager.CurrentWindow.Content as Grid).RequestedTheme
+                };
+
+                // Show the message box
+                ContentDialogResult result = await message.ShowAsync();
+
+                // If the user clicked the primary button, return
+                if (result == ContentDialogResult.Primary) { return; }
+            }
+
+            // If the description is in the faults list, it is a duplicate
+            if (Manager.Selected.Faults.Any(f => f.Description == Description.Text))
+            {
+                // Show a message box
+                ContentDialog message = new()
+                {
+                    XamlRoot = Manager.CurrentWindow.Content.XamlRoot,
+                    Title = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_DupliciteFault/Text")),
+                    Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                    Content = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_DupliciteFaultDsn/Text")),
+                    PrimaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Delete/Text")),
+                    SecondaryButtonText = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:B_Keep/Content")),
+                    DefaultButton = ContentDialogButton.Primary
+                };
+
+                // Show the message box
+                ContentDialogResult result = await message.ShowAsync();
+
+                // If the user clicked the secondary button, return
+                if (result != ContentDialogResult.Secondary) { CleanFault(); return; }
+            }
+
             Fault preparate = PrepareFault();
 
             preparate.Index = ((uint)Memory.Lavender.AppendFault(preparate, Manager.Selected.OrderNumber));
@@ -173,30 +206,8 @@ namespace DN_Henkel_Vision.Interface
             //If it is not set to remove, function can return, because following code is just for removing the fault
             if (keep) { return; }
 
-            if (Manager.Selected.ReviewFaults[Cache.CurrentReview].Equals(preparate))
-            {
-                Trainer.Correct.Add(new Trainee(preparate));
-            }
-            else
-            {
-                Trainer.Incorrect.Add(new Trainee(preparate));
-            }
-
-            Manager.Selected.ReviewFaults.RemoveAt(Cache.CurrentReview);
-
-            if (Manager.Selected.ReviewFaults.Count > 0)
-            {
-                if (Cache.CurrentReview >= Manager.Selected.ReviewFaults.Count)
-                {
-                    Cache.CurrentReview = Manager.Selected.ReviewFaults.Count - 1;
-                }
-
-                Manager.CurrentEditor.FaultPreview.Navigate(typeof(Preview), null, new SuppressNavigationTransitionInfo());
-
-                return;
-            }
-
-            Manager.CurrentEditor.Unreview();
+            // Remove the fault from the review list
+            CleanFault();
         }
 
         /// <summary>

@@ -337,4 +337,16 @@
     <value>Exportovať</value>
     <comment>Content Of The Export Button</comment>
   </data>
+  <data name="B_Keep.Content" xml:space="preserve">
+    <value>Zachovať</value>
+    <comment>Content Of The Keep Button</comment>
+  </data>
+  <data name="T_DupliciteFault.Text" xml:space="preserve">
+    <value>Duplicitná chyba</value>
+    <comment>Header Of The Duplicite Fault Dialog</comment>
+  </data>
+  <data name="T_DupliciteFaultDsn.Text" xml:space="preserve">
+    <value>Táto chyba je už v databáze. Chcete ju zachovať?</value>
+    <comment>Content Of The Duplicite Fault Dialog</comment>
+  </data>
 </root>

@@ -293,7 +293,7 @@ namespace DN_Henkel_Vision.Interface
             AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
             OverlappedPresenter presenter = (OverlappedPresenter)appWindow.Presenter;
             presenter.Maximize();
-            Authentification.Auth();
+            _ = Authentification.Auth();
         }
 
         public void UpdateTimebar(bool evaluateOnly = false)
