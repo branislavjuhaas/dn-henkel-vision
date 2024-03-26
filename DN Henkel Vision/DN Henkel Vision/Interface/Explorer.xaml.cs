@@ -35,6 +35,9 @@ namespace DN_Henkel_Vision.Interface
         }
     }
 
+    /// <summary>
+    /// Represents a class for storing information about an export.
+    /// </summary>
     public class Exportite
     {
         public string Order;
@@ -42,6 +45,9 @@ namespace DN_Henkel_Vision.Interface
         public string Description;
         public string Registrant;
 
+        /// <summary>
+        /// Initializes a new instance of the Exportite class using a raw string array.
+        /// </summary>
         public Exportite(string[] raw)
         {
             Order = raw[0];

@@ -49,6 +49,11 @@ namespace DN_Henkel_Vision.Memory
 
         }
 
+        /// <summary>
+        /// This returns a new Fault struct whose values are copied from the current Fault struct.
+        /// </summary>
+        /// <param name="fault">The fault to copy</param>
+        /// <returns>A new Fault with copied values</returns>
         public bool Equals(Fault fault)
         {
             if (fault == null) return false;
@@ -70,6 +75,13 @@ namespace DN_Henkel_Vision.Memory
             return $"{Component}\t{Placement}\t{Description}\t{ClassIndexes[0]}\t{ClassIndexes[1]}\t{ClassIndexes[2]}";
         }
 
+        /// <summary>
+        /// This method returns the fault in a format that can be exported to a file.
+        /// </summary>
+        /// <param name="order">The order number</param>
+        /// <param name="user">The user who classified the fault</param>
+        /// <param name="date">The date of classification</param>
+        /// <returns>The string of the fault</returns>
         public string Export(string order, string user, string date)
         {
             string ordernumber = order.Replace(" ", "");

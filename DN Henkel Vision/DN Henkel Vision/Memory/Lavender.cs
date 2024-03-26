@@ -12,6 +12,9 @@ using System.Security.Cryptography;
 
 namespace DN_Henkel_Vision.Memory
 {
+    /// <summary>
+    /// The Lavender class storing all information about the database.
+    /// </summary>
     internal class Lavender
     {
         private static string s_local = string.Empty;
@@ -19,12 +22,18 @@ namespace DN_Henkel_Vision.Memory
 
         public static float Time = 0;
 
+        /// <summary>
+        /// Function to destroy the database connection.
+        /// </summary>
         public static void Invalidate()
         {
             Lavenderbase?.Close();
             Lavenderbase = null;
         }
 
+        /// <summary>
+        /// Function to get the database connection.
+        /// </summary>
         public static SqliteConnection GetConnection()
         {
             if (Lavenderbase == null)
@@ -49,11 +58,18 @@ namespace DN_Henkel_Vision.Memory
             return Lavenderbase;
         }
 
+        /// <summary>
+        /// Function to check if the database is valid.
+        /// </summary>
         public static void Validate()
         {
             GetConnection();
         }
 
+        /// <summary>
+        /// Loads the registry from the database.
+        /// </summary>
+        /// <returns>A list of registry entries.</returns>
         public static List<string> LoadRegistry()
         {
             List<string> registry = new List<string>();
@@ -75,6 +91,11 @@ namespace DN_Henkel_Vision.Memory
             return registry;
         }
 
+        /// <summary>
+        /// Loads faults associated with a specific order number.
+        /// </summary>
+        /// <param name="orderNumber">The order number.</param>
+        /// <returns>A list of faults.</returns>
         public static List<Fault> LoadFaults(string orderNumber)
         {
             List<Fault> faults = new List<Fault>();
@@ -114,6 +135,12 @@ namespace DN_Henkel_Vision.Memory
             return faults.Reverse<Fault>().ToList();
         }
     
+        /// <summary>
+        /// Appends a fault to the database.
+        /// </summary>
+        /// <param name="fault">The fault to append.</param>
+        /// <param name="orderNumber">The associated order number.</param>
+        /// <returns>The ID of the appended fault.</returns>
         public static int AppendFault(Fault fault, string orderNumber)
         {
             int id = 0;
@@ -136,6 +163,10 @@ namespace DN_Henkel_Vision.Memory
             return id;
         }
 
+        /// <summary>
+        /// Deletes a fault from the database.
+        /// </summary>
+        /// <param name="index">The ID of the fault to delete.</param>
         public static void DeleteFault(uint index)
         {
             using (SqliteConnection Lavenderbase = GetConnection())
@@ -148,6 +179,14 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        /// <summary>
+        /// Loads exports from the database.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="date">The date.</param>
+        /// <param name="netstal">A flag indicating whether to include Netstal data.</param>
+        /// <param name="inkognito">A flag indicating whether to include Inkognito data.</param>
+        /// <returns>A string representing the exports.</returns>
         public static string LoadExports(string user, string date, bool netstal, bool inkognito)
         {
             // Declare a lists used to store the exports and the times.
@@ -190,6 +229,9 @@ namespace DN_Henkel_Vision.Memory
             return Export.Header(netstal, inkognito) + "\r\n" + string.Join("\n", exports);
         }
 
+        /// <summary>
+        /// Evaluates the total time of all complete faults.
+        /// </summary>
         public static void EvaluateTime()
         {
             // Open the database connection.
@@ -211,6 +253,10 @@ namespace DN_Henkel_Vision.Memory
             }   
         }
 
+        /// <summary>
+        /// Evaluates the graph data.
+        /// </summary>
+        /// <returns>A list of float values representing the graph data.</returns>
         public static List<float> EvaluateGraph()
         {
             List<float> output = new List<float>();
@@ -249,6 +295,10 @@ namespace DN_Henkel_Vision.Memory
             return output;
         }
 
+        /// <summary>
+        /// Creates a new order in the database.
+        /// </summary>
+        /// <param name="order">The order to create.</param>
         public static void CreateOrder(string order)
         {
             // Open the database connection.
@@ -264,6 +314,9 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        /// <summary>
+        /// Loads the application settings.
+        /// </summary>
         public static void LoadSettings()
         {
             // Load the local settings of the application.
@@ -282,6 +335,9 @@ namespace DN_Henkel_Vision.Memory
             }
         }
 
+        /// <summary>
+        /// Saves the application settings.
+        /// </summary>
         public static void SaveSettings()
         {
             // Load the local settings of the application.
@@ -293,6 +349,10 @@ namespace DN_Henkel_Vision.Memory
             settings.Values["user"] = Settings.UserName;
         }
 
+        /// <summary>
+        /// Loads the application language.
+        /// </summary>
+        /// <returns>The application language.</returns>
         public static string LoadLanguage()
         {
             // Load the local settings of the application.
@@ -302,6 +362,10 @@ namespace DN_Henkel_Vision.Memory
             return settings.Values["language"] == null ? CultureInfo.CurrentUICulture.Name : (string)settings.Values["language"];
         }
 
+        /// <summary>
+        /// Loads the application theme.
+        /// </summary>
+        /// <returns>The application theme.</returns>
         public static ElementTheme LoadTheme()
         {
             // Load the local settings of the application.

@@ -348,6 +348,11 @@ namespace DN_Henkel_Vision.Interface
             _fromui = true;
         }
 
+        /// <summary>
+        /// Handles the event when the duplicate button is clicked.
+        /// </summary>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">The routed event arguments</param>
         private void Duplicate_Click(object sender, RoutedEventArgs e)
         {
             Component.Margin = new Thickness(0);
