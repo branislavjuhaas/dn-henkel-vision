@@ -307,7 +307,7 @@ namespace DN_Henkel_Vision.Interface
         public void UpdateTimebar(bool evaluateOnly = false)
         {
             _time = $"{MathF.Round(Memory.Lavender.Time / 60f, 2)} {s_hours}";
-            _revenue = (MathF.Round(Memory.Lavender.Time / 60f, 2) * 4.2f).ToString("0.00") + "\u20AC";
+            _revenue = (MathF.Round(Memory.Lavender.Time / 60f, 2) * 4.31f).ToString("0.00") + "\u20AC";
 
             if (evaluateOnly) { return; }
 
