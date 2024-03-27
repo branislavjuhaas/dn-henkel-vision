@@ -27,7 +27,7 @@ namespace DN_Henkel_Vision
 
             this.InitializeComponent();
             if (!mutex.WaitOne(TimeSpan.Zero, true))
-            {
+            {                
                 System.Environment.Exit(0);
             }
         }

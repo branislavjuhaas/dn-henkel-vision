@@ -147,7 +147,7 @@ namespace DN_Henkel_Vision.Interface
         public async void ApproveFault(bool keep = false)
         {
             // If the component is empty, show a message box
-            if (string.IsNullOrEmpty(Placement.Text))
+            if (string.IsNullOrEmpty(Placement.Text) && !Manager.Selected.IsNetstal())
             {
                 // Show a message box
                 ContentDialog message = new()
@@ -166,7 +166,7 @@ namespace DN_Henkel_Vision.Interface
                 ContentDialogResult result = await message.ShowAsync();
 
                 // If the user clicked the primary button, return
-                if (result == ContentDialogResult.Primary) { return; }
+                if (result != ContentDialogResult.Secondary) { return; }
             }
 
             // If the description is in the faults list, it is a duplicate
