@@ -207,7 +207,7 @@ namespace DN_Henkel_Vision.Memory
                 // If the line is not empty
                 if (splits.Length == 0) { continue; }
 
-                string order = Interface.Environment.Format("38" + splits[0]);
+                string order = splits[0].Length == 6 ? Interface.Environment.Format("38" + splits[0]) : Interface.Environment.Format(splits[0]);
 
                 // Split the order number into its parts usin
 

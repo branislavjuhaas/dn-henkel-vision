@@ -198,8 +198,11 @@ namespace DN_Henkel_Vision.Memory
             {
                 Lavenderbase.Open();
 
-                // Create a command to select all the exports from the database and execute it.
-                SqliteCommand selectCommand = new SqliteCommand("SELECT * from faults WHERE status='complete'", Lavenderbase);
+                string beginning = "38";
+                if (netstal) { beginning = "20"; }
+
+                // Create a command to select all the exports from the database where the first two digits of number are equal to beginning
+                SqliteCommand selectCommand = new SqliteCommand("SELECT * from faults WHERE status='complete' AND number LIKE '" + beginning + "%'", Lavenderbase);
                 SqliteDataReader query = selectCommand.ExecuteReader();
 
                 // Read all the exports and add them to the list with the times.
@@ -217,7 +220,7 @@ namespace DN_Henkel_Vision.Memory
                 // Replace the status of the exports to exported.
                 if (!inkognito)
                 {
-                    SqliteCommand updateCommand = new SqliteCommand("UPDATE faults SET status='exported' WHERE status='complete'", Lavenderbase);
+                    SqliteCommand updateCommand = new SqliteCommand("UPDATE faults SET status='exported' WHERE status='complete' AND number LIKE '" + beginning + "%'", Lavenderbase);
                     updateCommand.ExecuteNonQuery();
                 }
 
