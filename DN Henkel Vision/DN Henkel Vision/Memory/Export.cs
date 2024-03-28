@@ -8,6 +8,7 @@ using System.IO;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using DN_Henkel_Vision.Interface;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -32,7 +33,7 @@ namespace DN_Henkel_Vision.Memory
         /// <param name="netstal">Indicates whether export is for Netstal machine or not.</param>
         /// <param name="inkognito">Indicates whether to show the real project name or not.</param>
         /// <returns>The header string for exports.</returns>
-        public static string Header(bool netstal = false, bool inkognito = false)
+        public static string Header(bool netstal = false, bool inkognito = false, string checksum = "")
         {
             string pseudoheader = s_header.Replace("DNHENKELVISION", "##############");
 
@@ -47,6 +48,8 @@ namespace DN_Henkel_Vision.Memory
             char[] date = DateTime.Now.ToString("ddMMyy").ToCharArray();
             char[] user = Regex.Replace(System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToUpper(), "[^A-Z0-9]", "").ToCharArray();
             char[] version = Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace('.', 'N').ToCharArray();
+            char[] time = (Memory.Lavender.GetExportTime(netstal) / 60f).ToString("0.00").Replace(".", "").PadLeft(5, '0').ToCharArray();
+            
 
             HeaderReplace(ref pseudoheader, ref indexes, ref values, 77, (char)ri);
             HeaderReplace(ref pseudoheader, ref indexes, ref values, 78, (char)rii);
@@ -82,6 +85,20 @@ namespace DN_Henkel_Vision.Memory
                 HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), 'P');
             }
 
+            HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), time[0]);
+            HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), time[1]);
+            HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), time[2]);
+            HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), time[3]);
+            HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), time[4]);
+
+            // Write a hash
+            if (!checksum.IsNullOrEmpty())
+            {
+                HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), checksum[0]);
+                HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), checksum[1]);
+                HeaderReplace(ref pseudoheader, ref indexes, ref values, Sequence(ref seed, 10, 605), checksum[2]);
+            }
+
             char[] pseudo = pseudoheader.Replace("##############", "DNHENKELVISION").ToCharArray();
 
             for (int i = 0; i < indexes.Count; i++)
@@ -95,6 +112,79 @@ namespace DN_Henkel_Vision.Memory
             }
 
             return new string(pseudo) + s_adauftrag;
+        }
+
+        public static string[] DecodeHeader(string header)
+        {
+            string series = "Auftrag";
+            string date = string.Empty;
+            string user = string.Empty;
+            string version = string.Empty;
+            string time = "N/A";
+            string checksum = string.Empty;
+
+            // if the seventh line is equal to the netstal header then the export is for netstal
+            if (header.Split('\r')[6].Contains(s_adnetstal)) { series = "Netstal"; }
+
+            // Remove the last line
+            header = header.Substring(0, header.LastIndexOf('\r'));
+
+            // Convert header to char array
+            char[] headerArray = header.Replace("DNHENKELVISION", "##############").ToCharArray();
+
+            int ri = (int)headerArray[77];
+            int rii = (int)headerArray[78];
+
+            int seed = ri * rii;
+
+            // Get date
+            for (int i = 0; i < 6; i++)
+            {
+                date += HeaderRead(ref headerArray, Sequence(ref seed, 10, 605));
+            }
+
+            // Convert date which is now in format ddMMyy to dd. mm. yyyy
+            date = date.Substring(0, 2).TrimStart('0') + ". " + date.Substring(2, 2).TrimStart('0') + ". " + "20" + date.Substring(4, 2);
+
+            // Get username
+            int userlength = (int)HeaderRead(ref headerArray, Sequence(ref seed, 10, 605)) - 65;
+
+            for (int i = 0; i < userlength; i++)
+            {
+                user += HeaderRead(ref headerArray, Sequence(ref seed, 10, 605));
+            }
+
+            // Get version
+            int versionLength = (int)HeaderRead(ref headerArray, Sequence(ref seed, 10, 605)) - 65;
+            for (int i = 0; i < versionLength; i++)
+            {
+                version += HeaderRead(ref headerArray, Sequence(ref seed, 10, 605));
+            }
+
+            version = version.Replace('N', '.');
+
+            // Get mode
+            series = HeaderRead(ref headerArray, Sequence(ref seed, 10, 605)) == 'I' ? series + " Inkognito" : series;
+
+            // If the build of the version can be read and it is >= 2007 then read the time (build are digits after the last dot in the version
+            if (int.TryParse(version.Split('.').Last(), out int build) && build >= 2027)
+            {
+                time = string.Empty;
+                for (int i = 0; i < 5; i++)
+                {
+                    time += HeaderRead(ref headerArray, Sequence(ref seed, 10, 605));
+                }
+                // Conver time string from 01234 to 012.34 and then remove all paddin zeros from the beginning
+                time = time.Insert(3, ".").TrimStart('0') + " " + Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Hours"));
+
+                // Get checksum
+                for (int i = 0; i < 3; i++)
+                {
+                    checksum += HeaderRead(ref headerArray, Sequence(ref seed, 10, 605));
+                }
+            }
+
+            return new string[] { series, date, user, version, time, checksum };
         }
 
         /// <summary>
@@ -120,6 +210,44 @@ namespace DN_Henkel_Vision.Memory
             char[] pseudo = pseudoheader.ToCharArray();
             pseudo[index] = '$';
             pseudoheader = new string(pseudo);
+        }
+
+        public static char HeaderRead( ref char[] pseudoheader, int index )
+        {
+            while (pseudoheader[index] == '#' || pseudoheader[index] == ' ' || pseudoheader[index] == '$' || pseudoheader[index] == '\r' || pseudoheader[index] == '\n')
+            {
+                index += 2;
+                if (index >= pseudoheader.Length) { index = 0; }
+            }
+
+            char value = pseudoheader[index];
+            pseudoheader[index] = '$';
+            return value;
+        }
+
+        public static string Checksum(string checker)
+        {
+            if (checker.IsNullOrEmpty()) { return string.Empty; }
+
+            char[] chars = checker.ToCharArray();
+
+            int checksum = 0;
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                checksum += chars[i] ^ i;
+                if (checksum > 15625) { checksum = checksum % 15626; }
+            }
+
+            string checks = "";
+
+            for (int i = 0; i < 3; i++)
+            {
+                checks += (char)(65 + checksum % 26);
+                checksum = checksum / 26;
+            }
+
+            return checks;
         }
 
         /// <summary>
@@ -219,6 +347,24 @@ namespace DN_Henkel_Vision.Memory
             }
 
             return faults;
+        }
+
+        public static string[] GetHeader(string file)
+        {
+            string[] lines = File.ReadAllLines(file);
+
+            string[] decoded = DecodeHeader(string.Join("\r\n", lines.Take(7)));
+
+            if (Checksum(string.Join('\n', lines.Skip(7))).Equals(decoded[5]))
+            {
+                decoded[5] = "Verified";
+            }
+            else
+            {
+                decoded[5] = "Forged";
+            }
+
+            return decoded;
         }
     }
 }

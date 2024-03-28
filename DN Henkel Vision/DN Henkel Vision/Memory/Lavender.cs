@@ -8,7 +8,6 @@ using Windows.Storage;
 using Microsoft.UI.Xaml;
 using System.Globalization;
 using System.Text;
-using System.Security.Cryptography;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -228,8 +227,11 @@ namespace DN_Henkel_Vision.Memory
                 Lavenderbase.Close();
             }
 
+            string joined = string.Join("\n", exports);
+            
+
             // Return the exports.
-            return Export.Header(netstal, inkognito) + "\r\n" + string.Join("\n", exports);
+            return Export.Header(netstal, inkognito, Export.Checksum(joined)) + "\r\n" + string.Join("\n", exports);
         }
 
         /// <summary>
@@ -254,6 +256,29 @@ namespace DN_Henkel_Vision.Memory
 
                 Time = query.GetFloat(0);
             }   
+        }
+
+        public static float GetExportTime(bool netstal)
+        {
+            string beginning = "38";
+            if (netstal) { beginning = "20"; }
+
+            using (SqliteConnection Lavenderbase = GetConnection())
+            {
+                Lavenderbase.Open();
+
+                // Create a command to select all the exports from the database and execute it.
+                SqliteCommand selectCommand = new SqliteCommand("SELECT SUM(time) from faults WHERE status='complete' AND number LIKE '" + beginning + "%'", Lavenderbase);
+                SqliteDataReader query = selectCommand.ExecuteReader();
+
+                // Read all the exports and update the time.
+                query.Read();
+
+                if (!query.HasRows) { return 0f; }
+                if (query.IsDBNull(0)) { return 0f ; }
+
+                return query.GetFloat(0);
+            }
         }
 
         /// <summary>
