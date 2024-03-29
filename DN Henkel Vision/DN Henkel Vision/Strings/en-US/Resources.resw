@@ -337,4 +337,16 @@
     <value>Export</value>
     <comment>Content Of The Export Button</comment>
   </data>
+  <data name="B_Keep.Content" xml:space="preserve">
+    <value>Keep</value>
+    <comment>Content Of The Keep Button</comment>
+  </data>
+  <data name="T_DupliciteFault.Text" xml:space="preserve">
+    <value>Duplicate Fault</value>
+    <comment>Header Of The Duplicite Fault Dialog</comment>
+  </data>
+  <data name="T_DupliciteFaultDsn.Text" xml:space="preserve">
+    <value>This fault is already in the database. Do you want to keep it?</value>
+    <comment>Content Of The Duplicite Fault Dialog</comment>
+  </data>
 </root>

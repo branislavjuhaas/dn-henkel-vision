@@ -83,7 +83,8 @@ namespace DN_Henkel_Vision.Felber
                 else { input.Cause = PredictCause(input.Description); }
             }
             
-            string description = Capitalize(input.Description);
+            // Capitalizes all words that contain digits and replaces "mm2" with "mm²" and "mm3" with "mm³"
+            string description = Capitalize(Superscript(input.Description));
 
             Fault output = new(description, input.Cause);
 
@@ -201,6 +202,15 @@ namespace DN_Henkel_Vision.Felber
                     input = input.Replace(word, word.ToUpper());
                 }
             }
+
+            return input;
+        }
+
+        public static string Superscript(string input)
+        {
+            // Replace all the values of "mm2" with "mm²" and "mm3" with "mm³"
+            input = input.Replace("mm2", "mm²").Replace("MM2", "MM²").Replace("Mm2", "Mm²").Replace("mM2", "mM²");
+            input = input.Replace("mm3", "mm³").Replace("MM3", "MM³").Replace("Mm3", "Mm³").Replace("mM3", "mM³");
 
             return input;
         }

@@ -337,4 +337,16 @@
     <value>Exportieren</value>
     <comment>Content Of The Export Button</comment>
   </data>
+  <data name="B_Keep.Content" xml:space="preserve">
+    <value>Behalten</value>
+    <comment>Content Of The Keep Button</comment>
+  </data>
+  <data name="T_DupliciteFault.Text" xml:space="preserve">
+    <value>Duplizierte Störung</value>
+    <comment>Header Of The Duplicite Fault Dialog</comment>
+  </data>
+  <data name="T_DupliciteFaultDsn.Text" xml:space="preserve">
+    <value>Diese Störung ist bereits in der Datenbank vorhanden. Möchten Sie sie behalten?</value>
+    <comment>Content Of The Duplicite Fault Dialog</comment>
+  </data>
 </root>

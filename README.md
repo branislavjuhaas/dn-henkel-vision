@@ -1,1 +1,2 @@
-# DN-Henkel-Vision
+# DN Henkel Vision
+![Version](https://img.shields.io/badge/Version-2024.0.0-blue?style=flat-square) ![License](https://img.shields.io/badge/License-MIT-red?style=flat-square) ![State](https://img.shields.io/badge/Development_State-Active-green?style=flat-square) ![Framework](https://img.shields.io/badge/Framework-WinUI-purple?style=flat-square&link=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fwindows%2Fapps%2Fwinui%2Fwinui3%2F)

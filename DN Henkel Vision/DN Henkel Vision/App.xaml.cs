@@ -28,6 +28,13 @@ namespace DN_Henkel_Vision
             this.InitializeComponent();
             if (!mutex.WaitOne(TimeSpan.Zero, true))
             {
+                AppActivationArguments activatedEventArgs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+                if (activatedEventArgs.Kind == Microsoft.Windows.AppLifecycle.ExtendedActivationKind.File)
+                {
+                    Lavender.SendMessage("OPEN\t" + (activatedEventArgs.Data as Windows.ApplicationModel.Activation.IFileActivatedEventArgs).Files[0].Path);
+                    System.Environment.Exit(0);
+                }
+                Lavender.SendMessage("FOCUS");
                 System.Environment.Exit(0);
             }
         }

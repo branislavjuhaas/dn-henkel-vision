@@ -4,11 +4,9 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Drawing;
 using System.Numerics;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -24,7 +22,7 @@ namespace DN_Henkel_Vision.Interface
 
         private static string s_hours = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Hours"));
         private string _time = $"0.00 {s_hours}";
-        private string _revenue = "0�";
+        private string _revenue = "0\u20AC";
       
         /// <summary>
         /// Constructor of the main application's window.
@@ -299,7 +297,7 @@ namespace DN_Henkel_Vision.Interface
             AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
             OverlappedPresenter presenter = (OverlappedPresenter)appWindow.Presenter;
             presenter.Maximize();
-            Authentification.Auth();
+            _ = Authentification.Auth();
         }
 
         /// <summary>
@@ -309,7 +307,7 @@ namespace DN_Henkel_Vision.Interface
         public void UpdateTimebar(bool evaluateOnly = false)
         {
             _time = $"{MathF.Round(Memory.Lavender.Time / 60f, 2)} {s_hours}";
-            _revenue = (MathF.Round(Memory.Lavender.Time / 60f, 2) * 4.2f).ToString("0.00") + "�";
+            _revenue = (MathF.Round(Memory.Lavender.Time / 60f, 2) * 4.31f).ToString("0.00") + "\u20AC";
 
             if (evaluateOnly) { return; }
 

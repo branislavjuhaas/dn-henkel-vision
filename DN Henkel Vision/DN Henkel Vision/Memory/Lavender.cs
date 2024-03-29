@@ -8,7 +8,8 @@ using Windows.Storage;
 using Microsoft.UI.Xaml;
 using System.Globalization;
 using System.Text;
-using System.Security.Cryptography;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace DN_Henkel_Vision.Memory
 {
@@ -18,6 +19,7 @@ namespace DN_Henkel_Vision.Memory
     internal class Lavender
     {
         private static string s_local = string.Empty;
+        private static FileSystemWatcher s_watcher;
         private static SqliteConnection Lavenderbase;
 
         public static float Time = 0;
@@ -149,7 +151,7 @@ namespace DN_Henkel_Vision.Memory
             {
                 Lavenderbase.Open();
 
-                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO faults (number, component, placement, description, cause, classification, type, time, status, registrant) VALUES ('{orderNumber.Replace(" ", string.Empty)}', '{fault.Component}', '{fault.Placement}', '{fault.Description}', '{fault.ClassIndexes[0]}', '{fault.ClassIndexes[1]}', '{fault.ClassIndexes[2]}', '{fault.UserTime + fault.MachineTime}', 'complete', '{Settings.UserName}')", Lavenderbase);
+                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO faults (written, number, component, placement, description, cause, classification, type, time, status, registrant) VALUES ('{DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")}', '{orderNumber.Replace(" ", string.Empty)}', '{fault.Component}', '{fault.Placement}', '{fault.Description}', '{fault.ClassIndexes[0]}', '{fault.ClassIndexes[1]}', '{fault.ClassIndexes[2]}', '{fault.UserTime + fault.MachineTime}', 'complete', '{Settings.UserName}')", Lavenderbase);
                 insertCommand.ExecuteNonQuery();
 
                 SqliteCommand selectCommand = new SqliteCommand("SELECT * FROM faults WHERE id = (SELECT MAX(id) FROM faults)", Lavenderbase);
@@ -198,8 +200,11 @@ namespace DN_Henkel_Vision.Memory
             {
                 Lavenderbase.Open();
 
-                // Create a command to select all the exports from the database and execute it.
-                SqliteCommand selectCommand = new SqliteCommand("SELECT * from faults WHERE status='complete'", Lavenderbase);
+                string beginning = "38";
+                if (netstal) { beginning = "20"; }
+
+                // Create a command to select all the exports from the database where the first two digits of number are equal to beginning
+                SqliteCommand selectCommand = new SqliteCommand("SELECT * from faults WHERE status='complete' AND number LIKE '" + beginning + "%'", Lavenderbase);
                 SqliteDataReader query = selectCommand.ExecuteReader();
 
                 // Read all the exports and add them to the list with the times.
@@ -215,15 +220,21 @@ namespace DN_Henkel_Vision.Memory
                 }
 
                 // Replace the status of the exports to exported.
-                SqliteCommand updateCommand = new SqliteCommand("UPDATE faults SET status='exported' WHERE status='complete'", Lavenderbase);
-                updateCommand.ExecuteNonQuery();
+                if (!inkognito)
+                {
+                    SqliteCommand updateCommand = new SqliteCommand("UPDATE faults SET status='exported' WHERE status='complete' AND number LIKE '" + beginning + "%'", Lavenderbase);
+                    updateCommand.ExecuteNonQuery();
+                }
 
                 // Close the database connection.
                 Lavenderbase.Close();
             }
 
+            string joined = string.Join("\n", exports);
+            
+
             // Return the exports.
-            return Export.Header(netstal, inkognito) + "\r\n" + string.Join("\n", exports);
+            return Export.Header(netstal, inkognito, Export.Checksum(joined)) + "\r\n" + string.Join("\n", exports);
         }
 
         /// <summary>
@@ -248,6 +259,29 @@ namespace DN_Henkel_Vision.Memory
 
                 Time = query.GetFloat(0);
             }   
+        }
+
+        public static float GetExportTime(bool netstal)
+        {
+            string beginning = "38";
+            if (netstal) { beginning = "20"; }
+
+            using (SqliteConnection Lavenderbase = GetConnection())
+            {
+                Lavenderbase.Open();
+
+                // Create a command to select all the exports from the database and execute it.
+                SqliteCommand selectCommand = new SqliteCommand("SELECT SUM(time) from faults WHERE status='complete' AND number LIKE '" + beginning + "%'", Lavenderbase);
+                SqliteDataReader query = selectCommand.ExecuteReader();
+
+                // Read all the exports and update the time.
+                query.Read();
+
+                if (!query.HasRows) { return 0f; }
+                if (query.IsDBNull(0)) { return 0f ; }
+
+                return query.GetFloat(0);
+            }
         }
 
         /// <summary>
@@ -378,5 +412,104 @@ namespace DN_Henkel_Vision.Memory
                 default: return ElementTheme.Default;
             }
         }
+
+        public static void CreateWatcher()
+        {
+            string directory = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Messages");
+
+            // Create the directory if it does not exist.
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            // Create a file system watcher for the directory.
+            s_watcher = new FileSystemWatcher(directory)
+            {
+                NotifyFilter = NotifyFilters.LastWrite,
+            };
+
+            // Add the event handler for the changed event.
+            s_watcher.Changed += MessageReceived;
+            s_watcher.EnableRaisingEvents = true;
+        }
+
+        private static void MessageReceived(object sender, FileSystemEventArgs e)
+        {
+            // Open the file and read the contents.
+            using (StreamReader reader = new StreamReader(e.FullPath))
+            {
+                string message = reader.ReadToEnd();
+
+                // Parse the message and append it to the database.
+                string[] parts = message.Split('\t');
+                // If the first part is equal to "FOCUS", then focus the window.
+                if (parts[0] == "FOCUS")
+                {
+                    // Focus the window.
+                    WindowHelper.BringProcessToFront(Process.GetCurrentProcess());
+                }
+                else if (parts[0] == "OPEN")
+                {
+                    // Open the exported file (parts[1]) in the default application.
+                    if (parts[1] == string.Empty || (!parts[1].EndsWith(".dnfa") && !parts[1].EndsWith(".dnfn"))) { return; }
+
+                    Manager.LaunchingFile = parts[1];
+
+                    // Focus the window.
+                    WindowHelper.BringProcessToFront(Process.GetCurrentProcess());
+
+                    // Open the file.
+                    Manager.CurrentWindow.DispatcherQueue.TryEnqueue(() => { (Manager.CurrentWindow as Interface.Environment).Workspace.Navigate(typeof(Explorer)); });
+                }
+            }
+
+            // Delete the file
+            File.Delete(e.FullPath);
+        }
+
+        public static void SendMessage(string message)
+        {
+            string directory = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Messages");
+
+            // Create the directory if it does not exist.
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            // Create a file and write the message to it.
+            using (StreamWriter writer = new StreamWriter(Path.Combine(directory, $"{Guid.NewGuid()}.dnw")))
+            {
+                writer.Write(message);
+            }
+        }
+    }
+
+    public static class WindowHelper
+    {
+        [DllImport("USER32.DLL")]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("USER32.DLL")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        public static void BringProcessToFront(Process process)
+        {
+            IntPtr handle = process.MainWindowHandle;
+            if (IsIconic(handle))
+            {
+                ShowWindow(handle, SW_RESTORE);
+            }
+            SetForegroundWindow(handle);
+        }
+
+        const int SW_RESTORE = 9;
+
+        [DllImport("User32.dll")]
+        private static extern bool IsIconic(IntPtr handle);
+
+        [DllImport("User32.dll")]
+        private static extern bool ShowWindow(IntPtr handle, int nCmdShow);
     }
 }
