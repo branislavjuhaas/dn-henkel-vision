@@ -42,6 +42,7 @@ namespace DN_Henkel_Vision.Memory
             OrdersRegistry = Lavender.LoadRegistry();
             VisualRegistry = new(OrdersRegistry);
             Lavender.EvaluateTime();
+            Lavender.CreateWatcher();
         }
 
         /// <summary>
