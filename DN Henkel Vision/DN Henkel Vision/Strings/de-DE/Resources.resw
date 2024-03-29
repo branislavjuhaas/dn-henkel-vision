@@ -282,7 +282,7 @@
     <comment>Placeholder Of The Fault Description Field In Editor</comment>
   </data>
   <data name="T_Felber.Text" xml:space="preserve">
-    <value>Felber KI-Klassifikator</value>
+    <value>FelberAI</value>
     <comment>Caption Of The Felber In Settings Page</comment>
   </data>
   <data name="T_Funding.Text" xml:space="preserve">
@@ -290,7 +290,7 @@
     <comment>Funding Caption In Settings Page</comment>
   </data>
   <data name="T_Heritage.Text" xml:space="preserve">
-    <value>Teil des DN Software-Erbes</value>
+    <value>Teil des DN Familie</value>
     <comment>DN Software Heritage Caption In Settings Page</comment>
   </data>
   <data name="T_Invalid.Text" xml:space="preserve">
