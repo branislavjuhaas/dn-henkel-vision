@@ -1,19 +1,19 @@
 # DN Henkel Vision
-![Version](https://img.shields.io/badge/Version-2024.0.0-blue) ![License](https://img.shields.io/badge/License-MIT-red) ![State](https://img.shields.io/badge/Development_State-Active-green) ![Framework](https://img.shields.io/badge/Framework-Windows_App_SDK_1.5-purple?link=https%3A%2F%2Flearn.microsoft.com%2Fen-us%2Fwindows%2Fapps%2Fwinui%2Fwinui3%2F)
+![Version](https://img.shields.io/badge/Version-2024.0.0-blue) ![License](https://img.shields.io/badge/License-MIT-red) ![State](https://img.shields.io/badge/Development_State-Active-green) ![Framework](https://img.shields.io/badge/Framework-Windows_App_SDK_1.5-purple)
 
 # DN Henkel Vision
 ![DN Henkel Vision Editor](Readme/henkel-vision-editor.png)
 
 # Description
-DN Henkel Vision is a software application designed for fault registration at KraussMaffei Technologies, spol. s r.o. The project is partially funded by the same organization. The application provides support for exporting data to both Netstal and Autrag Microsoft Access Databases. One of the key features of the application is its integration with FelberAI, which predicts the classification of faults.
+DN Henkel Vision is a software application designed for fault registration at [KraussMaffei Technologies, spol. s r.o.](https://www.kraussmaffei.com/en/home) The project is partially funded by the same organization. The application provides support for exporting data to both [Netstal](https://www.netstal.com/#) and [Autrag](https://www.kraussmaffei.com/en/our-products/px-series-250-4-000-kn) Microsoft Access Databases. One of the key features of the application is its integration with `FelberAI`, which predicts the classification of faults.
 
 # Setup Instructions
 To set up DN Henkel Vision, follow the standard setup instructions for a WinUI app:
 
 1. **Prerequisites**: Make sure you have the following installed on your machine:
-    - Windows 11, version 23H2 (build 22631), or later
-    - Visual Studio 2022, version 17.9.4 or later, with the Universal Windows Platform development workload
-    - The Windows 11 SDK, version 23H2 (build 22621), or later
+    - [Windows 11](https://www.microsoft.com/software-download/windows11), version 23H2 (build 22631), or later
+    - [Visual Studio 2022](https://visualstudio.microsoft.com/vs/), version 17.9.4 or later, with the Universal Windows Platform development workload
+    - [The Windows 11 SDK](https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/), version 23H2 (build 22621), or later
 
 2. **Clone the Repository**: Clone the DN Henkel Vision repository to your local machine.
 
