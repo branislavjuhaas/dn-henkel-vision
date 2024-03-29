@@ -165,13 +165,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ML" Version="2.0.1" />
-    <PackageReference Include="Microsoft.ML.FastTree" Version="2.0.1" />
-    <PackageReference Include="Microsoft.ML.LightGbm" Version="2.0.1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000">
+    <PackageReference Include="Microsoft.ML" Version="3.0.1" />
+    <PackageReference Include="Microsoft.ML.FastTree" Version="3.0.1" />
+    <PackageReference Include="Microsoft.ML.LightGbm" Version="3.0.1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240311000">
       <IncludeAssets>build</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.2428">
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233">
       <IncludeAssets>build</IncludeAssets>
     </PackageReference>
   </ItemGroup>
