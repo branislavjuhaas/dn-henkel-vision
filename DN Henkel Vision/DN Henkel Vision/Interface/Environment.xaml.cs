@@ -192,25 +192,25 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="input">input string</param>
         /// <returns>Formatted string in (net)'xxxx  xxxx' and (ord)'xx xxx xxx'</returns>
-        public static string Format(string input)
+        public static string Format(string input, bool variable = false)
         {
-            string output = input;
+            if (variable && input.Length == 6 && !input.StartsWith("38")) { input = "38" + input; }
 
             try
             {
                 if (input.StartsWith("20"))
                 {
-                    output = input.Insert(4, "  ");
+                    input = input.Insert(4, "  ");
                 }
                 else if (input.StartsWith("38"))
                 {
-                    output = input.Insert(2, " ");
-                    output = output.Insert(6, " ");
+                    input = input.Insert(2, " ");
+                    input = input.Insert(6, " ");
                 }
             }
             catch { }
 
-            return output;
+            return input;
         }
 
         /// <summary>

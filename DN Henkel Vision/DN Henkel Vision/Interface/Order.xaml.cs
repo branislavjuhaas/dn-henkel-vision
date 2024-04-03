@@ -26,7 +26,7 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">Key event data that describes the key that raised the event.</param> 
         private void Number_KeyUp(object sender, KeyRoutedEventArgs e)
         {
-            string order = Environment.Format(Number.Text.Replace(" ", ""));
+            string order = Environment.Format(Number.Text.Replace(" ", ""), true);
 
             ContentDialog dialog = this.Parent as ContentDialog;
 
