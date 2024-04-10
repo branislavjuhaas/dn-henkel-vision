@@ -195,6 +195,8 @@ namespace DN_Henkel_Vision.Memory
             List<string> exports = new List<string>();
             List<float> times = new List<float>();
 
+            float exportTime = GetExportTime(netstal);
+
             // Open the database connection.
             using (SqliteConnection Lavenderbase = GetConnection())
             {
@@ -234,7 +236,7 @@ namespace DN_Henkel_Vision.Memory
             
 
             // Return the exports.
-            return Export.Header(netstal, inkognito, Export.Checksum(joined)) + "\r\n" + string.Join("\n", exports);
+            return Export.Header(netstal, inkognito, Export.Checksum(joined), exportTime) + "\r\n" + string.Join("\n", exports);
         }
 
         /// <summary>
@@ -369,7 +371,7 @@ namespace DN_Henkel_Vision.Memory
         /// <summary>
         /// Saves the application settings.
         /// </summary>
-        public static void SaveSettings()
+        public static void SaveSettings(bool language = false)
         {
             // Load the local settings of the application.
             ApplicationDataContainer settings = Windows.Storage.ApplicationData.Current.LocalSettings;
@@ -378,6 +380,11 @@ namespace DN_Henkel_Vision.Memory
             settings.Values["testing"] = Settings.SetAutoTesting;
             settings.Values["collection"] = Settings.DataCollection;
             settings.Values["user"] = Settings.UserName;
+
+            if (language)
+            {
+                settings.Values["language"] = Settings.Language;
+            }
         }
 
         /// <summary>

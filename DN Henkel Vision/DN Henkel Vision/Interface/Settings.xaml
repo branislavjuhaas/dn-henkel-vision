@@ -521,6 +521,32 @@
                         IsOn="{x:Bind _dataCollection}"
                         Toggled="CollectionSwitch_Toggled"/>
                 </Grid>
+                <Grid
+                    Style="{StaticResource SettingsCard}"
+                    Visibility="{x:Bind _languageVisibility}">
+                    <FontIcon
+                        Glyph="&#xF2B7;"
+                        HorizontalAlignment="Left"/>
+                    <TextBlock
+                        x:Uid="T_AppLanguage"
+                        Margin="40,0"/>
+                    <TextBlock
+                        x:Uid="T_AppLanguageDsn"
+                        Margin="40,0"
+                        VerticalAlignment="Bottom"
+                        FontSize="{ThemeResource CaptionTextBlockFontSize}"
+                        Foreground="{ThemeResource TextFillColorPrimary}"/>
+                    <ComboBox
+                        x:Name="LanguageCombo"
+                        Width="150"
+                        HorizontalAlignment="Right"
+                        SelectedIndex="{x:Bind _languageIndex}"
+                        SelectionChanged="LanguageCombo_SelectionChanged">
+                        <ComboBoxItem x:Uid="B_EnglishLanguage"/>
+                        <ComboBoxItem x:Uid="B_SlovakLanguage"/>
+                        <ComboBoxItem x:Uid="B_GermanLanguage"/>
+                    </ComboBox>
+                </Grid>
                 <Expander
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch">

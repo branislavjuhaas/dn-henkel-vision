@@ -1,6 +1,7 @@
 using DN_Henkel_Vision.Memory;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Reflection;
 using Windows.ApplicationModel.Activation;
 
@@ -18,12 +19,15 @@ namespace DN_Henkel_Vision.Interface
         public static bool SetAutoTesting = true;
         public static bool DataCollection = true;
         public static string UserName = string.Empty;
+        public static string Language = Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride;
 
         private ElementTheme _theme = Theme;
         private int _themeIndex = ThemeIndex;
         private bool _setAutoTesting = SetAutoTesting;
         private bool _dataCollection = DataCollection;
         private string _userName = UserName;
+        private Visibility _languageVisibility = AdminVisibility();
+        private int _languageIndex = LanguageIndex();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Settings"/> class.
@@ -33,6 +37,31 @@ namespace DN_Henkel_Vision.Interface
             this.InitializeComponent();
         }
 
+        private static Visibility AdminVisibility()
+        {
+            return Manager.DevText == "Administrator" ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private static int LanguageIndex()
+        {
+            int index = 0;
+
+            switch (Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride)
+            {
+                case "en-US":
+                    index = 0;
+                    break;
+                case "sk-SK":
+                    index = 1;
+                    break;
+                case "de-DE":
+                    index = 2;
+                    break;
+            }
+
+            return index;
+        }
+
         /// <summary>
         /// Handles the event when the user clicks the dropdown for the theme.
         /// </summary>
@@ -40,6 +69,8 @@ namespace DN_Henkel_Vision.Interface
         /// <param name="e">The event arguments.</param>
         private void ThemeCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (ThemeCombo.SelectedIndex == -1) { return; }
+            
             _themeIndex = ThemeCombo.SelectedIndex;
             ThemeIndex = _themeIndex;
 
@@ -114,6 +145,31 @@ namespace DN_Henkel_Vision.Interface
             }
 
             return false;
+        }
+
+        private void LanguageCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LanguageCombo.SelectedIndex == -1) { return; }
+
+            _languageIndex = LanguageCombo.SelectedIndex;
+
+            switch (_languageIndex)
+            {
+                case 0:
+                    Language = "en-US";
+                    break;
+                case 1:
+                    Language = "sk-SK";
+                    break;
+                case 2:
+                    Language = "de-DE";
+                    break;
+                default:
+                    Language = "en-US";
+                    break;
+            }
+
+            Memory.Lavender.SaveSettings(true);
         }
     }
 }

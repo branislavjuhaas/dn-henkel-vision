@@ -349,4 +349,32 @@
     <value>This fault is already in the database. Do you want to keep it?</value>
     <comment>Content Of The Duplicite Fault Dialog</comment>
   </data>
+  <data name="T_Forged.Text" xml:space="preserve">
+    <value>Forged</value>
+    <comment>Forged Text Of The Export</comment>
+  </data>
+  <data name="T_Verified.Text" xml:space="preserve">
+    <value>DN Verified</value>
+    <comment>Verification Proof Of The Export</comment>
+  </data>
+  <data name="B_EnglishLanguage.Content" xml:space="preserve">
+    <value>English</value>
+    <comment>English Language Of The Application</comment>
+  </data>
+  <data name="B_GermanLanguage.Content" xml:space="preserve">
+    <value>German</value>
+    <comment>German Language Of The Application</comment>
+  </data>
+  <data name="B_SlovakLanguage.Content" xml:space="preserve">
+    <value>Slovak</value>
+    <comment>Slovak Language Of The Application</comment>
+  </data>
+  <data name="T_AppLanguage.Text" xml:space="preserve">
+    <value>App Language</value>
+    <comment>App Language Setting Caption</comment>
+  </data>
+  <data name="T_AppLanguageDsn.Text" xml:space="preserve">
+    <value>Select the display language of the application. (reload required to apply)</value>
+    <comment>App Language Setting Description</comment>
+  </data>
 </root>

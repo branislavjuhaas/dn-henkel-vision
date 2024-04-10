@@ -8,6 +8,9 @@ using System.ComponentModel;
 using System.Globalization;
 using Microsoft.Windows.AppLifecycle;
 using Windows.Foundation.Diagnostics;
+using Microsoft.UI.Input;
+using Windows.System;
+using Windows.UI.Core;
 
 namespace DN_Henkel_Vision.Interface
 {
@@ -41,6 +44,18 @@ namespace DN_Henkel_Vision.Interface
             presenter.IsResizable = false;
             presenter.SetBorderAndTitleBar(true, false);
             this.AppWindow.MoveAndResize(new Windows.Graphics.RectInt32((area.WorkArea.Width - StartupWidth) / 2, (area.WorkArea.Height - StartupHeight) / 2, StartupWidth, StartupHeight));
+        
+            if (IsShift())
+            {
+                Manager.DevText = "Administrator";
+            }
+        }
+
+        private bool IsShift()
+        {
+            CoreVirtualKeyStates states = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
+
+            return (states & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         }
 
         /// <summary>

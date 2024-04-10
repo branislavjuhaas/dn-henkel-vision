@@ -265,11 +265,11 @@ namespace DN_Henkel_Vision.Interface
 
             if (chip == Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Existing/Text")))
             {
-                OrdersPanel_Select(Format(((Order)orderDialog.Content).Number.Text));
+                OrdersPanel_Select(Format(((Order)orderDialog.Content).Number.Text, true));
                 return;
             }
 
-            Manager.CreateOrder(Format(((Order)orderDialog.Content).Number.Text));
+            Manager.CreateOrder(Format(((Order)orderDialog.Content).Number.Text, true));
         }
 
         /// <summary>

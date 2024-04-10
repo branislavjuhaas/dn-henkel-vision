@@ -349,4 +349,32 @@
     <value>Diese Störung ist bereits in der Datenbank vorhanden. Möchten Sie sie behalten?</value>
     <comment>Content Of The Duplicite Fault Dialog</comment>
   </data>
+  <data name="T_Forged.Text" xml:space="preserve">
+    <value>Gefälscht</value>
+    <comment>Forged Text Of The Export</comment>
+  </data>
+  <data name="T_Verified.Text" xml:space="preserve">
+    <value>DN Verifiziert</value>
+    <comment>Verification Proof Of The Export</comment>
+  </data>
+  <data name="B_EnglishLanguage.Content" xml:space="preserve">
+    <value>Englisch</value>
+    <comment>English Language Of The Application</comment>
+  </data>
+  <data name="B_GermanLanguage.Content" xml:space="preserve">
+    <value>Deutsch</value>
+    <comment>German Language Of The Application</comment>
+  </data>
+  <data name="B_SlovakLanguage.Content" xml:space="preserve">
+    <value>Slowakisch</value>
+    <comment>Slovak Language Of The Application</comment>
+  </data>
+  <data name="T_AppLanguage.Text" xml:space="preserve">
+    <value>App-Sprache</value>
+    <comment>App Language Setting Caption</comment>
+  </data>
+  <data name="T_AppLanguageDsn.Text" xml:space="preserve">
+    <value>Wählen Sie die Anzeigesprache der Anwendung aus. (Neuladen erforderlich, um anzuwenden)</value>
+    <comment>App Language Setting Description</comment>
+  </data>
 </root>

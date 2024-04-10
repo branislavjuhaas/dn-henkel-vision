@@ -111,6 +111,18 @@
                 <StackPanel Orientation="Horizontal">
                     <FontIcon
                         FontFamily="Segoe Fluent Icons"
+                        Glyph="&#xE8A9;"
+                        FontSize="16"
+                        HorizontalAlignment="Left"
+                        Margin="9,0"/>
+                    <TextBlock
+                        Text="{x:Bind Exportites.Count}"
+                        VerticalAlignment="Center"
+                        Margin="0,0,0,2"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon
+                        FontFamily="Segoe Fluent Icons"
                         Glyph="&#xE823;"
                         FontSize="16"
                         HorizontalAlignment="Left"
@@ -147,7 +159,7 @@
                     x:Name="ExportsList"
                     x:FieldModifier="public"
                     Layout="{StaticResource ExportsLayout}"
-                    ItemsSource="{x:Bind Exports()}"
+                    ItemsSource="{x:Bind Exportites}"
                     ItemTemplate="{StaticResource ExportTemplate}"/>
             </ScrollViewer>
         </Grid>

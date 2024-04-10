@@ -33,7 +33,7 @@ namespace DN_Henkel_Vision.Memory
         /// <param name="netstal">Indicates whether export is for Netstal machine or not.</param>
         /// <param name="inkognito">Indicates whether to show the real project name or not.</param>
         /// <returns>The header string for exports.</returns>
-        public static string Header(bool netstal = false, bool inkognito = false, string checksum = "")
+        public static string Header(bool netstal = false, bool inkognito = false, string checksum = "", float exportTime = 0f)
         {
             string pseudoheader = s_header.Replace("DNHENKELVISION", "##############");
 
@@ -48,7 +48,7 @@ namespace DN_Henkel_Vision.Memory
             char[] date = DateTime.Now.ToString("ddMMyy").ToCharArray();
             char[] user = Regex.Replace(System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToUpper(), "[^A-Z0-9]", "").ToCharArray();
             char[] version = Assembly.GetExecutingAssembly().GetName().Version.ToString().Replace('.', 'N').ToCharArray();
-            char[] time = (Memory.Lavender.GetExportTime(netstal) / 60f).ToString("0.00").Replace(".", "").PadLeft(5, '0').ToCharArray();
+            char[] time = (exportTime / 60f).ToString("0.00").Replace(".", "").PadLeft(5, '0').ToCharArray();
             
 
             HeaderReplace(ref pseudoheader, ref indexes, ref values, 77, (char)ri);
@@ -132,8 +132,8 @@ namespace DN_Henkel_Vision.Memory
             // Convert header to char array
             char[] headerArray = header.Replace("DNHENKELVISION", "##############").ToCharArray();
 
-            int ri = (int)headerArray[77];
-            int rii = (int)headerArray[78];
+            int ri = HeaderRead(ref headerArray, 77);
+            int rii = HeaderRead(ref headerArray, 78);
 
             int seed = ri * rii;
 
@@ -176,6 +176,11 @@ namespace DN_Henkel_Vision.Memory
                 }
                 // Conver time string from 01234 to 012.34 and then remove all paddin zeros from the beginning
                 time = time.Insert(3, ".").TrimStart('0') + " " + Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:S_Hours"));
+
+                if (time.StartsWith("."))
+                {
+                    time = "0" + time;
+                }
 
                 // Get checksum
                 for (int i = 0; i < 3; i++)
@@ -357,11 +362,11 @@ namespace DN_Henkel_Vision.Memory
 
             if (Checksum(string.Join('\n', lines.Skip(7))).Equals(decoded[5]))
             {
-                decoded[5] = "Verified";
+                decoded[5] = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Verified/Text"));
             }
             else
             {
-                decoded[5] = "Forged";
+                decoded[5] = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Forged/Text"));
             }
 
             return decoded;
