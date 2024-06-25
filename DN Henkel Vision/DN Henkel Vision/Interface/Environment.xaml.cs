@@ -140,8 +140,14 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="selection">The string with order that should be selected</param>
         private void OrdersPanel_Select(string selection)
-        {           
-            int selectedOrderIndex = Manager.OrdersRegistry.IndexOf(_selectedOrder);
+        {  
+            // If the selection is not in the visual registry, create it.
+            if (!Manager.VisualRegistry.Contains(selection))
+            {
+                Manager.CreateOrder(selection, true);
+            }
+
+            int selectedOrderIndex = Manager.VisualRegistry.IndexOf(_selectedOrder);
 
             // If there is already selected order, deselect it.
             if (selectedOrderIndex != -1)
@@ -157,7 +163,7 @@ namespace DN_Henkel_Vision.Interface
                 return;
             }
 
-            int newOrderIndex = Manager.OrdersRegistry.IndexOf(selection);
+            int newOrderIndex = Manager.VisualRegistry.IndexOf(selection);
 
             ((ToggleButton)OrdersPanel.GetOrCreateElement(newOrderIndex)).IsChecked = true;
 

@@ -72,25 +72,57 @@ namespace DN_Henkel_Vision.Memory
         /// Loads the registry from the database.
         /// </summary>
         /// <returns>A list of registry entries.</returns>
-        public static List<string> LoadRegistry()
+        public static List<string>[] LoadRegistries()
         {
             List<string> registry = new List<string>();
+            List<DateTime> lastDates = new List<DateTime>();
 
             using (SqliteConnection Lavenderbase = GetConnection())
             {
                 Lavenderbase.Open();
-                SqliteCommand selectCommand = new SqliteCommand("SELECT * from orders", Lavenderbase);
+                // get unique order numbers from the database table faults and get the last datetime of that number sorted by the datetime from the most recent to the oldest
+                SqliteCommand selectCommand = new SqliteCommand("SELECT DISTINCT number, MAX(written) FROM faults GROUP BY number ORDER BY MAX(written) DESC", Lavenderbase);
                 SqliteDataReader query = selectCommand.ExecuteReader();
 
                 while (query.Read())
                 {
-                    registry.Add(query.GetString(1));
+                    registry.Add(Interface.Environment.Format(query.GetInt32(0).ToString()));
+                    lastDates.Add(query.GetDateTime(1));
                 }
 
                 Lavenderbase.Close();
             }
 
-            return registry;
+            if (registry.Count <= 9) { return new List<string>[] { registry, registry }; }
+
+            int count = 0;
+            int weeks = 0;
+
+            while (count < 9)
+            {
+                count = 0;
+                // count is a number of lastDates that are in a past weeks weeks
+                foreach (DateTime date in lastDates)
+                {
+                    DateTime calcdate = DateTime.Now.AddDays(-7 * weeks);
+                    if (date > DateTime.Now.AddDays(-7 * weeks))
+                    {
+                        count++;
+                        // skip the rest of the current loop cycle
+                        continue;
+                    }
+
+                    break;
+                }
+
+                weeks++;
+            }
+
+            // round the count to the nearest multiple of 3
+            count = (int)Math.Ceiling((double)count / 3) * 3;
+
+            // return count registry entries from the most recent to the oldest and the complete registry
+            return new List<string>[] { registry.GetRange(0, count), registry };
         }
 
         /// <summary>
@@ -217,7 +249,7 @@ namespace DN_Henkel_Vision.Memory
                     if (ordernumber.StartsWith("38")) { ordernumber = ordernumber.Remove(0, 2); }
 
                     // Add to the lists.
-                    exports.Add($"{ordernumber}\t{query.GetString(4)}\t{query.GetString(5)}\t{query.GetString(4)}\t{Memory.Classification.OriginalCauses[query.GetInt32(6)]}\t{Memory.Classification.OriginalClassifications[query.GetInt32(6)][query.GetInt32(7)]}\t{Memory.Classification.OriginalTypes[Memory.Classification.ClassificationsPointers[query.GetInt32(6)][query.GetInt32(7)]][query.GetInt32(8)]}\t{user}\t{date}");
+                    exports.Add($"{ordernumber}\t{query.GetString(4)}\t{query.GetString(5)}\t{query.GetString(3)}\t{Memory.Classification.OriginalCauses[query.GetInt32(6)]}\t{Memory.Classification.OriginalClassifications[query.GetInt32(6)][query.GetInt32(7)]}\t{Memory.Classification.OriginalTypes[Memory.Classification.ClassificationsPointers[query.GetInt32(6)][query.GetInt32(7)]][query.GetInt32(8)]}\t{user}\t{date}");
                     times.Add(query.GetFloat(9));
                 }
 
@@ -232,11 +264,11 @@ namespace DN_Henkel_Vision.Memory
                 Lavenderbase.Close();
             }
 
-            string joined = string.Join("\n", exports);
+            string joined = string.Join("\r\n", exports);
             
 
             // Return the exports.
-            return Export.Header(netstal, inkognito, Export.Checksum(joined), exportTime) + "\r\n" + string.Join("\n", exports);
+            return Export.Header(netstal, inkognito, Export.Checksum(joined), exportTime) + "\r\n" + joined;
         }
 
         /// <summary>
@@ -326,25 +358,6 @@ namespace DN_Henkel_Vision.Memory
             output.Reverse();
 
             return output;
-        }
-
-        /// <summary>
-        /// Creates a new order in the database.
-        /// </summary>
-        /// <param name="order">The order to create.</param>
-        public static void CreateOrder(string order)
-        {
-            // Open the database connection.
-            using (SqliteConnection Lavenderbase = GetConnection())
-            {
-                Lavenderbase.Open();
-
-                // Create a command to select all the exports from the database and execute it.
-                SqliteCommand insertCommand = new SqliteCommand($"INSERT INTO orders (number) VALUES ('{order}')", Lavenderbase);
-                insertCommand.ExecuteNonQuery();
-
-                Lavenderbase.Close();
-            }
         }
 
         /// <summary>

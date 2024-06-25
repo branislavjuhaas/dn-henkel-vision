@@ -360,7 +360,7 @@ namespace DN_Henkel_Vision.Memory
 
             string[] decoded = DecodeHeader(string.Join("\r\n", lines.Take(7)));
 
-            if (Checksum(string.Join('\n', lines.Skip(7))).Equals(decoded[5]))
+            if (Checksum(string.Join("\r\n", lines.Skip(7))).Equals(decoded[5]))
             {
                 decoded[5] = Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Verified/Text"));
             }
