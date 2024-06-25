@@ -1,7 +1,6 @@
 # DN Henkel Vision
 ![Version](https://img.shields.io/badge/Version-2024.0.1-blue) ![License](https://img.shields.io/badge/License-MIT-red) ![State](https://img.shields.io/badge/Development_State-Active-green) ![Framework](https://img.shields.io/badge/Framework-Windows_App_SDK_1.5-purple)
 
-# DN Henkel Vision
 ![DN Henkel Vision Editor](Readme/henkel-vision-editor.png)
 
 # Description
