@@ -25,9 +25,11 @@ namespace DN_Henkel_Vision.Interface
     public sealed partial class Explorer : Page
     {
         public string[] Header;
+        public List<Exportite> Exportites;
 
         public Explorer()
         {
+            Exportites = Exports();
             Header = Export.GetHeader(Manager.LaunchingFile);
             this.InitializeComponent();
         }

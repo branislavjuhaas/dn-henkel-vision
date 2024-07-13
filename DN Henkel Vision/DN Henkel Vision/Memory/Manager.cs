@@ -39,8 +39,9 @@ namespace DN_Henkel_Vision.Memory
             Lavender.Validate();
 
             Memory.Lavender.LoadSettings();
-            OrdersRegistry = Lavender.LoadRegistry();
-            VisualRegistry = new(OrdersRegistry);
+            List<string>[] registries = Lavender.LoadRegistries();
+            OrdersRegistry = registries[1];
+            VisualRegistry = new(registries[0]);
             Lavender.EvaluateTime();
             Lavender.CreateWatcher();
         }
@@ -72,12 +73,11 @@ namespace DN_Henkel_Vision.Memory
         /// Creates and adds an order to the global memory.
         /// </summary>
         /// <param name="order">Number of the order to be created and added.</param>
-        public static void CreateOrder(string order)
+        public static void CreateOrder(string order, bool visualOnly = false)
         {
-            OrdersRegistry.Add(order);
             VisualRegistry.Add(order);
-
-            Lavender.CreateOrder(order);
+            if (visualOnly) { return; }
+            OrdersRegistry.Add(order);
         }
     }
 }

@@ -8,12 +8,12 @@
 
   <Identity
     Name="d61de81d-cd85-4388-bdcb-72407fecb779"
-    Publisher="CN=dn-foundation"
+    Publisher="CN=juhas"
     Version="2024.0.1.2027" />
 
   <Properties>
     <DisplayName>DN Henkel Vision</DisplayName>
-    <PublisherDisplayName>DN Foundation</PublisherDisplayName>
+    <PublisherDisplayName>Branislav Juhaas</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 

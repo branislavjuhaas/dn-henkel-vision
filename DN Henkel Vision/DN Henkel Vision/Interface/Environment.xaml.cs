@@ -140,8 +140,14 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="selection">The string with order that should be selected</param>
         private void OrdersPanel_Select(string selection)
-        {           
-            int selectedOrderIndex = Manager.OrdersRegistry.IndexOf(_selectedOrder);
+        {  
+            // If the selection is not in the visual registry, create it.
+            if (!Manager.VisualRegistry.Contains(selection))
+            {
+                Manager.CreateOrder(selection, true);
+            }
+
+            int selectedOrderIndex = Manager.VisualRegistry.IndexOf(_selectedOrder);
 
             // If there is already selected order, deselect it.
             if (selectedOrderIndex != -1)
@@ -157,7 +163,7 @@ namespace DN_Henkel_Vision.Interface
                 return;
             }
 
-            int newOrderIndex = Manager.OrdersRegistry.IndexOf(selection);
+            int newOrderIndex = Manager.VisualRegistry.IndexOf(selection);
 
             ((ToggleButton)OrdersPanel.GetOrCreateElement(newOrderIndex)).IsChecked = true;
 
@@ -192,25 +198,25 @@ namespace DN_Henkel_Vision.Interface
         /// </summary>
         /// <param name="input">input string</param>
         /// <returns>Formatted string in (net)'xxxx  xxxx' and (ord)'xx xxx xxx'</returns>
-        public static string Format(string input)
+        public static string Format(string input, bool variable = false)
         {
-            string output = input;
+            if (variable && input.Length == 6 && !input.StartsWith("38")) { input = "38" + input; }
 
             try
             {
                 if (input.StartsWith("20"))
                 {
-                    output = input.Insert(4, "  ");
+                    input = input.Insert(4, "  ");
                 }
                 else if (input.StartsWith("38"))
                 {
-                    output = input.Insert(2, " ");
-                    output = output.Insert(6, " ");
+                    input = input.Insert(2, " ");
+                    input = input.Insert(6, " ");
                 }
             }
             catch { }
 
-            return output;
+            return input;
         }
 
         /// <summary>
@@ -265,11 +271,11 @@ namespace DN_Henkel_Vision.Interface
 
             if (chip == Windows.ApplicationModel.Resources.ResourceLoader.GetStringForReference(new Uri("ms-resource:T_Existing/Text")))
             {
-                OrdersPanel_Select(Format(((Order)orderDialog.Content).Number.Text));
+                OrdersPanel_Select(Format(((Order)orderDialog.Content).Number.Text, true));
                 return;
             }
 
-            Manager.CreateOrder(Format(((Order)orderDialog.Content).Number.Text));
+            Manager.CreateOrder(Format(((Order)orderDialog.Content).Number.Text, true));
         }
 
         /// <summary>

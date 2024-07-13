@@ -26,5 +26,11 @@ To set up DN Henkel Vision, follow the standard setup instructions for a WinUI a
 
 7. **Build and Run the Application**: Press `F5` or use the `Debug > Start Debugging` menu command to build and run the application.
 
-# Support
+# Support 
+
 For any issues or queries, please contact the support team at juhas.branislaw@gmail.com.
+
+---
+
+| Since January 21, 2024, the DN Henkel Vision project has proudly become an open-sourced member of the DN Family. Prior to this significant milestone, it had been a cherished and copyrighted member of the DN Family since its inception. This transition marks a new era of collaboration and community-driven development for the project. | ![](Readme/certificate-of-dn-membership.png) |
+|-------------------------------------|----------------------------------------------|

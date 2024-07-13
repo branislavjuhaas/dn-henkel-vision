@@ -397,3 +397,12 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Api Keys
+*.key
+key.json
+
+# FelberAI Training Files
+FelberAI/images/
+FelberAI/responses/
+FelberAI/pdfs/
