@@ -401,3 +401,8 @@ FodyWeavers.xsd
 # Api Keys
 *.key
 key.json
+
+# FelberAI Training Files
+FelberAI/images/
+FelberAI/responses/
+FelberAI/pdfs/
