@@ -32,5 +32,5 @@ For any issues or queries, please contact the support team at juhas.branislaw@gm
 
 ---
 
-| Since January 21, 2024, the DN Henkel Vision project has proudly become an open-sourced member of the DN Family. Prior to this significant milestone, it had been a cherished and copyrighted member of the DN Family since its inception. This transition marks a new era of collaboration and community-driven development for the project. | ![](Readme/certificate-of-dn-membership.png) |
-|-------------------------------------|----------------------------------------------|
+| Since January 21, 2024, the DN Henkel Vision project has proudly become an open-sourced member of the [DN Family](https://dn.juhaas.eu). Prior to this significant milestone, it had been a cherished and copyrighted member of the DN Family since its inception. This transition marks a new era of collaboration and community-driven development for the project. | ![](Readme/certificate-of-dn-membership.png) |
+|:------------------------------------|----------------------------------------------|
